@@ -1,0 +1,86 @@
+Smartcat Platform Overview
+-------------------------
+Smartcat (https://www.smartcat.com/) is an all-in-one AI translation and localization platform for enterprises, L&D, and global teams. It offers AI-powered translation, a marketplace of 500,000+ linguists, workflow automation, integrations, and tools for managing multilingual content at scale.
+
+Navigation Structure (Header & Footer)
+--------------------------------------
+# Main Navigation Links
+- /ai-course-creator/
+- /why-smartcat/
+- /translate-document/
+- /learning-and-development/
+- /marketplace/
+- /video-translation/
+- /software-localization/
+- /website-translator/
+- /machine-translation/
+- /product-tour/
+- /payments/
+- /cat-tool/
+- /integrations/
+- /marketing-translation/
+- /translation-management-system/
+- /product-localization/
+- /ecommerce-translation/
+- /ai-translation-software-for-schools/
+- /government-translation/
+- /agencies/
+- /enterprise/
+- /pricing/
+- /learning-hub/
+- /academy/
+- /events/
+- /news/
+- /cases/
+- /help-smartcat.com/
+- /contact-support/
+- /release-notes/
+- /about-us/
+- /culture-code/
+- /careers/
+- /rfp-translation/
+- /life-science-translation/
+- /retail-consumer-goods-translation/
+- /manufacturing-translation/
+- /automotive-translation/
+- /technical-translation/
+- /security/
+- /legal/privacy-policy/
+- /legal/terms/
+- /status.smartcat.com/
+- /report-of-the-illegal-content/
+- /blog/
+- /localize-mobile-app/
+
+# Social & External
+- https://www.facebook.com/smartcatai
+- https://www.linkedin.com/company/smartcatai
+- https://x.com/Smartcatai
+- https://www.youtube.com/channel/UCKKUamgbbSDDe5AGCZ5jeBg
+- https://status.smartcat.com/
+- https://help.smartcat.com/
+- https://help.smartcat.com/contact-support/
+
+Sitemap Structure
+-----------------
+# Main Sitemaps
+- https://www.smartcat.com/sitemap-site.xml
+- https://www.smartcat.com/sitemap-news.xml
+- https://www.smartcat.com/sitemap-online-events.xml
+- https://www.smartcat.com/sitemap-help.xml
+- https://www.smartcat.com/sitemap-blog-de.xml
+- https://www.smartcat.com/sitemap-blog-en.xml
+- https://www.smartcat.com/sitemap-blog-es.xml
+- https://www.smartcat.com/sitemap-blog-fr.xml
+- https://www.smartcat.com/sitemap-blog-ru.xml
+- https://www.smartcat.com/custom-sitemap.xml
+
+Languages Supported
+-------------------
+- English, Русский, Türkçe, Deutsch, Español, 한국어, 日本語, 中文, Français, العربية, Polski, Svenska, Português, Italiano
+
+Contact & Company Info
+----------------------
+Smartcat Platform Inc. 2025 | 2810 N Church St PMB 50985, Wilmington, Delaware, 19802-4447, USA
+
+For more information, visit: https://www.smartcat.com/

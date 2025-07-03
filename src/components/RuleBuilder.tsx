@@ -1,13 +1,21 @@
 "use client";
 import React, { useState } from "react";
-import { Plus, HelpCircle } from "lucide-react";
+import { Plus, HelpCircle, Trash2, RotateCcw } from "lucide-react";
 import type { Rule } from "./Generator";
 
 interface RuleBuilderProps {
+  rules: Rule[];
   onAddRule: (rule: Omit<Rule, "id">) => void;
+  onRemoveRule: (id: string) => void;
+  onResetRules: () => void;
 }
 
-const RuleBuilder = ({ onAddRule }: RuleBuilderProps) => {
+const RuleBuilder = ({
+  rules,
+  onAddRule,
+  onRemoveRule,
+  onResetRules,
+}: RuleBuilderProps) => {
   const [userAgent, setUserAgent] = useState("*");
   const [ruleType, setRuleType] = useState<"Allow" | "Disallow">("Allow");
   const [path, setPath] = useState("");
@@ -37,7 +45,18 @@ const RuleBuilder = ({ onAddRule }: RuleBuilderProps) => {
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6">
-      <h3 className="text-2xl font-bold text-gray-900 mb-6">Rule Builder</h3>
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-2xl font-bold text-gray-900">Rule Builder</h3>
+        {rules.length > 0 && (
+          <button
+            onClick={onResetRules}
+            className="flex items-center space-x-2 px-3 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm font-medium"
+          >
+            <RotateCcw className="h-4 w-4" />
+            <span>Reset All</span>
+          </button>
+        )}
+      </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
@@ -117,6 +136,53 @@ const RuleBuilder = ({ onAddRule }: RuleBuilderProps) => {
           <span>Add Rule</span>
         </button>
       </form>
+
+      {/* Rules List */}
+      {rules.length > 0 && (
+        <div className="mt-8">
+          <h4 className="text-lg font-semibold text-gray-900 mb-4">
+            Current Rules ({rules.length})
+          </h4>
+          <div className="space-y-3 max-h-64 overflow-y-auto">
+            {rules.map((rule) => (
+              <div
+                key={rule.id}
+                className={`flex items-center justify-between p-3 rounded-lg border ${
+                  rule.type === "Allow"
+                    ? "bg-green-50 border-green-200"
+                    : "bg-red-50 border-red-200"
+                }`}
+              >
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm font-medium text-gray-700">
+                      {rule.userAgent}
+                    </span>
+                    <span
+                      className={`text-xs font-medium px-2 py-1 rounded ${
+                        rule.type === "Allow"
+                          ? "bg-green-100 text-green-700"
+                          : "bg-red-100 text-red-700"
+                      }`}
+                    >
+                      {rule.type}
+                    </span>
+                  </div>
+                  <div className="font-mono text-sm text-gray-900 mt-1">
+                    {rule.path}
+                  </div>
+                </div>
+                <button
+                  onClick={() => onRemoveRule(rule.id)}
+                  className="ml-3 p-1 text-red-500 hover:text-red-700 hover:bg-red-100 rounded transition-colors"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
