@@ -1,6 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import { Search, Loader2, AlertCircle, CheckCircle, ChevronDown } from "lucide-react";
+import {
+  Search,
+  Loader2,
+  AlertCircle,
+  CheckCircle,
+  ChevronDown,
+} from "lucide-react";
 import type { LLMBot } from "../types/backend";
 
 interface WebsiteAnalyzerProps {
@@ -89,20 +95,20 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
     setAnalysisResult(null);
 
     try {
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/analyze-website`;
-      const response = await fetch(
-        apiUrl,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            url: url.trim(),
-            llmBot: selectedBot,
-          }),
-        }
-      );
+      const apiUrl = `${
+        process.env.NEXT_PUBLIC_API_BASE_URL ||
+        "https://llms-backend-mvtx.onrender.com"
+      }/api/analyze-website`;
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          url: url.trim(),
+          llmBot: selectedBot,
+        }),
+      });
 
       const data: AnalysisResult = await response.json();
 
