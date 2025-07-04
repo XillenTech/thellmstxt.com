@@ -89,8 +89,9 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
     setAnalysisResult(null);
 
     try {
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/analyze-website`;
       const response = await fetch(
-        "https://llms-backend-d416.onrender.com/api/analyze-website",
+        apiUrl,
         {
           method: "POST",
           headers: {
