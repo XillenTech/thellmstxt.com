@@ -43,7 +43,7 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
   );
   const [aiEnrichment, setAiEnrichment] = useState(false);
   const [progress, setProgress] = useState<number>(0);
-  const [progressMsg, setProgressMsg] = useState<string>("");
+  const [, setProgressMsg] = useState<string>("");
   const [sessionId, setSessionId] = useState<string>("");
   const [eventSource, setEventSource] = useState<EventSource | null>(null);
 
@@ -176,7 +176,7 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
     });
 
     evtSource.addEventListener("open", () => {
-      setProgress(0);
+      // Connection opened, progress will be updated by server events
     });
 
     evtSource.addEventListener("message", () => {
@@ -272,13 +272,13 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
             )}
           </div>
           {isLoading && (
-            <div className="text-sm text-blue-800 bg-blue-50 border border-blue-200 rounded mt-2 px-3 py-2">
+            <div className="text-sm text-blue-800 bg-blue-50 border border-blue-200 rounded-3xl mt-2 px-3 py-2">
               Analyzing the website takes just couple of minutes.
             </div>
           )}
-          {isLoading && progressMsg && (
+          {/* {isLoading && progressMsg && (
             <div className="text-xs text-blue-700 mt-1">{progressMsg}</div>
-          )}
+          )} */}
           <p className="text-xs text-gray-500 mt-1">
             Enter the website URL you want to analyze for LLM crawler paths
           </p>

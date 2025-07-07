@@ -21,6 +21,9 @@ const MarkdownGenerator: React.FC<MarkdownGeneratorProps> = ({
   const [isGenerating, setIsGenerating] = useState(false);
   const [result, setResult] = useState<MarkdownGenerationResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+   const BASE_API_URL =
+     process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
+
 
   const generateMarkdown = async () => {
     setIsGenerating(true);
@@ -28,13 +31,16 @@ const MarkdownGenerator: React.FC<MarkdownGeneratorProps> = ({
     setResult(null);
 
     try {
-      const response = await fetch("/api/generate-markdown", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ websiteUrl }),
-      });
+      const response = await fetch(
+        `${BASE_API_URL}/api/generate-markdown`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ websiteUrl }),
+        }
+      );
 
       const data: MarkdownGenerationResponse = await response.json();
 
@@ -85,7 +91,7 @@ const MarkdownGenerator: React.FC<MarkdownGeneratorProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/10 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-3">
