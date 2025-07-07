@@ -5,7 +5,7 @@ import {
   // Loader2,
   AlertCircle,
   CheckCircle,
-  ChevronDown,
+  // ChevronDown,
   Sparkles,
   Square,
 } from "lucide-react";
@@ -35,7 +35,7 @@ interface AnalysisResult {
 
 const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
   const [url, setUrl] = useState("");
-  const [selectedBot, setSelectedBot] = useState<LLMBot>("ChatGPT-User");
+  const [selectedBots, setSelectedBots] = useState<LLMBot[]>(["ChatGPT-User"]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(
@@ -144,8 +144,8 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
       process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
     const sseUrl = `${apiBase}/api/analyze-website?url=${encodeURIComponent(
       url.trim()
-    )}&llmBot=${encodeURIComponent(
-      selectedBot
+    )}&bots=${encodeURIComponent(
+      selectedBots.join(",")
     )}&aiEnrichment=${aiEnrichment}&sessionId=${newSessionId}`;
 
     const evtSource = new EventSource(sseUrl);
@@ -241,7 +241,8 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder="https://example.com"
-              className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-black placeholder:text-gray-400"
+              autoFocus
+              className="flex-1 px-4 py-3 border border-gray-300 rounded-3xl focus:outline-none focus:ring-blue-500 transition-all text-black placeholder:text-gray-400"
               disabled={isLoading}
               required
             />
@@ -249,7 +250,7 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
               <button
                 type="button"
                 onClick={stopAnalysis}
-                className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all flex items-center space-x-2"
+                className="px-6 py-3 bg-red-600 text-white rounded-3xl hover:bg-red-700 transition-all flex items-center space-x-2"
               >
                 <Square className="h-5 w-5" />
                 <span>
@@ -262,7 +263,7 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
               <button
                 type="submit"
                 disabled={!url.trim()}
-                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all flex items-center space-x-2"
+                className="px-6 py-3 bg-blue-600 text-white rounded-3xl hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all flex items-center space-x-2"
               >
                 <Search className="h-5 w-5" />
                 <span>Analyze</span>
@@ -270,7 +271,7 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
             )}
           </div>
           {isLoading && (
-            <div className="text-xs text-blue-800 bg-blue-50 border border-blue-200 rounded mt-2 px-3 py-2">
+            <div className="text-sm text-blue-800 bg-blue-50 border border-blue-200 rounded mt-2 px-3 py-2">
               Analyzing the website takes just couple of minutes.
             </div>
           )}
@@ -282,24 +283,61 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
           </p>
         </div>
 
-        <div>
-          <label className="text-sm font-medium text-gray-700 mb-2 block">
+        <div className="mb-6">
+          <label className="text-sm font-semibold text-gray-800 mb-2 block">
             LLM Bot Type
           </label>
-          <div className="relative">
-            <select
-              value={selectedBot}
-              onChange={(e) => setSelectedBot(e.target.value as LLMBot)}
-              className="w-full px-4 py-3 border border-gray-300 text-black rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all appearance-none"
-              disabled={isLoading}
-            >
-              {llmBots.map((bot) => (
-                <option key={bot.value} value={bot.value}>
-                  {bot.label} - {bot.description}
-                </option>
-              ))}
-            </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 rounded-lg border border-gray-200 bg-gray-50 p-4 shadow-sm">
+            {llmBots.map((bot) => (
+              <label
+                key={bot.value}
+                className="flex items-center space-x-3 cursor-pointer rounded px-2 py-2 transition border border-transparent hover:border-blue-200 select-none group"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === " " || e.key === "Enter") {
+                    setSelectedBots((prev) =>
+                      prev.includes(bot.value)
+                        ? prev.filter((b) => b !== bot.value)
+                        : [...prev, bot.value]
+                    );
+                  }
+                }}
+              >
+                <span className="relative flex items-center justify-center">
+                  <input
+                    type="checkbox"
+                    checked={selectedBots.includes(bot.value)}
+                    onChange={() => {
+                      setSelectedBots((prev) =>
+                        prev.includes(bot.value)
+                          ? prev.filter((b) => b !== bot.value)
+                          : [...prev, bot.value]
+                      );
+                    }}
+                    className="peer appearance-none w-5 h-5 border border-gray-300 rounded-md bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+                  />
+                  <svg
+                    className="absolute w-4 h-4 text-white pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path
+                      d="M5 10l4 4 6-6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+                <div>
+                  <span className="font-medium text-gray-900">{bot.label}</span>
+                  <div className="text-xs text-gray-500 pl-1">
+                    {bot.description}
+                  </div>
+                </div>
+              </label>
+            ))}
           </div>
         </div>
 

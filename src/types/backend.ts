@@ -48,7 +48,7 @@ export interface EnhancedMetadata {
 // API request/response types
 export interface WebsiteAnalysisRequest {
   url: string;
-  llmBot: LLMBot;
+  bots: LLMBot[];
   aiEnrichment?: boolean;
 }
 
