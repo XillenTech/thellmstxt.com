@@ -242,6 +242,7 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
               onChange={(e) => setUrl(e.target.value)}
               placeholder="https://example.com"
               autoFocus
+              autoComplete="on"
               className="flex-1 px-4 py-3 border border-gray-300 rounded-3xl focus:outline-none focus:ring-blue-500 transition-all text-black placeholder:text-gray-400"
               disabled={isLoading}
               required
