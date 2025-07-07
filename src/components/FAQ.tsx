@@ -1,6 +1,7 @@
-'use client';
-import React, { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+"use client";
+import React, { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import Link from "next/link";
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -8,28 +9,24 @@ const FAQ = () => {
   const faqs = [
     {
       question: "What is a User-Agent?",
-      answer: "A User-Agent identifies which AI crawler or bot is accessing your website. For example, 'ChatGPT-User' is OpenAI's crawler, while 'Google-Extended' is Google's AI training crawler. Using '*' applies the rule to all AI crawlers."
+      answer:
+        "A User-Agent identifies which AI crawler or bot is accessing your website. For example, 'ChatGPT-User' is OpenAI's crawler, while 'Google-Extended' is Google's AI training crawler. Using '*' applies the rule to all AI crawlers.",
     },
     {
       question: "What is the difference between Allow and Disallow?",
-      answer: "Allow tells AI crawlers they can access and learn from specific paths on your website. Disallow blocks them from accessing those paths. Use Allow for content you want AI to understand, and Disallow for private or sensitive areas."
+      answer:
+        "Allow tells AI crawlers they can access and learn from specific paths on your website. Disallow blocks them from accessing those paths. Use Allow for content you want AI to understand, and Disallow for private or sensitive areas.",
     },
     {
       question: "Is this the same as robots.txt?",
-      answer: "No, they serve different purposes. robots.txt controls search engine crawlers like Google and Bing, while llms.txt specifically controls AI model training crawlers like ChatGPT and Gemini. You can use both files together."
-    },
-    {
-      question: "How can I generate a file for my Shopify store?",
-      answer: "You can manually add rules like 'Allow: /products/*' and 'Allow: /collections/*' using the tool above. For a fully automated, one-click solution that syncs with your store and handles all eCommerce-specific paths, visit our premium service at llmstxt.store."
+      answer:
+        "No, they serve different purposes. robots.txt controls search engine crawlers like Google and Bing, while llms.txt specifically controls AI model training crawlers like ChatGPT and Gemini. You can use both files together.",
     },
     {
       question: "Where do I upload the llms.txt file?",
-      answer: "Upload the file to your website's root directory, so it's accessible at yoursite.com/llms.txt. This is the same location where you'd place robots.txt or sitemap.xml files."
+      answer:
+        "Upload the file to your website's root directory, so it's accessible at yoursite.com/llms.txt. This is the same location where you'd place robots.txt or sitemap.xml files.",
     },
-    {
-      question: "Do I need to update my llms.txt file regularly?",
-      answer: "Only when your website structure changes significantly. If you add new sections, change URL patterns, or want to modify which areas AI can access, you should update your llms.txt file accordingly."
-    }
   ];
 
   const toggleFAQ = (index: number) => {
@@ -67,11 +64,13 @@ const FAQ = () => {
                   <ChevronDown className="h-5 w-5 text-gray-400 flex-shrink-0" />
                 )}
               </button>
-              
+
               {openIndex === index && (
                 <div className="px-6 pb-6">
                   <div className="border-t border-gray-100 pt-4">
-                    <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
+                    <p className="text-gray-700 leading-relaxed">
+                      {faq.answer}
+                    </p>
                   </div>
                 </div>
               )}
@@ -80,19 +79,20 @@ const FAQ = () => {
         </div>
 
         <div className="mt-12 text-center">
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-8">
+          <div className="bg-white rounded-xl p-8">
             <h3 className="text-xl font-bold text-gray-900 mb-4">
-              Still Have Questions?
+              Want to Learn More?
             </h3>
             <p className="text-gray-600 mb-6">
-              We&apos;re here to help you optimize your website for AI crawlers.
+              Explore our complete FAQ section with detailed answers to all your
+              questions.
             </p>
-            <a
-              href="mailto:support@thellmstxt.com"
-              className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
+            <Link
+              href="/faq"
+              className="inline-flex items-center space-x-2 bg-pink-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 cursor-pointer"
             >
-              <span>Get Support</span>
-            </a>
+              <span>Learn More</span>
+            </Link>
           </div>
         </div>
       </div>

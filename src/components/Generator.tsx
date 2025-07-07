@@ -5,8 +5,11 @@ import WebsiteAnalyzer from "./WebsiteAnalyzer";
 import PathSelector from "./PathSelector";
 // import RuleBuilder from "./RuleBuilder";
 import OutputPreview from "./OutputPreview";
-import AdSidebar from "./AdSidebar";
+
+import LLMsFullGenerator from "./LLMsFullGenerator";
+import MarkdownGenerator from "./MarkdownGenerator";
 import type { PathSelection } from "../types/backend";
+import { Sparkles, FileText, FolderOpen, Settings } from "lucide-react";
 
 export interface Rule {
   id: string;
@@ -40,9 +43,19 @@ const Generator = () => {
     "analyze" | "select" | "generate"
   >("analyze");
 
+  // Enhanced features state
+  const [showLLMsFull, setShowLLMsFull] = useState(false);
+  const [showMarkdown, setShowMarkdown] = useState(false);
+  const [enhancedFeatures, setEnhancedFeatures] = useState({
+    includeSummaries: false,
+    includeContextSnippets: false,
+    hierarchicalLayout: false,
+    aiEnrichment: false,
+  });
+
   useEffect(() => {
     generateContent();
-  }, [rules, analysisData]);
+  }, [rules, analysisData, enhancedFeatures]);
 
   const generateContent = () => {
     if (!analysisData) {
@@ -50,10 +63,25 @@ const Generator = () => {
       return;
     }
 
+    // Build quick metadata lookup
+    const metaMap = new Map<
+      string,
+      { title?: string; description?: string; keywords?: string }
+    >();
+    if (
+      analysisData.pageMetadatas &&
+      Array.isArray(analysisData.pageMetadatas)
+    ) {
+      analysisData.pageMetadatas.forEach((m) => metaMap.set(m.path, m));
+    }
+
     // --- DETAILS SECTION (format1.txt style) ---
     let content = `# ${analysisData.metadata.title || "Website Overview"}\n`;
     content += `# Website: ${analysisData.metadata.url}\n`;
     content += `# Last updated: ${new Date().toISOString().slice(0, 10)}\n`;
+    content += `# AI Enrichment: ${
+      enhancedFeatures.aiEnrichment ? "Enabled" : "Disabled"
+    }\n`;
     content += `\n`;
     if (analysisData.metadata.description) {
       content += `> ${analysisData.metadata.description}\n\n`;
@@ -75,40 +103,97 @@ const Generator = () => {
     content += `LLMs and indexing agents are encouraged to read and use this file for accurate citation and integration guidance.\n\n`;
 
     // --- PATHS SECTION (format2.txt style) ---
-    content += `Navigation Structure\n----------------------\n`;
-    // List allowed paths
-    const allowedPaths = rules.filter((r) => r.type === "Allow");
-    if (allowedPaths.length > 0) {
-      content += `# Allowed Paths\n`;
-      allowedPaths.forEach((rule) => {
-        content += `- ${rule.path}\n`;
-        // Robust metadata match: normalize and allow partial matches
-        const normalize = (p: string) => p.replace(/\/$/, "").toLowerCase();
-        const meta = analysisData.pageMetadatas?.find(
-          (m) =>
-            normalize(m.path) === normalize(rule.path) ||
-            normalize(rule.path).startsWith(normalize(m.path)) ||
-            normalize(m.path).startsWith(normalize(rule.path))
-        );
-        if (meta) {
-          if (meta.title) content += `    • Title: ${meta.title}\n`;
-          if (meta.description)
-            content += `    • Description: ${meta.description}\n`;
-          if (meta.keywords) content += `    • Keywords: ${meta.keywords}\n`;
-        } else {
-          content += `    • No metadata found for this path\n`;
-        }
+    if (enhancedFeatures.hierarchicalLayout) {
+      content += `# Hierarchical Site Structure\n`;
+      content += `=======================\n\n`;
+
+      // Group paths by content type or priority
+      const groupedPaths = groupPathsByType(selectedPaths);
+
+      Object.entries(groupedPaths).forEach(([group, paths]) => {
+        content += `## ${group}\n`;
+        paths.forEach((path) => {
+          content += `- ${path.path}\n`;
+          if (enhancedFeatures.includeSummaries && path.summary) {
+            content += `  • Summary: ${path.summary}\n`;
+          }
+          if (enhancedFeatures.includeContextSnippets && path.contextSnippet) {
+            content += `  • Context: ${path.contextSnippet}\n`;
+          }
+          if (path.priority) {
+            content += `  • Priority: ${path.priority}\n`;
+          }
+          if (path.contentType) {
+            content += `  • Type: ${path.contentType}\n`;
+          }
+          if (path.aiUsageDirective) {
+            content += `  • AI Usage: ${path.aiUsageDirective}\n`;
+          }
+          const meta = metaMap.get(path.path);
+          if (meta?.title) {
+            content += `  • Title: ${meta.title}\n`;
+          }
+          if (meta?.description) {
+            content += `  • Description: ${meta.description}\n`;
+          }
+          if (meta?.keywords) {
+            content += `  • Keywords: ${meta?.keywords || "N/A"}\n`;
+          }
+        });
+        content += `\n`;
       });
+    } else {
+      content += `Navigation Structure\n----------------------\n`;
+      // List allowed paths
+      const allowedPaths = rules.filter((r) => r.type === "Allow");
+      if (allowedPaths.length > 0) {
+        content += `# Allowed Paths\n`;
+        allowedPaths.forEach((rule) => {
+          content += `- ${rule.path}\n`;
+          // Find corresponding path data
+          const pathData = selectedPaths.find((p) => p.path === rule.path);
+          if (pathData) {
+            if (enhancedFeatures.includeSummaries && pathData.summary) {
+              content += `    • Summary: ${pathData.summary}\n`;
+            }
+            if (
+              enhancedFeatures.includeContextSnippets &&
+              pathData.contextSnippet
+            ) {
+              content += `    • Context: ${pathData.contextSnippet}\n`;
+            }
+            if (pathData.priority) {
+              content += `    • Priority: ${pathData.priority}\n`;
+            }
+            if (pathData.contentType) {
+              content += `    • Type: ${pathData.contentType}\n`;
+            }
+            if (pathData.aiUsageDirective) {
+              content += `    • AI Usage: ${pathData.aiUsageDirective}\n`;
+            }
+          }
+          const meta2 = metaMap.get(rule.path);
+          if (meta2?.title) {
+            content += `    • Title: ${meta2.title}\n`;
+          }
+          if (meta2?.description) {
+            content += `    • Description: ${meta2.description}\n`;
+          }
+          if (meta2?.keywords) {
+            content += `    • Keywords: ${meta2?.keywords || "N/A"}\n`;
+          }
+        });
+      }
+      // List disallowed paths
+      const disallowedPaths = rules.filter((r) => r.type === "Disallow");
+      if (disallowedPaths.length > 0) {
+        content += `# Disallowed Paths\n`;
+        disallowedPaths.forEach((rule) => {
+          content += `- ${rule.path}\n`;
+        });
+      }
+      content += `\n`;
     }
-    // List disallowed paths
-    const disallowedPaths = rules.filter((r) => r.type === "Disallow");
-    if (disallowedPaths.length > 0) {
-      content += `# Disallowed Paths\n`;
-      disallowedPaths.forEach((rule) => {
-        content += `- ${rule.path}\n`;
-      });
-    }
-    content += `\n`;
 
     // Optionally, add a sitemap section if available in analysisData
     if (analysisData.paths && analysisData.paths.length > 0) {
@@ -120,6 +205,56 @@ const Generator = () => {
     }
 
     setGeneratedContent(content);
+  };
+
+  const groupPathsByType = (paths: PathSelection[]) => {
+    const groups: Record<string, PathSelection[]> = {
+      "Main Pages": [],
+      "Content Pages": [],
+      Documentation: [],
+      "Legal & Terms": [],
+      Other: [],
+    };
+
+    paths.forEach((path) => {
+      const contentType = path.contentType || "page";
+      const pathLower = path.path.toLowerCase();
+
+      if (pathLower === "/" || pathLower === "/home") {
+        groups["Main Pages"].push(path);
+      } else if (
+        contentType === "docs" ||
+        pathLower.includes("docs") ||
+        pathLower.includes("documentation")
+      ) {
+        groups["Documentation"].push(path);
+      } else if (
+        contentType === "terms" ||
+        pathLower.includes("privacy") ||
+        pathLower.includes("terms") ||
+        pathLower.includes("legal")
+      ) {
+        groups["Legal & Terms"].push(path);
+      } else if (
+        contentType === "blog" ||
+        contentType === "project" ||
+        pathLower.includes("blog") ||
+        pathLower.includes("project")
+      ) {
+        groups["Content Pages"].push(path);
+      } else {
+        groups["Other"].push(path);
+      }
+    });
+
+    // Remove empty groups
+    Object.keys(groups).forEach((key) => {
+      if (groups[key].length === 0) {
+        delete groups[key];
+      }
+    });
+
+    return groups;
   };
 
   const handleAnalysisComplete = (data: {
@@ -134,22 +269,6 @@ const Generator = () => {
   const handlePathSelectionChange = (paths: PathSelection[]) => {
     setSelectedPaths(paths);
   };
-
-  // const addRule = (rule: Omit<Rule, "id">) => {
-  //   const newRule = {
-  //     ...rule,
-  //     id: Date.now().toString(),
-  //   };
-  //   setRules([...rules, newRule]);
-  // };
-
-  // const removeRule = (id: string) => {
-  //   setRules(rules.filter((rule) => rule.id !== id));
-  // };
-
-  // const resetRules = () => {
-  //   setRules([]);
-  // };
 
   const generateFromSelectedPaths = () => {
     if (!analysisData) return;
@@ -189,6 +308,12 @@ const Generator = () => {
     setSelectedPaths([]);
     setRules([]);
     setCurrentStep("analyze");
+    setEnhancedFeatures({
+      includeSummaries: false,
+      includeContextSnippets: false,
+      hierarchicalLayout: false,
+      aiEnrichment: false,
+    });
   };
 
   // Determine step completion status
@@ -208,7 +333,7 @@ const Generator = () => {
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Analyze your website and generate llms.txt files for LLM crawlers.
-            Build your file step by step.
+            Build your file step by step with AI-powered enhancements.
           </p>
         </div>
 
@@ -286,12 +411,8 @@ const Generator = () => {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-4 gap-8">
-          <div
-            className={`${
-              currentStep === "generate" ? "lg:col-span-3" : "lg:col-span-2"
-            } space-y-8`}
-          >
+        <div className="max-w-6xl mx-auto">
+          <div className="space-y-8">
             {/* Step 1: Website Analysis */}
             {currentStep === "analyze" && (
               <WebsiteAnalyzer onAnalysisComplete={handleAnalysisComplete} />
@@ -300,6 +421,80 @@ const Generator = () => {
             {/* Step 2: Path Selection */}
             {currentStep === "select" && analysisData && (
               <div className="space-y-6">
+                {/* Enhanced Features Toggle */}
+                <div className="bg-white rounded-lg p-6 border border-gray-200">
+                  <div className="flex items-center space-x-2 mb-4">
+                    <Sparkles className="w-5 h-5 text-purple-600" />
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      Enhanced Features
+                    </h3>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <label className="flex items-center space-x-3">
+                      <input
+                        type="checkbox"
+                        checked={enhancedFeatures.aiEnrichment}
+                        onChange={(e) =>
+                          setEnhancedFeatures({
+                            ...enhancedFeatures,
+                            aiEnrichment: e.target.checked,
+                          })
+                        }
+                        className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                      />
+                      <span className="text-gray-700">
+                        Enable AI Enrichment
+                      </span>
+                    </label>
+                    <label className="flex items-center space-x-3">
+                      <input
+                        type="checkbox"
+                        checked={enhancedFeatures.includeSummaries}
+                        onChange={(e) =>
+                          setEnhancedFeatures({
+                            ...enhancedFeatures,
+                            includeSummaries: e.target.checked,
+                          })
+                        }
+                        className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                      />
+                      <span className="text-gray-700">
+                        Include AI Summaries
+                      </span>
+                    </label>
+                    <label className="flex items-center space-x-3">
+                      <input
+                        type="checkbox"
+                        checked={enhancedFeatures.includeContextSnippets}
+                        onChange={(e) =>
+                          setEnhancedFeatures({
+                            ...enhancedFeatures,
+                            includeContextSnippets: e.target.checked,
+                          })
+                        }
+                        className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                      />
+                      <span className="text-gray-700">
+                        Include Context Snippets
+                      </span>
+                    </label>
+                    <label className="flex items-center space-x-3">
+                      <input
+                        type="checkbox"
+                        checked={enhancedFeatures.hierarchicalLayout}
+                        onChange={(e) =>
+                          setEnhancedFeatures({
+                            ...enhancedFeatures,
+                            hierarchicalLayout: e.target.checked,
+                          })
+                        }
+                        className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                      />
+                      <span className="text-gray-700">Hierarchical Layout</span>
+                    </label>
+                  </div>
+                </div>
+
                 <PathSelector
                   paths={selectedPaths}
                   onSelectionChange={handlePathSelectionChange}
@@ -344,16 +539,61 @@ const Generator = () => {
                     Start Over
                   </button>
                 </div>
-                <div className="flex flex-col items-start space-y-4">
-                  <a
-                    href={`data:text/plain;charset=utf-8,${encodeURIComponent(
-                      generatedContent
-                    )}`}
-                    download="llms.txt"
-                    className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium"
-                  >
-                    Download llms.txt
-                  </a>
+
+                {/* Enhanced Generation Options */}
+                <div className="bg-white rounded-lg p-6 border border-gray-200">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                    Generation Options
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <button
+                      onClick={() => setShowLLMsFull(true)}
+                      className="flex items-center space-x-3 p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors"
+                    >
+                      <FileText className="w-6 h-6 text-blue-600" />
+                      <div className="text-left">
+                        <div className="font-medium text-gray-900">
+                          LLMs Full
+                        </div>
+                        <div className="text-sm text-gray-600">
+                          Complete site content
+                        </div>
+                      </div>
+                    </button>
+
+                    <button
+                      onClick={() => setShowMarkdown(true)}
+                      className="flex items-center space-x-3 p-4 border border-gray-200 rounded-lg hover:border-green-300 hover:bg-green-50 transition-colors"
+                    >
+                      <FolderOpen className="w-6 h-6 text-green-600" />
+                      <div className="text-left">
+                        <div className="font-medium text-gray-900">
+                          Markdown Pages
+                        </div>
+                        <div className="text-sm text-gray-600">
+                          Individual .md files
+                        </div>
+                      </div>
+                    </button>
+
+                    <a
+                      href={`data:text/plain;charset=utf-8,${encodeURIComponent(
+                        generatedContent
+                      )}`}
+                      download="llms.txt"
+                      className="flex items-center space-x-3 p-4 border border-gray-200 rounded-lg hover:border-purple-300 hover:bg-purple-50 transition-colors"
+                    >
+                      <Settings className="w-6 h-6 text-purple-600" />
+                      <div className="text-left">
+                        <div className="font-medium text-gray-900">
+                          Standard llms.txt
+                        </div>
+                        <div className="text-sm text-gray-600">
+                          Basic configuration
+                        </div>
+                      </div>
+                    </a>
+                  </div>
                 </div>
               </div>
             )}
@@ -361,19 +601,27 @@ const Generator = () => {
 
           {/* Live Preview - Only show in step 3 */}
           {currentStep === "generate" && (
-            <div className="lg:col-span-4">
+            <div className="mt-8">
               <OutputPreview content={generatedContent} />
-            </div>
-          )}
-
-          {/* Ad Sidebar - Show in steps 1 and 2 */}
-          {(currentStep === "analyze" || currentStep === "select") && (
-            <div className="lg:col-span-2">
-              <AdSidebar />
             </div>
           )}
         </div>
       </div>
+
+      {/* Enhanced Generators */}
+      {showLLMsFull && analysisData && (
+        <LLMsFullGenerator
+          websiteUrl={analysisData.metadata.url}
+          onClose={() => setShowLLMsFull(false)}
+        />
+      )}
+
+      {showMarkdown && analysisData && (
+        <MarkdownGenerator
+          websiteUrl={analysisData.metadata.url}
+          onClose={() => setShowMarkdown(false)}
+        />
+      )}
     </section>
   );
 };

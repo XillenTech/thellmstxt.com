@@ -7,10 +7,49 @@ export type LLMBot =
   | "Anthropic"
   | "CCBot";
 
+// Enhanced PathSelection with new features
+export interface PathSelection {
+  path: string;
+  allow: boolean;
+  description?: string;
+  priority?: "high" | "medium" | "low";
+  tags?: string[];
+  contentType?: "page" | "blog" | "docs" | "project" | "archive" | "terms";
+  lastModified?: string;
+  summary?: string;
+  contextSnippet?: string;
+  aiUsageDirective?: "allow" | "citation-only" | "no-fine-tuning" | "disallow";
+}
+
+// AI Generated Content
+export interface AIGeneratedContent {
+  path: string;
+  summary?: string;
+  contextSnippet?: string;
+  keywords?: string[];
+  contentType?: string;
+  priority?: "high" | "medium" | "low";
+  generatedAt: string;
+  model: string;
+}
+
+// Enhanced Metadata
+export interface EnhancedMetadata {
+  title: string;
+  description: string;
+  keywords?: string[];
+  language?: string;
+  contentType?: string;
+  lastModified?: string;
+  priority?: "high" | "medium" | "low";
+  aiUsageDirective?: "allow" | "citation-only" | "no-fine-tuning" | "disallow";
+}
+
 // API request/response types
 export interface WebsiteAnalysisRequest {
   url: string;
   llmBot: LLMBot;
+  aiEnrichment?: boolean;
 }
 
 export interface WebsiteAnalysisResponse {
@@ -30,13 +69,8 @@ export interface WebsiteAnalysisResponse {
     description: string;
     keywords?: string;
   }>;
+  aiGeneratedContent?: AIGeneratedContent[];
   error?: string;
-}
-
-export interface PathSelection {
-  path: string;
-  allow: boolean;
-  description?: string;
 }
 
 export interface LLMsTxtPayload {
@@ -44,6 +78,12 @@ export interface LLMsTxtPayload {
   allowPaths: string[];
   disallowPaths: string[];
   websiteUrl: string;
+  generateFull?: boolean;
+  generateMarkdown?: boolean;
+  includeSummaries?: boolean;
+  includeContextSnippets?: boolean;
+  hierarchicalLayout?: boolean;
+  aiEnrichment?: boolean;
 }
 
 export interface LLMsTxtGenerationResponse {
@@ -51,6 +91,65 @@ export interface LLMsTxtGenerationResponse {
   content: string;
   filename: string;
   error?: string;
+}
+
+// New enhanced types
+export interface LLMsFullPayload {
+  websiteUrl: string;
+  includeImages?: boolean;
+  includeLinks?: boolean;
+  maxDepth?: number;
+  aiEnrichment?: boolean;
+}
+
+export interface LLMsFullGenerationResponse {
+  success: boolean;
+  content: string;
+  filename: string;
+  totalPages: number;
+  totalWords: number;
+  error?: string;
+}
+
+export interface MarkdownGenerationResponse {
+  success: boolean;
+  files: Array<{
+    path: string;
+    content: string;
+    filename: string;
+  }>;
+  error?: string;
+}
+
+export interface AnalyticsData {
+  websiteUrl: string;
+  accessCount: number;
+  lastAccessed: string;
+  userAgents: string[];
+  mostAccessedPaths: Array<{
+    path: string;
+    count: number;
+  }>;
+  generationCount: number;
+  lastGenerated: string;
+}
+
+export interface AnalyticsResponse {
+  success: boolean;
+  data: AnalyticsData;
+  error?: string;
+}
+
+export interface AutomationConfig {
+  enabled: boolean;
+  schedule: string; // cron expression
+  websiteUrl: string;
+  llmBot: LLMBot;
+  generateFull: boolean;
+  generateMarkdown: boolean;
+  webhookUrl?: string;
+  lastRun?: string;
+  nextRun?: string;
 }
 
 // LLM Bot configurations

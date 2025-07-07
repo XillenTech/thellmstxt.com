@@ -2,10 +2,12 @@
 import React, { useState } from "react";
 import {
   Search,
-  Loader2,
+  // Loader2,
   AlertCircle,
   CheckCircle,
   ChevronDown,
+  Sparkles,
+  Square,
 } from "lucide-react";
 import type { LLMBot } from "../types/backend";
 
@@ -39,6 +41,11 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(
     null
   );
+  const [aiEnrichment, setAiEnrichment] = useState(false);
+  const [progress, setProgress] = useState<number>(0);
+  const [progressMsg, setProgressMsg] = useState<string>("");
+  const [sessionId, setSessionId] = useState<string>("");
+  const [eventSource, setEventSource] = useState<EventSource | null>(null);
 
   const llmBots: Array<{ value: LLMBot; label: string; description: string }> =
     [
@@ -79,6 +86,38 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
     }
   };
 
+  const generateSessionId = (): string => {
+    return `analysis_${Date.now()}_${Math.random()
+      .toString(36)
+      .substring(2, 15)}`;
+  };
+
+  const stopAnalysis = async () => {
+    if (sessionId) {
+      try {
+        const apiBase =
+          process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
+        await fetch(`${apiBase}/api/cancel-analysis`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ sessionId }),
+        });
+      } catch (error) {
+        console.warn("Failed to cancel analysis:", error);
+      }
+    }
+
+    if (eventSource) {
+      eventSource.close();
+      setEventSource(null);
+    }
+
+    setIsLoading(false);
+    setProgress(0);
+    setProgressMsg("");
+    setSessionId("");
+  };
+
   const analyzeWebsite = async () => {
     if (!url.trim()) {
       setError("Please enter a website URL");
@@ -93,42 +132,91 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
     setIsLoading(true);
     setError(null);
     setAnalysisResult(null);
+    setProgress(0);
+    setProgressMsg("");
 
-    try {
-      const apiUrl = `${
-        process.env.NEXT_PUBLIC_API_BASE_URL ||
-        "https://llms-backend-mvtx.onrender.com"
-      }/api/analyze-website`;
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          url: url.trim(),
-          llmBot: selectedBot,
-        }),
-      });
+    // Generate unique session ID
+    const newSessionId = generateSessionId();
+    setSessionId(newSessionId);
 
-      const data: AnalysisResult = await response.json();
+    // Listen to SSE for progress
+    const apiBase =
+      process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
+    const sseUrl = `${apiBase}/api/analyze-website?url=${encodeURIComponent(
+      url.trim()
+    )}&llmBot=${encodeURIComponent(
+      selectedBot
+    )}&aiEnrichment=${aiEnrichment}&sessionId=${newSessionId}`;
 
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to analyze website");
-      }
+    const evtSource = new EventSource(sseUrl);
+    setEventSource(evtSource);
 
-      if (!data.success) {
-        throw new Error(data.error || "Analysis failed");
-      }
+    evtSource.addEventListener("progress", (event: MessageEvent) => {
+      try {
+        const data = JSON.parse(event.data);
+        setProgress(data.progress);
+        setProgressMsg(data.message || "");
+      } catch {}
+    });
 
-      setAnalysisResult(data);
-      onAnalysisComplete(data);
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "An unexpected error occurred"
-      );
-    } finally {
+    evtSource.addEventListener("cancelled", () => {
+      setError("Analysis was cancelled");
       setIsLoading(false);
-    }
+      setProgress(0);
+      setEventSource(null);
+      setSessionId("");
+    });
+
+    evtSource.addEventListener("error", () => {
+      setError("Analysis failed or connection lost.");
+      setIsLoading(false);
+      setProgress(0);
+      setEventSource(null);
+      setSessionId("");
+    });
+
+    evtSource.addEventListener("open", () => {
+      setProgress(0);
+    });
+
+    evtSource.addEventListener("message", () => {
+      // fallback for generic messages
+    });
+
+    evtSource.addEventListener("end", () => {
+      evtSource.close();
+      setEventSource(null);
+      setSessionId("");
+    });
+
+    // Listen for final result event
+    evtSource.addEventListener("result", (event: MessageEvent) => {
+      try {
+        const data: AnalysisResult = JSON.parse(event.data);
+        if (data.success) {
+          setAnalysisResult(data);
+          onAnalysisComplete(data);
+          setIsLoading(false);
+          setProgress(100);
+        } else {
+          setError(data.error || "Analysis failed");
+          setIsLoading(false);
+          setProgress(0);
+        }
+      } catch (err) {
+        const message =
+          err instanceof Error
+            ? err.message
+            : "Failed to parse analysis result";
+        setError(message);
+        setIsLoading(false);
+        setProgress(0);
+      } finally {
+        evtSource.close();
+        setEventSource(null);
+        setSessionId("");
+      }
+    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -157,19 +245,38 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
               disabled={isLoading}
               required
             />
-            <button
-              type="submit"
-              disabled={isLoading || !url.trim()}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all flex items-center space-x-2"
-            >
-              {isLoading ? (
-                <Loader2 className="h-5 w-5 animate-spin" />
-              ) : (
+            {isLoading ? (
+              <button
+                type="button"
+                onClick={stopAnalysis}
+                className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all flex items-center space-x-2"
+              >
+                <Square className="h-5 w-5" />
+                <span>
+                  {progress > 0 && progress < 100
+                    ? `Stop (${progress}%)`
+                    : "Stop"}
+                </span>
+              </button>
+            ) : (
+              <button
+                type="submit"
+                disabled={!url.trim()}
+                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all flex items-center space-x-2"
+              >
                 <Search className="h-5 w-5" />
-              )}
-              <span>{isLoading ? "Analyzing..." : "Analyze"}</span>
-            </button>
+                <span>Analyze</span>
+              </button>
+            )}
           </div>
+          {isLoading && (
+            <div className="text-xs text-blue-800 bg-blue-50 border border-blue-200 rounded mt-2 px-3 py-2">
+              Analyzing the website takes just couple of minutes.
+            </div>
+          )}
+          {isLoading && progressMsg && (
+            <div className="text-xs text-blue-700 mt-1">{progressMsg}</div>
+          )}
           <p className="text-xs text-gray-500 mt-1">
             Enter the website URL you want to analyze for LLM crawler paths
           </p>
@@ -196,10 +303,38 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
           </div>
         </div>
 
+        {/* AI Enrichment Option */}
+        <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+          <div className="flex items-start space-x-3">
+            <Sparkles className="w-5 h-5 text-purple-600 mt-0.5" />
+            <div className="flex-1">
+              <div className="flex items-center space-x-3 mb-2">
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    checked={aiEnrichment}
+                    onChange={(e) => setAiEnrichment(e.target.checked)}
+                    className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                    disabled={isLoading}
+                  />
+                  <span className="font-medium text-purple-900">
+                    Enable AI Enrichment
+                  </span>
+                </label>
+              </div>
+              <p className="text-sm text-purple-800">
+                Use AI to generate summaries, context snippets, and semantic
+                analysis for each page. This enhances the llms.txt file with
+                richer content for better LLM understanding.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {error && (
           <div className="flex items-center space-x-2 p-3 bg-red-50 border border-red-200 rounded-lg">
             <AlertCircle className="h-5 w-5 text-red-500" />
-            <span className="text-red-700 text-sm">{error}</span>
+            <span className="text-red-800">{error}</span>
           </div>
         )}
 
@@ -207,48 +342,44 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
           <div className="space-y-4">
             <div className="flex items-center space-x-2 p-3 bg-green-50 border border-green-200 rounded-lg">
               <CheckCircle className="h-5 w-5 text-green-500" />
-              <span className="text-green-700 text-sm font-medium">
-                Analysis complete! Found {analysisResult.paths.length} paths.
+              <span className="text-green-800 font-medium">
+                Analysis Complete!
               </span>
             </div>
 
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h4 className="font-medium text-gray-900 mb-2">Website Info</h4>
-              <div className="space-y-1 text-sm">
-                <p>
-                  <strong>Title:</strong> {analysisResult.metadata.title}
-                </p>
-                <p>
-                  <strong>Description:</strong>{" "}
-                  {analysisResult.metadata.description}
-                </p>
-                <p>
-                  <strong>URL:</strong> {analysisResult.metadata.url}
-                </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+              <div className="bg-gray-50 p-3 rounded-lg">
+                <div className="font-medium text-gray-900">Website</div>
+                <div className="text-gray-600 truncate">
+                  {analysisResult.metadata.title}
+                </div>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-lg">
+                <div className="font-medium text-gray-900">Paths Found</div>
+                <div className="text-gray-600">
+                  {analysisResult.paths.length}
+                </div>
+              </div>
+              <div className="bg-gray-50 p-3 rounded-lg">
+                <div className="font-medium text-gray-900">AI Enrichment</div>
+                <div className="text-gray-600">
+                  {aiEnrichment ? "Enabled" : "Disabled"}
+                </div>
               </div>
             </div>
 
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h4 className="font-medium text-gray-900 mb-2">
-                Discovered Paths
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <h4 className="font-medium text-blue-900 mb-2">
+                Analysis Summary
               </h4>
-              <div className="max-h-40 overflow-y-auto space-y-1">
-                {analysisResult.paths.slice(0, 10).map((path, index) => (
-                  <div key={index} className="text-sm text-gray-600">
-                    <span className="font-mono">{path.path}</span>
-                    {path.description && (
-                      <span className="text-gray-500 ml-2">
-                        - {path.description}
-                      </span>
-                    )}
-                  </div>
-                ))}
-                {analysisResult.paths.length > 10 && (
-                  <p className="text-xs text-gray-500 mt-2">
-                    ... and {analysisResult.paths.length - 10} more paths
-                  </p>
-                )}
-              </div>
+              <p className="text-blue-800 text-sm">
+                Found {analysisResult.paths.length} paths on{" "}
+                {analysisResult.metadata.title}.
+                {aiEnrichment &&
+                  " AI enrichment has been applied to enhance content understanding."}
+                You can now proceed to select which paths to include in your
+                llms.txt file.
+              </p>
             </div>
           </div>
         )}
