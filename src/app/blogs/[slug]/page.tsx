@@ -1,9 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowLeft, Clock } from "lucide-react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import type { Metadata } from "next";
 
 interface BlogPost {
   id: string;
@@ -19,10 +16,11 @@ interface BlogPost {
 // Blog data - in a real app, this would come from a CMS or API
 const blogPosts: BlogPost[] = [
   {
-    id: "1", 
+    id: "1",
     slug: "complete-guide-to-llms-txt",
     title: "What is llms.txt? The Complete Guide to Implementation in 2025",
-    excerpt: "Learn how to create llms.txt files and discover the benefits of llms.txt for your website. Compare the best llms.txt generator options and understand the llms.txt format spec in this comprehensive guide.",
+    excerpt:
+      "Learn how to create llms.txt files and discover the benefits of llms.txt for your website. Compare the best llms.txt generator options and understand the llms.txt format spec in this comprehensive guide.",
     content: [
       "Wondering what is llms.txt and how it can help your website? This revolutionary protocol is changing how websites interact with AI systems in 2025. The llms.txt format spec provides a standardized way to control how AI language models access your content. Our llms.txt integration guide will show you exactly how to use llms.txt for SEO and AI presence.",
       "A common question is about llms.txt vs robots.txt differences. While robots.txt manages traditional search engine crawlers, llms.txt specifically instructs AI crawlers. Understanding this distinction helps you choose between llms.txt generator vs manual creation approaches. One of the key benefits of llms.txt is the granular control it provides over your intellectual property.",
@@ -52,8 +50,10 @@ const blogPosts: BlogPost[] = [
   {
     id: "2",
     slug: "ai-shopping-changing-ecommerce",
-    title: "How AI Shopping is Changing E-commerce in 2025: The Ultimate Guide to Conversational Commerce",
-    excerpt: "Explore the 2025 trend of conversational commerce and discover how AI assistants are transforming product discovery and online shopping. Learn how to optimize your e-commerce site for AI, llms.txt, and SEO to boost sales and visibility.",
+    title:
+      "How AI Shopping is Changing E-commerce in 2025: The Ultimate Guide to Conversational Commerce",
+    excerpt:
+      "Explore the 2025 trend of conversational commerce and discover how AI assistants are transforming product discovery and online shopping. Learn how to optimize your e-commerce site for AI, llms.txt, and SEO to boost sales and visibility.",
     content: [
       "In 2025, the landscape of online shopping is being transformed by AI assistants like ChatGPT, Claude, and Google Gemini. For businesses, this means mastering a new set of rules, including the critical implementation of llms.txt for eCommerce site success. This file is your gateway to controlling how AI interacts with your product catalog.",
       "Why AI Shopping Matters for E-commerce in 2025:",
@@ -77,13 +77,21 @@ const blogPosts: BlogPost[] = [
       "Stay ahead in 2025 by making your e-commerce site AI-ready. The benefits of llms.txt in this sector—from protecting pricing strategies to guiding AIs to new product lines—are too significant to ignore.",
     ],
     readTime: "12 min read",
-    tags: ["E-commerce", "AI Shopping", "Conversational Commerce", "2025", "SEO"],
+    tags: [
+      "E-commerce",
+      "AI Shopping",
+      "Conversational Commerce",
+      "2025",
+      "SEO",
+    ],
   },
   {
     id: "3",
     slug: "llms-txt-vs-robots-txt",
-    title: "llms.txt vs robots.txt in 2025: Key Differences, SEO Impact, and Best Practices",
-    excerpt: "Understand the crucial differences between llms.txt and robots.txt in 2025. Learn when to use each protocol for optimal AI and search engine visibility, and how to structure your files for maximum SEO and brand safety.",
+    title:
+      "llms.txt vs robots.txt in 2025: Key Differences, SEO Impact, and Best Practices",
+    excerpt:
+      "Understand the crucial differences between llms.txt and robots.txt in 2025. Learn when to use each protocol for optimal AI and search engine visibility, and how to structure your files for maximum SEO and brand safety.",
     content: [
       "In 2025, the discussion around llms.txt vs robots.txt is central to modern technical SEO. While both are text files placed in your site's root directory to manage crawler access, their targets and purposes are fundamentally different, and using them correctly is key to digital strategy.",
       "Key Differences Between llms.txt and robots.txt:",
@@ -109,8 +117,10 @@ const blogPosts: BlogPost[] = [
   {
     id: "4",
     slug: "best-practices-implementing-llms-txt",
-    title: "Best Practices for Implementing llms.txt in 2025: A Step-by-Step SEO Guide",
-    excerpt: "Discover proven strategies and common pitfalls to avoid when setting up llms.txt for optimal AI crawler control and SEO in 2025. Learn how to protect your content, boost AI visibility, and improve your digital marketing results.",
+    title:
+      "Best Practices for Implementing llms.txt in 2025: A Step-by-Step SEO Guide",
+    excerpt:
+      "Discover proven strategies and common pitfalls to avoid when setting up llms.txt for optimal AI crawler control and SEO in 2025. Learn how to protect your content, boost AI visibility, and improve your digital marketing results.",
     content: [
       "Effectively implementing llms.txt in 2025 is more than just creating a file; it's a strategic process. This llms.txt integration guide will walk you through the best practices. The first decision is often the 'llms.txt generator vs manual' approach. While a manual approach offers custom control, using the best llms.txt generator for your needs can prevent costly syntax errors and save time.",
       "2025 Implementation Steps:",
@@ -138,8 +148,10 @@ const blogPosts: BlogPost[] = [
   {
     id: "5",
     slug: "future-ai-powered-marketing",
-    title: "The Future of AI-Powered Marketing in 2025: Trends, Strategies, and SEO Insights",
-    excerpt: "Explore the top 2025 trends in AI marketing and discover how businesses can prepare for the next wave of AI-driven customer interactions. Learn how to optimize your content for both AI and search engines to stay ahead.",
+    title:
+      "The Future of AI-Powered Marketing in 2025: Trends, Strategies, and SEO Insights",
+    excerpt:
+      "Explore the top 2025 trends in AI marketing and discover how businesses can prepare for the next wave of AI-driven customer interactions. Learn how to optimize your content for both AI and search engines to stay ahead.",
     content: [
       "In 2025, AI technology is no longer a futuristic concept but a core driver of digital marketing. As AI assistants become the primary interface for discovery, marketers must adapt. A key part of this adaptation is understanding how to use llms.txt for SEO, as this file controls the very data that fuels these AI systems.",
       "Emerging AI Marketing Trends for 2025:",
@@ -167,8 +179,10 @@ const blogPosts: BlogPost[] = [
   {
     id: "6",
     slug: "ai-content-optimization-guide",
-    title: "AI Content Optimization Guide 2025: Make Your Content AI & SEO Friendly",
-    excerpt: "Learn proven strategies to optimize your content for AI systems and search engines in 2025. Discover actionable tips for structure, markup, and comprehensive coverage to boost your rankings and AI visibility.",
+    title:
+      "AI Content Optimization Guide 2025: Make Your Content AI & SEO Friendly",
+    excerpt:
+      "Learn proven strategies to optimize your content for AI systems and search engines in 2025. Discover actionable tips for structure, markup, and comprehensive coverage to boost your rankings and AI visibility.",
     content: [
       "Creating content that excels in the age of AI requires a new playbook. In 2025, your content must be easily digestible for AI crawlers while remaining engaging for human readers. This dual focus is the key to visibility. However, great content is useless if it's invisible, which is why understanding how to use llms.txt for SEO is a foundational step.",
       "2025 Content Optimization Strategies:",
@@ -188,8 +202,10 @@ const blogPosts: BlogPost[] = [
   {
     id: "7",
     slug: "measuring-ai-marketing-success",
-    title: "Measuring AI Marketing Success in 2025: Key Metrics, Analytics, and SEO Performance",
-    excerpt: "Discover the essential 2025 metrics and analytics tools to track your AI marketing and SEO performance. Learn how to optimize your strategy for maximum impact in the AI-driven digital landscape.",
+    title:
+      "Measuring AI Marketing Success in 2025: Key Metrics, Analytics, and SEO Performance",
+    excerpt:
+      "Discover the essential 2025 metrics and analytics tools to track your AI marketing and SEO performance. Learn how to optimize your strategy for maximum impact in the AI-driven digital landscape.",
     content: [
       "In 2025, measuring the ROI of AI marketing requires looking beyond traditional metrics like traffic and conversions. Success is now measured by your brand's presence and accuracy within AI-generated responses. This involves a new suite of KPIs and tools that connect directly to your technical SEO setup.",
       "2025 AI Marketing Metrics:",
@@ -216,8 +232,10 @@ const blogPosts: BlogPost[] = [
   {
     id: "8",
     slug: "llms-txt-case-studies",
-    title: "Real-World llms.txt Case Studies 2025: Success Stories, SEO Wins, and Lessons Learned",
-    excerpt: "Explore real-world 2025 examples of businesses that have successfully implemented llms.txt. Learn how llms.txt can boost your AI visibility, SEO, and digital marketing results with actionable case studies.",
+    title:
+      "Real-World llms.txt Case Studies 2025: Success Stories, SEO Wins, and Lessons Learned",
+    excerpt:
+      "Explore real-world 2025 examples of businesses that have successfully implemented llms.txt. Learn how llms.txt can boost your AI visibility, SEO, and digital marketing results with actionable case studies.",
     content: [
       "In 2025, the theoretical benefits of llms.txt are being proven by real-world results. Businesses across sectors are leveraging this simple text file to achieve significant gains in AI visibility and brand control. These case studies highlight the impact of a well-crafted strategy.",
       "Case Study 1: The E-commerce Retailer. A mid-sized business using Shopify struggled with AI assistants recommending outdated products. By implementing a specific llms.txt for eCommerce site strategy with an llms.txt tool for Shopify, they guided crawlers to in-stock items and new arrivals. The result was a 30% increase in AI-referred sales and a dramatic decrease in customer complaints about incorrect information.",
@@ -237,8 +255,10 @@ const blogPosts: BlogPost[] = [
   {
     id: "9",
     slug: "ai-seo-strategy-2025",
-    title: "AI SEO Strategy 2025: Beyond Traditional Search Optimization for Maximum Visibility",
-    excerpt: "Develop a comprehensive 2025 AI SEO strategy that works with both traditional search engines and AI systems. Learn how to use semantic search, structured data, and topical authority to boost your rankings.",
+    title:
+      "AI SEO Strategy 2025: Beyond Traditional Search Optimization for Maximum Visibility",
+    excerpt:
+      "Develop a comprehensive 2025 AI SEO strategy that works with both traditional search engines and AI systems. Learn how to use semantic search, structured data, and topical authority to boost your rankings.",
     content: [
       "AI SEO in 2025 is a holistic discipline that merges classic SEO with new directives for artificial intelligence. A winning strategy must cater to both Google's search crawlers and the data-gathering bots of AI models like Gemini and ChatGPT. This requires a nuanced approach that starts with your site's foundational instructions.",
       "A core pillar of any modern AI SEO strategy is understanding how to use llms.txt for SEO. This file is your first and most direct line of communication with AI systems. It dictates the boundaries of what data they can learn from, directly impacting how they perceive your brand's expertise and offerings.",
@@ -259,8 +279,10 @@ const blogPosts: BlogPost[] = [
   {
     id: "10",
     slug: "content-research-techniques-ai-era",
-    title: "Content Research Techniques for the AI Era 2025: How to Create AI-Optimized, SEO-Driven Content",
-    excerpt: "Master advanced 2025 content research techniques to create content optimized for both human readers and AI systems. Use AI tools, keyword research, and competitive analysis to boost your SEO and AI visibility.",
+    title:
+      "Content Research Techniques for the AI Era 2025: How to Create AI-Optimized, SEO-Driven Content",
+    excerpt:
+      "Master advanced 2025 content research techniques to create content optimized for both human readers and AI systems. Use AI tools, keyword research, and competitive analysis to boost your SEO and AI visibility.",
     content: [
       "Content research in 2025 has evolved. It's no longer enough to analyze search engine results pages. You must now investigate what AI chatbots are saying about your industry and how your competitors are influencing those conversations. This requires a new set of research techniques.",
       "2025 Research Methods for AI and SEO:",
@@ -275,21 +297,15 @@ const blogPosts: BlogPost[] = [
       "In 2025, a comprehensive content strategy is built on a foundation of deep research into both human and machine information ecosystems. By understanding how AI discovers and processes content, you can create SEO-driven articles and landing pages that are perfectly positioned to become authoritative sources in the AI era.",
     ],
     readTime: "12 min read",
-    tags: ["Content Research", "AI Optimization", "Research Techniques", "2025", "SEO"],
+    tags: [
+      "Content Research",
+      "AI Optimization",
+      "Research Techniques",
+      "2025",
+      "SEO",
+    ],
   },
 ];
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
-  return {
-    alternates: {
-      canonical: `https://thellmstxt.com/blogs/${params.slug}`,
-    },
-  };
-}
-
 interface BlogPostPageProps {
   params: Promise<{
     slug: string;
@@ -323,86 +339,77 @@ const BlogPostPage = ({ params }: BlogPostPageProps) => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <Header />
+    <main className="py-12">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Back Button */}
+        <div className="mb-8">
+          <Link
+            href="/blogs"
+            className="inline-flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back to Blogs</span>
+          </Link>
+        </div>
 
-      {/* Main Content */}
-      <main className="py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Back Button */}
-          <div className="mb-8">
-            <Link
-              href="/blogs"
-              className="inline-flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Back to Blogs</span>
-            </Link>
+        {/* Blog Post */}
+        <article className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          {/* Post Header */}
+          <header className="mb-8">
+            <div className="flex items-center space-x-4 mb-4">
+              {post.featured && (
+                <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                  Featured
+                </span>
+              )}
+              <div className="flex items-center space-x-2 text-gray-500 text-sm">
+                <Clock className="w-4 h-4" />
+                <span>{post.readTime}</span>
+              </div>
+            </div>
+
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              {post.title}
+            </h1>
+
+            <p className="text-xl text-gray-600 leading-relaxed">
+              {post.excerpt}
+            </p>
+          </header>
+
+          {/* Post Content */}
+          <div className="prose prose-lg max-w-none">
+            {post.content.map((block, idx) =>
+              Array.isArray(block) ? (
+                <ul key={idx} className="list-disc pl-6 mb-4 text-gray-700">
+                  {block.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p key={idx} className="text-gray-700 leading-relaxed mb-4">
+                  {block}
+                </p>
+              )
+            )}
           </div>
 
-          {/* Blog Post */}
-          <article className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-            {/* Post Header */}
-            <header className="mb-8">
-              <div className="flex items-center space-x-4 mb-4">
-                {post.featured && (
-                  <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
-                    Featured
-                  </span>
-                )}
-                <div className="flex items-center space-x-2 text-gray-500 text-sm">
-                  <Clock className="w-4 h-4" />
-                  <span>{post.readTime}</span>
-                </div>
-              </div>
-
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                {post.title}
-              </h1>
-
-              <p className="text-xl text-gray-600 leading-relaxed">
-                {post.excerpt}
-              </p>
-            </header>
-
-            {/* Post Content */}
-            <div className="prose prose-lg max-w-none">
-              {post.content.map((block, idx) =>
-                Array.isArray(block) ? (
-                  <ul key={idx} className="list-disc pl-6 mb-4 text-gray-700">
-                    {block.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p key={idx} className="text-gray-700 leading-relaxed mb-4">
-                    {block}
-                  </p>
-                )
-              )}
+          {/* Tags */}
+          <div className="mt-8 pt-8 border-t border-gray-100">
+            <div className="flex flex-wrap gap-2">
+              {post.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
+                >
+                  {tag}
+                </span>
+              ))}
             </div>
-
-            {/* Tags */}
-            <div className="mt-8 pt-8 border-t border-gray-100">
-              <div className="flex flex-wrap gap-2">
-                {post.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </article>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <Footer />
-    </div>
+          </div>
+        </article>
+      </div>
+    </main>
   );
 };
 

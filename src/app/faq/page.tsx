@@ -1,16 +1,8 @@
-import type { Metadata } from "next";
+"use client";
+
 import React, { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import Link from "next/link";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-
-export const metadata: Metadata = {
-  title: "FAQ – TheLLMsTxt: Free llms.txt Generator & Integration Guide",
-  alternates: {
-    canonical: "https://thellmstxt.com/faq",
-  },
-};
 
 const FAQPage = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -73,83 +65,79 @@ const FAQPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
+    <main className="py-20">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            How to Create llms.txt: Frequently Asked Questions
+          </h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Learn how to use our free llms.txt generator online and optimize
+            your website for AI crawlers with our comprehensive guide.
+          </p>
+        </div>
 
-      <main className="py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              How to Create llms.txt: Frequently Asked Questions
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Learn how to use our free llms.txt generator online and optimize your website for AI crawlers with our comprehensive guide.
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg border border-gray-100"
-              >
-                <button
-                  onClick={() => toggleFAQ(index)}
-                  className="w-full px-6 py-6 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
-                >
-                  <h3 className="text-lg font-semibold text-gray-900 pr-4">
-                    {faq.question}
-                  </h3>
-                  {openIndex === index ? (
-                    <ChevronUp className="h-5 w-5 text-blue-600 flex-shrink-0" />
-                  ) : (
-                    <ChevronDown className="h-5 w-5 text-gray-400 flex-shrink-0" />
-                  )}
-                </button>
-
-                {openIndex === index && (
-                  <div className="px-6 pb-6">
-                    <div className="border-t border-gray-100 pt-4">
-                      <p className="text-gray-700 leading-relaxed">
-                        {faq.answer}
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-16 text-center">
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-8">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">
-                Need Help with llms.txt Implementation?
-              </h3>
-              <p className="text-gray-600 mb-6">
-                Our experts can help you choose between llms.txt generator vs manual creation approaches.
-              </p>
-              <a
-                href="mailto:support@thellmstxt.com"
-                className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
-              >
-                <span>Get Support</span>
-              </a>
-            </div>
-          </div>
-
-          <div className="mt-12 text-center">
-            <Link
-              href="/"
-              className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors"
+        <div className="space-y-4">
+          {faqs.map((faq, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg border border-gray-100"
             >
-              ← Back to Generator
-            </Link>
+              <button
+                onClick={() => toggleFAQ(index)}
+                className="w-full px-6 py-6 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+              >
+                <h3 className="text-lg font-semibold text-gray-900 pr-4">
+                  {faq.question}
+                </h3>
+                {openIndex === index ? (
+                  <ChevronUp className="h-5 w-5 text-blue-600 flex-shrink-0" />
+                ) : (
+                  <ChevronDown className="h-5 w-5 text-gray-400 flex-shrink-0" />
+                )}
+              </button>
+
+              {openIndex === index && (
+                <div className="px-6 pb-6">
+                  <div className="border-t border-gray-100 pt-4">
+                    <p className="text-gray-700 leading-relaxed">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-16 text-center">
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-8">
+            <h3 className="text-xl font-bold text-gray-900 mb-4">
+              Need Help with llms.txt Implementation?
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Our experts can help you choose between llms.txt generator vs
+              manual creation approaches.
+            </p>
+            <a
+              href="mailto:support@thellmstxt.com"
+              className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
+            >
+              <span>Get Support</span>
+            </a>
           </div>
         </div>
-      </main>
 
-      <Footer />
-    </div>
+        <div className="mt-12 text-center">
+          <Link
+            href="/"
+            className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors"
+          >
+            ← Back to Generator
+          </Link>
+        </div>
+      </div>
+    </main>
   );
 };
 

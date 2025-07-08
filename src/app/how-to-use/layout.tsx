@@ -1,0 +1,24 @@
+import type { Metadata } from "next";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+
+export const metadata: Metadata = {
+  title: "How to Use llms.txt Generator & Integration Guide – TheLLMsTxt",
+  alternates: {
+    canonical: "https://thellmstxt.com/how-to-use",
+  },
+};
+
+export default function HowToUseLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <>
+      <Header />
+      {children}
+      <Footer />
+    </>
+  );
+}
