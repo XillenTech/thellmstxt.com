@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 
 export async function generateMetadata({
   params,
@@ -24,9 +22,7 @@ export default function BlogSlugLayout({
 }) {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
       {children}
-      <Footer />
     </div>
   );
 }
