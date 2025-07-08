@@ -70,7 +70,7 @@ const WhatIsLLMsTxt = () => {
         </div>
 
         <div className="flex justify-center">
-          <Link href="/what-is-llms">
+          <Link href="/what-is-llms-txt">
             <button className="px-8 py-3 bg-pink-600 hover:bg-pink-700 text-white text-lg font-semibold rounded-full shadow transition-all duration-200 cursor-pointer">
               Read More
             </button>

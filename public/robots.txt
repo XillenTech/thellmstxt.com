@@ -1,0 +1,31 @@
+# TheLLMsTxt.com robots.txt
+# Last updated: 2025-07
+
+User-Agent: *
+Allow: /
+
+# Block sensitive and internal areas
+Disallow: /admin/     # Admin dashboard and controls
+Disallow: /private/   # Private user content
+Disallow: /api/       # API endpoints
+Disallow: /_next/     # Next.js build files
+Disallow: /static/    # Static assets
+Disallow: /auth/      # Authentication pages
+Disallow: /dashboard/ # User dashboards
+Disallow: /settings/  # User settings
+
+# Allow public content pages
+Allow: /              # Homepage
+Allow: /blogs/        # Blog posts and articles
+Allow: /what-is-llms-txt/  # Educational content
+Allow: /how-to-use/   # Implementation guides
+Allow: /faq/          # Frequently asked questions
+Allow: /privacy/      # Privacy policy
+Allow: /terms/        # Terms of service
+
+# Rate limiting
+Crawl-delay: 10
+
+# Sitemap locations
+Sitemap: https://thellmstxt.com/sitemap.xml
+Sitemap: https://thellmstxt.com/blog-sitemap.xml

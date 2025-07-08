@@ -1,8 +1,15 @@
-"use client";
+import type { Metadata } from "next";
 import React from "react";
 import { FileText, Bot, Shield, Search } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
+export const metadata: Metadata = {
+  title: "What is llms.txt? Complete Guide & Free Generator – TheLLMsTxt",
+  alternates: {
+    canonical: "https://thellmstxt.com/what-is-llms-txt",
+  },
+};
 
 export default function WhatIsLLMsPage() {
   const features = [
@@ -10,28 +17,28 @@ export default function WhatIsLLMsPage() {
       icon: Bot,
       title: "AI Crawler Control",
       description:
-        "Tell AI models like ChatGPT and Gemini exactly which parts of your website they can access and learn from.",
+        "Use our free llms.txt generator tool to control how AI models like ChatGPT and Gemini access and learn from your website content.",
       color: "text-blue-600",
     },
     {
       icon: Shield,
       title: "Privacy Protection",
       description:
-        "Block AI crawlers from accessing sensitive areas like admin panels, user accounts, and private content.",
+        "The llms.txt format spec allows you to block AI crawlers from accessing sensitive areas while allowing beneficial content indexing.",
       color: "text-green-600",
     },
     {
       icon: Search,
       title: "Content Optimization",
       description:
-        "Guide AI models to your most important content, ensuring they understand your site's structure and purpose.",
+        "Learn how to use llms.txt for SEO and guide AI models to your most important content with our integration guide.",
       color: "text-purple-600",
     },
     {
       icon: FileText,
       title: "Simple Implementation",
       description:
-        "Just a plain text file placed in your website's root directory. No complex setup or technical knowledge required.",
+        "Compare llms.txt tools vs plugins - our free llms.txt generator online requires no complex setup or technical knowledge.",
       color: "text-orange-600",
     },
   ];
@@ -43,43 +50,27 @@ export default function WhatIsLLMsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              What is llms.txt?
+              What is llms.txt? The Complete Guide
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              A simple text file that tells AI crawlers how to interact with
-              your website. Think of it as a roadmap for artificial
-              intelligence.
+              Learn how to create llms.txt files and automate llms.txt generation for your website. Compare the best llms.txt generator options available.
             </p>
           </div>
 
           <div className="max-w-4xl mx-auto mb-16">
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                Understanding llms.txt: The AI Crawler Control Protocol
+                Understanding llms.txt: Benefits and Implementation
               </h2>
               <div className="prose prose-lg text-gray-700 space-y-6">
                 <p>
-                  llms.txt is a standardized protocol that allows website owners
-                  to control how AI language models and crawlers interact with
-                  their content. Similar to robots.txt for search engines,
-                  llms.txt provides explicit instructions to AI systems about
-                  which parts of your website they can access, analyze, and
-                  learn from.
+                  The llms.txt format spec provides a standardized protocol for controlling how AI language models interact with your content. Whether you need an llms.txt for eCommerce sites or content platforms, our llms.txt generator API and tools help you maintain control over your digital presence.
                 </p>
                 <p>
-                  As AI assistants like ChatGPT, Claude, and Gemini become
-                  increasingly popular for product research and recommendations,
-                  having a properly configured llms.txt file ensures your
-                  business appears accurately in AI-powered conversations and
-                  maintains control over your digital presence.
+                  When comparing llms.txt vs robots.txt, it&apos;s important to note that while robots.txt manages search engine crawlers, llms.txt specifically controls AI training models. Many hosts supporting llms.txt now recommend using both files for comprehensive crawler management.
                 </p>
                 <p>
-                  The file works by defining specific rules that AI crawlers
-                  must follow when accessing your website. These rules can allow
-                  access to product pages, blog content, and other public
-                  information while blocking sensitive areas like admin panels,
-                  user accounts, or private content that shouldn&apos;t be
-                  shared with AI systems.
+                  For Shopify stores and ecommerce platforms, our llms.txt tool for Shopify simplifies implementation. Choose between llms.txt generator vs manual creation based on your needs - our free generator provides an easy starting point while premium tools offer advanced automation features.
                 </p>
               </div>
             </div>
@@ -108,7 +99,7 @@ export default function WhatIsLLMsPage() {
 
           <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8 max-w-7xl mx-auto">
             <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-              How llms.txt Works
+              How llms.txt Works: Format Specification
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
               <div>
@@ -158,10 +149,10 @@ export default function WhatIsLLMsPage() {
             <div className="rounded-2xl p-8 shadow-xl border">
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-gray-900">
-                  Key Differences from robots.txt
+                  Key Differences: llms.txt vs robots.txt
                 </h2>
                 <p className="text-gray-600 mt-2">
-                  Understanding the distinct roles of these two protocols
+                  Understanding when to use each protocol for maximum protection
                 </p>
               </div>
               <div className="grid md:grid-cols-2 gap-8">

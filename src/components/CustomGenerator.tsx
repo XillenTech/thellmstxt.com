@@ -22,12 +22,12 @@ const CustomGenerator = ({ config, onConfigChange }: CustomGeneratorProps) => {
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6">
-      <h3 className="text-2xl font-bold text-gray-900 mb-6">Custom Generator</h3>
+      <h3 className="text-2xl font-bold text-gray-900 mb-6">Advanced llms.txt Generator Tool</h3>
       
       <div className="space-y-6">
         <div>
           <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-            <span>Product Feed URL (Optional, Recommended)</span>
+            <span>Product Feed URL for eCommerce Sites (Optional, Recommended)</span>
             <HelpCircle className="h-4 w-4 text-gray-400" />
           </label>
           <input
@@ -38,13 +38,13 @@ const CustomGenerator = ({ config, onConfigChange }: CustomGeneratorProps) => {
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
           />
           <p className="text-xs text-gray-500 mt-1">
-            Provide a link to your Google Merchant Center or other .xml/.csv product feed for the most accurate indexing.
+            Our llms.txt generator API integrates with your product feed to automate llms.txt generation for optimal eCommerce site protection.
           </p>
         </div>
 
         <div>
           <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-            <span>Product Pages Path</span>
+            <span>Product Pages Path (llms.txt Format Spec)</span>
             <HelpCircle className="h-4 w-4 text-gray-400" />
           </label>
           <input
@@ -55,13 +55,13 @@ const CustomGenerator = ({ config, onConfigChange }: CustomGeneratorProps) => {
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
           />
           <p className="text-xs text-gray-500 mt-1">
-            Use a * as a wildcard for all products. Separate multiple paths with commas.
+            Unlike robots.txt, the llms.txt format spec uses wildcards to control AI crawler access. Perfect for how to use llms.txt for SEO optimization.
           </p>
         </div>
 
         <div>
           <label className="flex items-center space-x-2 text-sm font-medium text-gray-700 mb-2">
-            <span>Paths to Disallow</span>
+            <span>Protected Paths (Benefits of llms.txt)</span>
             <HelpCircle className="h-4 w-4 text-gray-400" />
           </label>
           <textarea
@@ -72,7 +72,7 @@ const CustomGenerator = ({ config, onConfigChange }: CustomGeneratorProps) => {
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
           />
           <p className="text-xs text-gray-500 mt-1">
-            We&apos;ve pre-filled common private pages. Add any others you need to protect, separated by commas.
+            Our free llms.txt generator online helps protect sensitive pages while allowing beneficial AI interactions. Compare llms.txt tools to see why ours is preferred by hosts supporting llms.txt.
           </p>
         </div>
       </div>

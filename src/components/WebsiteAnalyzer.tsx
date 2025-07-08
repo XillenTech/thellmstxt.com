@@ -236,17 +236,30 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
             Website URL
           </label>
           <div className="flex space-x-2">
-            <input
-              type="url"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder="https://example.com"
-              autoFocus
-              autoComplete="on"
-              className="flex-1 px-4 py-3 border border-gray-300 rounded-3xl focus:outline-none focus:ring-blue-500 transition-all text-black placeholder:text-gray-400"
-              disabled={isLoading}
-              required
-            />
+            <div className="flex-1 relative overflow-hidden rounded-3xl">
+              {isLoading && progress > 0 && (
+                <div
+                  className="absolute inset-0 bg-gradient-to-r from-blue-100 to-blue-200 transition-all duration-300 ease-out z-0 rounded-3xl"
+                  style={{
+                    width: `${progress}%`,
+                    maxWidth: "100%",
+                  }}
+                />
+              )}
+              <input
+                type="url"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder="https://example.com"
+                autoFocus
+                autoComplete="on"
+                className={`w-full px-4 py-3 border border-gray-300 rounded-3xl focus:outline-none focus:ring-blue-500 transition-all text-black placeholder:text-gray-400 relative z-10 bg-transparent ${
+                  isLoading ? "cursor-not-allowed" : ""
+                }`}
+                disabled={isLoading}
+                required
+              />
+            </div>
             {isLoading ? (
               <button
                 type="button"
@@ -272,14 +285,14 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
             )}
           </div>
           {isLoading && (
-            <div className="text-sm text-blue-800 bg-blue-50 border border-blue-200 rounded-3xl mt-2 px-3 py-2">
-              Analyzing the website takes just couple of minutes.
+            <div className="text-sm text-blue-800 rounded-3xl mt-2 px-3 py-2">
+              Analyzing your website will take just couple of minutes.
             </div>
           )}
           {/* {isLoading && progressMsg && (
             <div className="text-xs text-blue-700 mt-1">{progressMsg}</div>
           )} */}
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-gray-500 mt-1 px-3">
             Enter the website URL you want to analyze for LLM crawler paths
           </p>
         </div>

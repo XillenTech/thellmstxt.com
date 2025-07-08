@@ -1,16 +1,21 @@
-
+import type { Metadata } from "next";
 import React from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
+export const metadata: Metadata = {
+  title: "Terms & Conditions – TheLLMsTxt",
+  alternates: {
+    canonical: "https://thellmstxt.com/terms",
+  },
+};
 
 export default function TermsPage() {
   return (
     <>
       <Header />
       <main className="bg-neutral-50 min-h-screen py-12 flex items-center justify-center">
-        <div
-          className="bg-white/95 rounded-3xl shadow-lg max-w-5xl w-full px-8 py-12 mx-4 border border-neutral-200"
-        >
+        <div className="bg-white/95 rounded-3xl shadow-lg max-w-5xl w-full px-8 py-12 mx-4 border border-neutral-200">
           <h1 className="text-4xl text-gray-900 font-bold mb-8 text-center">
             Terms &amp; Conditions
           </h1>
@@ -325,7 +330,7 @@ export default function TermsPage() {
               Service or any related website for violating any of the prohibited
               uses.
             </p>
-            {/* <hr className="my-8 border-neutral-200" /> */}  
+            {/* <hr className="my-8 border-neutral-200" /> */}
             <h2 id="refund" className="text-2xl font-bold mt-12 mb-4">
               Refund Policy
             </h2>
@@ -340,7 +345,7 @@ export default function TermsPage() {
               included). We reserve all the right to decide the amount to be
               refunded.
             </p>
-            {/* <hr className="my-8 border-neutral-200" /> */}  
+            {/* <hr className="my-8 border-neutral-200" /> */}
             <h2 id="disclaimer" className="text-2xl font-bold mt-12 mb-4">
               Disclaimer Of Warranties; Limitation Of Liability
             </h2>
@@ -389,7 +394,7 @@ export default function TermsPage() {
               jurisdictions, our liability shall be limited to the maximum
               extent permitted by law.
             </p>
-            {/* <hr className="my-8 border-neutral-200" /> */}  
+            {/* <hr className="my-8 border-neutral-200" /> */}
             <h2 id="indemnification" className="text-2xl font-bold mt-12 mb-4">
               Indemnification
             </h2>

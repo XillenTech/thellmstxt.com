@@ -8,24 +8,24 @@ const FAQ = () => {
 
   const faqs = [
     {
-      question: "What is a User-Agent?",
+      question: "What is llms.txt and how does it differ from robots.txt?",
       answer:
-        "A User-Agent identifies which AI crawler or bot is accessing your website. For example, 'ChatGPT-User' is OpenAI's crawler, while 'Google-Extended' is Google's AI training crawler. Using '*' applies the rule to all AI crawlers.",
+        "llms.txt is a protocol that controls how AI models interact with your website content. When comparing llms.txt vs robots.txt, they serve different purposes - robots.txt manages search engine crawlers, while llms.txt specifically controls AI training models. Our free llms.txt generator online helps you create and manage both files effectively.",
     },
     {
-      question: "What is the difference between Allow and Disallow?",
+      question: "How do I implement llms.txt for my website?",
       answer:
-        "Allow tells AI crawlers they can access and learn from specific paths on your website. Disallow blocks them from accessing those paths. Use Allow for content you want AI to understand, and Disallow for private or sensitive areas.",
+        "You can use our best llms.txt generator tool to create your file in minutes. The llms.txt format spec requires placing the file in your root directory at yoursite.com/llms.txt. For ecommerce platforms, we offer specialized solutions like our llms.txt tool for Shopify to automate llms.txt generation.",
     },
     {
-      question: "Is this the same as robots.txt?",
+      question: "What are the benefits of using llms.txt?",
       answer:
-        "No, they serve different purposes. robots.txt controls search engine crawlers like Google and Bing, while llms.txt specifically controls AI model training crawlers like ChatGPT and Gemini. You can use both files together.",
+        "The benefits of llms.txt include protecting sensitive content while optimizing AI visibility. Our llms.txt integration guide shows how to use llms.txt for SEO and content discovery. When you compare llms.txt tools vs plugins, a dedicated generator provides better control over how AI systems interact with your site.",
     },
     {
-      question: "Where do I upload the llms.txt file?",
+      question: "Should I choose manual creation or use a generator?",
       answer:
-        "Upload the file to your website's root directory, so it's accessible at yoursite.com/llms.txt. This is the same location where you'd place robots.txt or sitemap.xml files.",
+        "When considering llms.txt generator vs manual creation, our llms.txt generator API offers automated updates and validation. For eCommerce sites, the generator ensures proper protection of sensitive areas while maintaining product visibility. Many hosts supporting llms.txt recommend using a generator for accuracy.",
     },
   ];
 
@@ -41,7 +41,7 @@ const FAQ = () => {
             Frequently Asked Questions
           </h2>
           <p className="text-xl text-gray-600">
-            Everything you need to know about llms.txt files.
+            Learn how to create llms.txt files and optimize your website for AI interactions.
           </p>
         </div>
 
@@ -81,11 +81,10 @@ const FAQ = () => {
         <div className="mt-12 text-center">
           <div className="bg-white rounded-xl p-8">
             <h3 className="text-xl font-bold text-gray-900 mb-4">
-              Want to Learn More?
+              Want to Learn More About llms.txt?
             </h3>
             <p className="text-gray-600 mb-6">
-              Explore our complete FAQ section with detailed answers to all your
-              questions.
+              Explore our complete guide to understand what is llms.txt and how to implement it effectively for your website.
             </p>
             <Link
               href="/faq"

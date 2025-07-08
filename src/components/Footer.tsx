@@ -55,7 +55,7 @@ const Footer = () => {
               </li> */}
               <li>
                 <Link
-                  href="/what-is-llms"
+                  href="/what-is-llms-txt"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   What is llms.txt?

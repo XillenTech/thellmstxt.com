@@ -25,7 +25,7 @@ const Header = () => {
               Generator
             </a> */}
             <Link
-              href="/what-is-llms"
+              href="/what-is-llms-txt"
               className="text-gray-700 hover:text-blue-600 transition-colors"
             >
               What is llms.txt?
