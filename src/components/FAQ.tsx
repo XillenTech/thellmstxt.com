@@ -34,41 +34,41 @@ const FAQ = () => {
   };
 
   return (
-    <section id="faq" className="py-20 bg-white">
+    <section id="faq" className="py-12 sm:py-16 md:py-20 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
             Frequently Asked Questions
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600">
             Learn how to create llms.txt files and optimize your website for AI interactions.
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg border border-gray-100"
+              className="bg-white rounded-lg sm:rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg border border-gray-100"
             >
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full px-6 py-6 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                className="w-full px-4 sm:px-6 py-4 sm:py-6 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
               >
-                <h3 className="text-lg font-semibold text-gray-900 pr-4">
+                <h3 className="text-sm sm:text-base md:text-lg font-semibold text-gray-900 pr-2 sm:pr-4">
                   {faq.question}
                 </h3>
                 {openIndex === index ? (
-                  <ChevronUp className="h-5 w-5 text-blue-600 flex-shrink-0" />
+                  <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 flex-shrink-0" />
                 ) : (
-                  <ChevronDown className="h-5 w-5 text-gray-400 flex-shrink-0" />
+                  <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 flex-shrink-0" />
                 )}
               </button>
 
               {openIndex === index && (
-                <div className="px-6 pb-6">
-                  <div className="border-t border-gray-100 pt-4">
-                    <p className="text-gray-700 leading-relaxed">
+                <div className="px-4 sm:px-6 pb-4 sm:pb-6">
+                  <div className="border-t border-gray-100 pt-3 sm:pt-4">
+                    <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
                       {faq.answer}
                     </p>
                   </div>
@@ -78,17 +78,17 @@ const FAQ = () => {
           ))}
         </div>
 
-        <div className="mt-12 text-center">
-          <div className="bg-white rounded-xl p-8">
-            <h3 className="text-xl font-bold text-gray-900 mb-4">
+        <div className="mt-8 sm:mt-10 md:mt-12 text-center">
+          <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 md:p-8">
+            <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">
               Want to Learn More About llms.txt?
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">
               Explore our complete guide to understand what is llms.txt and how to implement it effectively for your website.
             </p>
             <Link
               href="/faq"
-              className="inline-flex items-center space-x-2 bg-pink-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 cursor-pointer"
+              className="inline-flex items-center space-x-2 bg-pink-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-semibold transition-all duration-300 cursor-pointer text-sm sm:text-base"
             >
               <span>Learn More</span>
             </Link>

@@ -225,17 +225,17 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6">
-      <h3 className="text-2xl font-bold text-gray-900 mb-6">
+    <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+      <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
         Website Analyzer
       </h3>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
         <div>
           <label className="text-sm font-medium text-gray-700 mb-2 block">
             Website URL
           </label>
-          <div className="flex space-x-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <div className="flex-1 relative overflow-hidden rounded-3xl">
               {isLoading && progress > 0 && (
                 <div
@@ -253,7 +253,7 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
                 placeholder="https://example.com"
                 autoFocus
                 autoComplete="on"
-                className={`w-full px-4 py-3 border border-gray-300 rounded-3xl focus:outline-none focus:ring-blue-500 transition-all text-black placeholder:text-gray-400 relative z-10 bg-transparent ${
+                className={`w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-3xl focus:outline-none focus:ring-blue-500 transition-all text-black placeholder:text-gray-400 relative z-10 bg-transparent text-sm sm:text-base ${
                   isLoading ? "cursor-not-allowed" : ""
                 }`}
                 disabled={isLoading}
@@ -264,9 +264,9 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
               <button
                 type="button"
                 onClick={stopAnalysis}
-                className="px-6 py-3 bg-red-600 text-white rounded-3xl hover:bg-red-700 transition-all flex items-center space-x-2"
+                className="px-4 sm:px-6 py-2 sm:py-3 bg-red-600 text-white rounded-3xl hover:bg-red-700 transition-all flex items-center justify-center space-x-2 w-full sm:w-auto text-sm sm:text-base"
               >
-                <Square className="h-5 w-5" />
+                <Square className="h-4 w-4 sm:h-5 sm:w-5" />
                 <span>
                   {progress > 0 && progress < 100
                     ? `Stop (${progress}%)`
@@ -277,15 +277,15 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
               <button
                 type="submit"
                 disabled={!url.trim()}
-                className="px-6 py-3 bg-blue-600 text-white rounded-3xl hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all flex items-center space-x-2"
+                className="px-4 sm:px-6 py-2 sm:py-3 bg-blue-600 text-white rounded-3xl hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all flex items-center justify-center space-x-2 w-full sm:w-auto text-sm sm:text-base"
               >
-                <Search className="h-5 w-5" />
+                <Search className="h-4 w-4 sm:h-5 sm:w-5" />
                 <span>Analyze</span>
               </button>
             )}
           </div>
           {isLoading && (
-            <div className="text-sm text-blue-800 rounded-3xl mt-2 px-3 py-2">
+            <div className="text-xs sm:text-sm text-blue-800 rounded-3xl mt-2 px-3 py-2">
               Analyzing your website will take just couple of minutes.
             </div>
           )}
@@ -297,15 +297,15 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
           </p>
         </div>
 
-        <div className="mb-6">
+        <div className="mb-4 sm:mb-6">
           <label className="text-sm font-semibold text-gray-800 mb-2 block">
             LLM Bot Type
           </label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 rounded-lg border border-gray-200 bg-gray-50 p-4 shadow-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 rounded-lg border border-gray-200 bg-gray-50 p-3 sm:p-4 shadow-sm">
             {llmBots.map((bot) => (
               <label
                 key={bot.value}
-                className="flex items-center space-x-3 cursor-pointer rounded px-2 py-2 transition border border-transparent hover:border-blue-200 select-none group"
+                className="flex items-center space-x-2 sm:space-x-3 cursor-pointer rounded px-2 py-2 transition border border-transparent hover:border-blue-200 select-none group"
                 tabIndex={0}
                 onKeyDown={(e) => {
                   if (e.key === " " || e.key === "Enter") {
@@ -328,10 +328,10 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
                           : [...prev, bot.value]
                       );
                     }}
-                    className="peer appearance-none w-5 h-5 border border-gray-300 rounded-md bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+                    className="peer appearance-none w-4 h-4 sm:w-5 sm:h-5 border border-gray-300 rounded-md bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
                   />
                   <svg
-                    className="absolute w-4 h-4 text-white pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity"
+                    className="absolute w-3 h-3 sm:w-4 sm:h-4 text-white pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity"
                     viewBox="0 0 20 20"
                     fill="none"
                     stroke="currentColor"
@@ -344,8 +344,10 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
                     />
                   </svg>
                 </span>
-                <div>
-                  <span className="font-medium text-gray-900">{bot.label}</span>
+                <div className="min-w-0 flex-1">
+                  <span className="font-medium text-gray-900 text-sm sm:text-base">
+                    {bot.label}
+                  </span>
                   <div className="text-xs text-gray-500 pl-1">
                     {bot.description}
                   </div>
@@ -356,25 +358,25 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
         </div>
 
         {/* AI Enrichment Option */}
-        <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-          <div className="flex items-start space-x-3">
-            <Sparkles className="w-5 h-5 text-purple-600 mt-0.5" />
-            <div className="flex-1">
-              <div className="flex items-center space-x-3 mb-2">
+        <div className="bg-purple-50 border border-purple-200 rounded-lg p-3 sm:p-4">
+          <div className="flex items-start space-x-2 sm:space-x-3">
+            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600 mt-0.5 flex-shrink-0" />
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center space-x-2 sm:space-x-3 mb-2">
                 <label className="flex items-center space-x-2">
                   <input
                     type="checkbox"
                     checked={aiEnrichment}
                     onChange={(e) => setAiEnrichment(e.target.checked)}
-                    className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                    className="rounded border-gray-300 text-purple-600 focus:ring-purple-500 w-4 h-4 sm:w-5 sm:h-5"
                     disabled={isLoading}
                   />
-                  <span className="font-medium text-purple-900">
+                  <span className="font-medium text-purple-900 text-sm sm:text-base">
                     Enable AI Enrichment
                   </span>
                 </label>
               </div>
-              <p className="text-sm text-purple-800">
+              <p className="text-xs sm:text-sm text-purple-800">
                 Use AI to generate summaries, context snippets, and semantic
                 analysis for each page. This enhances the llms.txt file with
                 richer content for better LLM understanding.
@@ -385,21 +387,21 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
 
         {error && (
           <div className="flex items-center space-x-2 p-3 bg-red-50 border border-red-200 rounded-lg">
-            <AlertCircle className="h-5 w-5 text-red-500" />
-            <span className="text-red-800">{error}</span>
+            <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-500 flex-shrink-0" />
+            <span className="text-red-800 text-sm sm:text-base">{error}</span>
           </div>
         )}
 
         {analysisResult && (
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             <div className="flex items-center space-x-2 p-3 bg-green-50 border border-green-200 rounded-lg">
-              <CheckCircle className="h-5 w-5 text-green-500" />
-              <span className="text-green-800 font-medium">
+              <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 flex-shrink-0" />
+              <span className="text-green-800 font-medium text-sm sm:text-base">
                 Analysis Complete!
               </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm">
               <div className="bg-gray-50 p-3 rounded-lg">
                 <div className="font-medium text-gray-900">Website</div>
                 <div className="text-gray-600 truncate">
@@ -412,7 +414,7 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
                   {analysisResult.paths.length}
                 </div>
               </div>
-              <div className="bg-gray-50 p-3 rounded-lg">
+              <div className="bg-gray-50 p-3 rounded-lg sm:col-span-2 lg:col-span-1">
                 <div className="font-medium text-gray-900">AI Enrichment</div>
                 <div className="text-gray-600">
                   {aiEnrichment ? "Enabled" : "Disabled"}

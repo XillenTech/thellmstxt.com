@@ -35,25 +35,25 @@ export default function WhatIsLLMsPage() {
   ];
 
   return (
-    <main className="py-20 bg-white">
+    <main className="py-12 sm:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-10 sm:mb-16">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
             What is llms.txt? The Complete Guide
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
             Learn how to create llms.txt files and automate llms.txt generation
             for your website. Compare the best llms.txt generator options
             available.
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto mb-16">
-          <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+        <div className="max-w-4xl mx-auto mb-10 sm:mb-16">
+          <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
               Understanding llms.txt: Benefits and Implementation
             </h2>
-            <div className="prose prose-lg text-gray-700 space-y-6">
+            <div className="prose prose-base sm:prose-lg text-gray-700 space-y-4 sm:space-y-6">
               <p>
                 The llms.txt format spec provides a standardized protocol for
                 controlling how AI language models interact with your content.
@@ -79,37 +79,37 @@ export default function WhatIsLLMsPage() {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-10 sm:mb-16">
           {features.map((feature, index) => (
             <div
               key={index}
-              className="group bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
+              className="group bg-white rounded-xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
             >
               <div
-                className={`inline-flex p-3 rounded-lg bg-gray-50 ${feature.color} mb-4 group-hover:scale-110 transition-transform`}
+                className={`inline-flex p-2 sm:p-3 rounded-lg bg-gray-50 ${feature.color} mb-3 sm:mb-4 group-hover:scale-110 transition-transform`}
               >
-                <feature.icon className="h-6 w-6" />
+                <feature.icon className="h-5 w-5 sm:h-6 sm:w-6" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">
                 {feature.title}
               </h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                 {feature.description}
               </p>
             </div>
           ))}
         </div>
 
-        <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8 max-w-7xl mx-auto">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+        <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 sm:p-8 max-w-7xl mx-auto">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 text-center">
             How llms.txt Works: Format Specification
           </h2>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 sm:mb-3">
                 The File Structure
               </h3>
-              <div className="bg-gray-900 rounded-lg p-4 font-mono text-sm">
+              <div className="bg-gray-900 rounded-lg p-3 sm:p-4 font-mono text-xs sm:text-sm">
                 <div className="text-green-400"># llms.txt</div>
                 <div className="text-blue-400">User-agent: *</div>
                 <div className="text-green-400">Allow: /blog/*</div>
@@ -118,26 +118,26 @@ export default function WhatIsLLMsPage() {
               </div>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 sm:mb-3">
                 What It Means
               </h3>
-              <div className="space-y-3 text-sm">
+              <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm">
                 <div className="flex items-start space-x-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></div>
                   <p className="text-gray-700">
                     <strong>User-agent:</strong> Specifies which AI crawler the
                     rule applies to
                   </p>
                 </div>
                 <div className="flex items-start space-x-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-green-500 rounded-full mt-1.5 flex-shrink-0"></div>
                   <p className="text-gray-700">
                     <strong>Allow:</strong> Permits AI crawlers to access these
                     paths
                   </p>
                 </div>
                 <div className="flex items-start space-x-2">
-                  <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-red-500 rounded-full mt-1.5 flex-shrink-0"></div>
                   <p className="text-gray-700">
                     <strong>Disallow:</strong> Blocks AI crawlers from these
                     paths
@@ -148,71 +148,71 @@ export default function WhatIsLLMsPage() {
           </div>
         </div>
 
-        <div className="mt-16 max-w-7xl mx-auto">
-          <div className="rounded-2xl p-8 shadow-xl border">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-900">
+        <div className="mt-10 sm:mt-16 max-w-7xl mx-auto">
+          <div className="rounded-2xl p-6 sm:p-8 shadow-xl border">
+            <div className="text-center mb-6 sm:mb-8">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
                 Key Differences: llms.txt vs robots.txt
               </h2>
-              <p className="text-gray-600 mt-2">
+              <p className="text-sm sm:text-base text-gray-600 mt-2">
                 Understanding when to use each protocol for maximum protection
               </p>
             </div>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="rounded-xl p-6 shadow-lg border">
-                <div className="flex items-center space-x-3 mb-4">
-                  <div className="p-2 rounded-lg">
-                    <FileText className="h-6 w-6 text-green-600" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+              <div className="rounded-xl p-4 sm:p-6 shadow-lg border">
+                <div className="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4">
+                  <div className="p-1.5 sm:p-2 rounded-lg">
+                    <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-green-600" />
                   </div>
-                  <h3 className="text-xl font-semibold text-green-600">
+                  <h3 className="text-lg sm:text-xl font-semibold text-green-600">
                     robots.txt
                   </h3>
                 </div>
-                <p className="text-gray-600 mb-4 text-sm">For Search Engines</p>
-                <ul className="space-y-3 text-gray-700">
+                <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4">For Search Engines</p>
+                <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-gray-700">
                   <li className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></div>
                     <span>Controls search engine crawlers</span>
                   </li>
                   <li className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></div>
                     <span>Affects SEO and search rankings</span>
                   </li>
                   <li className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></div>
                     <span>Used by Google, Bing, etc.</span>
                   </li>
                   <li className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></div>
                     <span>Focuses on indexing control</span>
                   </li>
                 </ul>
               </div>
-              <div className="rounded-xl p-6 shadow-lg border">
-                <div className="flex items-center space-x-3 mb-4">
-                  <div className="p-2 rounded-lg">
-                    <Bot className="h-6 w-6 text-blue-600" />
+              <div className="rounded-xl p-4 sm:p-6 shadow-lg border">
+                <div className="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4">
+                  <div className="p-1.5 sm:p-2 rounded-lg">
+                    <Bot className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
                   </div>
-                  <h3 className="text-xl font-semibold text-blue-600">
+                  <h3 className="text-lg sm:text-xl font-semibold text-blue-600">
                     llms.txt
                   </h3>
                 </div>
-                <p className="text-gray-600 mb-4 text-sm">For AI Systems</p>
-                <ul className="space-y-3 text-gray-700">
+                <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4">For AI Systems</p>
+                <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-gray-700">
                   <li className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"></div>
                     <span>Controls AI language models</span>
                   </li>
                   <li className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"></div>
                     <span>Affects AI recommendations</span>
                   </li>
                   <li className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"></div>
                     <span>Used by ChatGPT, Claude, Gemini</span>
                   </li>
                   <li className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"></div>
                     <span>Focuses on content access control</span>
                   </li>
                 </ul>

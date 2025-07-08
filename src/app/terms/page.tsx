@@ -3,12 +3,12 @@ import React from "react";
 
 export default function TermsPage() {
   return (
-    <main className="bg-neutral-50 min-h-screen py-12 flex items-center justify-center">
-      <div className="bg-white/95 rounded-3xl shadow-lg max-w-5xl w-full px-8 py-12 mx-4 border border-neutral-200">
-        <h1 className="text-4xl text-gray-900 font-bold mb-8 text-center">
+    <main className="bg-neutral-50 min-h-screen py-8 sm:py-12 flex items-center justify-center">
+      <div className="bg-white/95 rounded-2xl sm:rounded-3xl shadow-lg max-w-5xl w-full px-4 sm:px-8 py-8 sm:py-12 mx-2 sm:mx-4 border border-neutral-200">
+        <h1 className="text-3xl sm:text-4xl text-gray-900 font-bold mb-6 sm:mb-8 text-center">
           Terms &amp; Conditions
         </h1>
-        <div className="prose prose-lg max-w-none text-gray-800 mx-auto">
+        <div className="prose prose-base sm:prose-lg max-w-none text-gray-800 mx-auto">
           <p>
             This website is operated by TheLLMsTxt.com. Throughout the site, the
             terms &quot;we&quot;, &quot;us&quot; and &quot;our&quot; refer to
@@ -35,7 +35,7 @@ export default function TermsPage() {
             access the website or use any services.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="acceptance" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="acceptance" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Acceptance
           </h2>
           <p>
@@ -53,7 +53,7 @@ export default function TermsPage() {
             immediate termination of your Services.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="general" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="general" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             General Conditions
           </h2>
           <p>
@@ -75,7 +75,7 @@ export default function TermsPage() {
             provided, without express written permission by us.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="accuracy" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="accuracy" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Accuracy, Completeness And Timeliness Of Information
           </h2>
           <p>
@@ -96,7 +96,7 @@ export default function TermsPage() {
             own risk.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="modifications" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="modifications" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Modifications To The Service And Prices
           </h2>
           <p>Prices for our products are subject to change without notice.</p>
@@ -110,7 +110,7 @@ export default function TermsPage() {
             Service.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="products" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="products" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Products Or Services
           </h2>
           <p>
@@ -143,7 +143,7 @@ export default function TermsPage() {
             corrected.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="billing" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="billing" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Accuracy Of Billing And Account Information
           </h2>
           <p>
@@ -168,7 +168,7 @@ export default function TermsPage() {
             contact you as needed.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="tools" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="tools" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Optional Tools
           </h2>
           <p>
@@ -195,7 +195,7 @@ export default function TermsPage() {
             to these Terms of Service.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="thirdparty" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="thirdparty" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Third-Party Links
           </h2>
           <p>
@@ -220,7 +220,7 @@ export default function TermsPage() {
             third-party products should be directed to the third-party.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="comments" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="comments" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             User Comments, Feedback And Other Submissions
           </h2>
           <p>
@@ -257,7 +257,7 @@ export default function TermsPage() {
             you or any third-party.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="personal" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="personal" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Personal Information
           </h2>
           <p>
@@ -265,7 +265,7 @@ export default function TermsPage() {
             governed by our Privacy Policy.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="errors" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="errors" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Errors, Inaccuracies And Omissions
           </h2>
           <p>
@@ -288,7 +288,7 @@ export default function TermsPage() {
             the Service or on any related website has been modified or updated.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="prohibited" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="prohibited" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Prohibited Uses
           </h2>
           <p>
@@ -315,7 +315,7 @@ export default function TermsPage() {
             prohibited uses.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="refund" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="refund" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Refund Policy
           </h2>
           <p>
@@ -329,7 +329,7 @@ export default function TermsPage() {
             reserve all the right to decide the amount to be refunded.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="disclaimer" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="disclaimer" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Disclaimer Of Warranties; Limitation Of Liability
           </h2>
           <p>
@@ -377,7 +377,7 @@ export default function TermsPage() {
             permitted by law.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="indemnification" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="indemnification" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Indemnification
           </h2>
           <p>
@@ -391,7 +391,7 @@ export default function TermsPage() {
             any law or the rights of a third-party.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="severability" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="severability" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Severability
           </h2>
           <p>
@@ -404,7 +404,7 @@ export default function TermsPage() {
             provisions.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="termination" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="termination" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Termination
           </h2>
           <p>
@@ -427,7 +427,7 @@ export default function TermsPage() {
             access to our Services (or any part thereof).
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="entire" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="entire" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Entire Agreement
           </h2>
           <p>
@@ -449,7 +449,7 @@ export default function TermsPage() {
             shall not be construed against the drafting party.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="governing" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="governing" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Governing Law
           </h2>
           <p>
@@ -459,7 +459,7 @@ export default function TermsPage() {
             exclusive jurisdiction of the India courts.
           </p>
           <hr className="my-8 border-neutral-200" />
-          <h2 id="changes" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="changes" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Changes To Terms Of Service
           </h2>
           <p>
@@ -475,7 +475,7 @@ export default function TermsPage() {
             these Terms of Service constitutes acceptance of those changes.
           </p>
           <hr className="my-8 border-neutral-200" />
-          <h2 id="contact" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="contact" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Contact Us
           </h2>
           <p>

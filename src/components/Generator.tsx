@@ -324,22 +324,22 @@ const Generator = () => {
   return (
     <section
       id="generator"
-      className="py-20 bg-gradient-to-br from-gray-50 to-blue-50"
+      className="py-8 sm:py-12 md:py-20 bg-gradient-to-br from-gray-50 to-blue-50"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Free llms.txt Generator
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
             Analyze your website and generate llms.txt files for LLM crawlers.
             Build your file step by step with AI-powered enhancements.
           </p>
         </div>
 
         {/* Step Indicator */}
-        <div className="flex justify-center mb-8">
-          <div className="flex items-center space-x-4">
+        <div className="flex justify-center mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2 md:space-x-4">
             <div
               className={`flex items-center space-x-2 ${
                 isStep1Complete
@@ -350,7 +350,7 @@ const Generator = () => {
               }`}
             >
               <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-sm sm:text-base ${
                   isStep1Complete
                     ? "bg-green-600 text-white"
                     : currentStep === "analyze"
@@ -360,9 +360,10 @@ const Generator = () => {
               >
                 1
               </div>
-              <span className="font-medium">Analyze Website</span>
+              <span className="font-medium text-sm sm:text-base">Analyze Website</span>
             </div>
-            <div className="w-8 h-1 bg-gray-200"></div>
+            <div className="hidden sm:block w-8 h-1 bg-gray-200"></div>
+            <div className="sm:hidden w-1 h-8 bg-gray-200"></div>
             <div
               className={`flex items-center space-x-2 ${
                 isStep2Complete
@@ -373,7 +374,7 @@ const Generator = () => {
               }`}
             >
               <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-sm sm:text-base ${
                   isStep2Complete
                     ? "bg-green-600 text-white"
                     : currentStep === "select"
@@ -383,9 +384,10 @@ const Generator = () => {
               >
                 2
               </div>
-              <span className="font-medium">Select Paths</span>
+              <span className="font-medium text-sm sm:text-base">Select Paths</span>
             </div>
-            <div className="w-8 h-1 bg-gray-200"></div>
+            <div className="hidden sm:block w-8 h-1 bg-gray-200"></div>
+            <div className="sm:hidden w-1 h-8 bg-gray-200"></div>
             <div
               className={`flex items-center space-x-2 ${
                 isStep3Complete
@@ -396,7 +398,7 @@ const Generator = () => {
               }`}
             >
               <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-sm sm:text-base ${
                   isStep3Complete
                     ? "bg-green-600 text-white"
                     : currentStep === "generate"
@@ -406,13 +408,13 @@ const Generator = () => {
               >
                 3
               </div>
-              <span className="font-medium">Generate</span>
+              <span className="font-medium text-sm sm:text-base">Generate</span>
             </div>
           </div>
         </div>
 
         <div className="max-w-6xl mx-auto">
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             {/* Step 1: Website Analysis */}
             {currentStep === "analyze" && (
               <WebsiteAnalyzer onAnalysisComplete={handleAnalysisComplete} />
@@ -420,16 +422,16 @@ const Generator = () => {
 
             {/* Step 2: Path Selection */}
             {currentStep === "select" && analysisData && (
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 {/* Enhanced Features Toggle */}
-                <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <div className="bg-white rounded-lg p-4 sm:p-6 border border-gray-200">
                   <div className="flex items-center space-x-2 mb-4">
                     <Sparkles className="w-5 h-5 text-purple-600" />
                     <h3 className="text-lg font-semibold text-gray-900">
                       Enhanced Features
                     </h3>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <label className="flex items-center space-x-3">
                       <input
                         type="checkbox"
@@ -442,7 +444,7 @@ const Generator = () => {
                         }
                         className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
                       />
-                      <span className="text-gray-700">
+                      <span className="text-sm sm:text-base text-gray-700">
                         Enable AI Enrichment
                       </span>
                     </label>
@@ -458,7 +460,7 @@ const Generator = () => {
                         }
                         className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
                       />
-                      <span className="text-gray-700">
+                      <span className="text-sm sm:text-base text-gray-700">
                         Include AI Summaries
                       </span>
                     </label>
@@ -474,7 +476,7 @@ const Generator = () => {
                         }
                         className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
                       />
-                      <span className="text-gray-700">
+                      <span className="text-sm sm:text-base text-gray-700">
                         Include Context Snippets
                       </span>
                     </label>
@@ -490,7 +492,7 @@ const Generator = () => {
                         }
                         className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
                       />
-                      <span className="text-gray-700">Hierarchical Layout</span>
+                      <span className="text-sm sm:text-base text-gray-700">Hierarchical Layout</span>
                     </label>
                   </div>
                 </div>
@@ -499,22 +501,22 @@ const Generator = () => {
                   paths={selectedPaths}
                   onSelectionChange={handlePathSelectionChange}
                 />
-                <div className="flex space-x-4">
+                <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
                   <button
                     onClick={generateFromSelectedPaths}
-                    className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
+                    className="px-4 sm:px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium text-sm sm:text-base"
                   >
                     Generate llms.txt from Selected Paths
                   </button>
                   <button
                     onClick={resetAnalysis}
-                    className="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors font-medium"
+                    className="px-4 sm:px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors font-medium text-sm sm:text-base"
                   >
                     Start Over
                   </button>
                   <button
                     onClick={() => setCurrentStep("analyze")}
-                    className="px-6 py-3 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors font-medium"
+                    className="px-4 sm:px-6 py-3 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors font-medium text-sm sm:text-base"
                   >
                     Back
                   </button>
@@ -524,17 +526,17 @@ const Generator = () => {
 
             {/* Step 3: Download Only (no RuleBuilder) */}
             {currentStep === "generate" && (
-              <div className="space-y-8">
-                <div className="flex space-x-4">
+              <div className="space-y-6 sm:space-y-8">
+                <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
                   <button
                     onClick={() => setCurrentStep("select")}
-                    className="px-6 py-3 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors font-medium"
+                    className="px-4 sm:px-6 py-3 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors font-medium text-sm sm:text-base"
                   >
                     Back to Path Selection
                   </button>
                   <button
                     onClick={resetAnalysis}
-                    className="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors font-medium"
+                    className="px-4 sm:px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors font-medium text-sm sm:text-base"
                   >
                     Start Over
                   </button>

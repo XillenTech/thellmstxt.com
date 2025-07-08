@@ -15,19 +15,19 @@ const PlatformSelector = ({ selectedPlatform, onPlatformSelect }: PlatformSelect
   ];
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6">
-      <h3 className="text-2xl font-bold text-gray-900 mb-2">One-Click Setup for Your Platform</h3>
-      <p className="text-gray-600 mb-6">
+    <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+      <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">One-Click Setup for Your Platform</h3>
+      <p className="text-gray-600 mb-6 text-sm sm:text-base">
         Select your eCommerce platform to automatically configure common settings.
       </p>
       
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         {platforms.map((platform) => (
           <button
             key={platform.id}
             onClick={() => onPlatformSelect(selectedPlatform === platform.id ? '' : platform.id)}
             className={`
-              ${platform.color} text-white font-semibold py-4 px-6 rounded-lg 
+              ${platform.color} text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg 
               transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg
               ${selectedPlatform === platform.id ? 'ring-4 ring-blue-200 scale-105' : ''}
             `}
@@ -38,8 +38,8 @@ const PlatformSelector = ({ selectedPlatform, onPlatformSelect }: PlatformSelect
       </div>
       
       {selectedPlatform && (
-        <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-          <p className="text-sm text-blue-800">
+        <div className="mt-4 p-3 sm:p-4 bg-blue-50 rounded-lg">
+          <p className="text-xs sm:text-sm text-blue-800">
             ✓ Platform-specific paths have been automatically configured for {platforms.find(p => p.id === selectedPlatform)?.name}
           </p>
         </div>

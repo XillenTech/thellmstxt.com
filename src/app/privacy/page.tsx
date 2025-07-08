@@ -3,12 +3,12 @@ import React from "react";
 
 export default function PrivacyPage() {
   return (
-    <main className="bg-neutral-50 min-h-screen py-12 flex items-center justify-center">
-      <div className="bg-white/95 rounded-3xl shadow-lg max-w-5xl w-full px-8 py-12 mx-4 border border-neutral-200">
-        <h1 className="text-4xl text-gray-900 font-bold mb-8 text-center">
+    <main className="bg-neutral-50 min-h-screen py-8 sm:py-12 flex items-center justify-center">
+      <div className="bg-white/95 rounded-2xl sm:rounded-3xl shadow-lg max-w-5xl w-full px-4 sm:px-8 py-8 sm:py-12 mx-2 sm:mx-4 border border-neutral-200">
+        <h1 className="text-2xl sm:text-4xl text-gray-900 font-bold mb-6 sm:mb-8 text-center">
           Privacy Policy
         </h1>
-        <div className="prose prose-lg max-w-none text-gray-800 mx-auto">
+        <div className="prose prose-base sm:prose-lg max-w-none text-gray-800 mx-auto">
           <p>
             This Privacy Policy describes how LLMsTxt (&quot;we&quot;,
             &quot;us&quot;, or &quot;our&quot;) collects, uses, and protects
@@ -17,7 +17,7 @@ export default function PrivacyPage() {
             described in this policy.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="info" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="info" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Information We Collect
           </h2>
           <ul>
@@ -35,7 +35,7 @@ export default function PrivacyPage() {
             </li>
           </ul>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="payment" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="payment" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Payment Information
           </h2>
           <p>
@@ -45,7 +45,7 @@ export default function PrivacyPage() {
             securely by third-party providers.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="cookies" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="cookies" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Use of Cookies
           </h2>
           <p>
@@ -61,7 +61,7 @@ export default function PrivacyPage() {
             website.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="use" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="use" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             How We Use Your Information
           </h2>
           <ul>
@@ -76,7 +76,7 @@ export default function PrivacyPage() {
             <li>To analyze usage and improve our website and services.</li>
           </ul>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="storage" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="storage" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Storing and Transferring Your Data
           </h2>
           <p>
@@ -87,7 +87,7 @@ export default function PrivacyPage() {
             treated securely.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="security" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="security" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Data Security
           </h2>
           <p>
@@ -97,7 +97,7 @@ export default function PrivacyPage() {
             information is at your own risk.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="disclosure" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="disclosure" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Disclosing Your Information
           </h2>
           <ul>
@@ -117,7 +117,7 @@ export default function PrivacyPage() {
             </li>
           </ul>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="aggregation" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="aggregation" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Data Sharing and Aggregation
           </h2>
           <p>
@@ -128,7 +128,7 @@ export default function PrivacyPage() {
             purposes outlined above.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="thirdparty" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="thirdparty" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Third-Party Links / Websites
           </h2>
           <p>
@@ -137,7 +137,7 @@ export default function PrivacyPage() {
             privacy policy before providing any personal data.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="updates" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="updates" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Policy Updates
           </h2>
           <p>
@@ -147,7 +147,7 @@ export default function PrivacyPage() {
             will be deemed your acceptance of those changes.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="acceptance" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="acceptance" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Your Acceptance
           </h2>
           <p>
@@ -155,7 +155,7 @@ export default function PrivacyPage() {
             you do not agree, please do not use our site.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="deletion" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="deletion" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Data Deletion
           </h2>
           <p>
@@ -165,7 +165,7 @@ export default function PrivacyPage() {
             details.
           </p>
           {/* <hr className="my-8 border-neutral-200" /> */}
-          <h2 id="contact" className="text-2xl font-bold mt-12 mb-4">
+          <h2 id="contact" className="text-xl sm:text-2xl font-bold mt-8 sm:mt-12 mb-3 sm:mb-4">
             Contact Us
           </h2>
           <p>

@@ -32,15 +32,15 @@ const OutputPreview = ({ content }: OutputPreviewProps) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 sticky top-24 w-full">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xl font-bold text-gray-900">Live Preview</h3>
+    <div className="bg-white rounded-xl shadow-lg p-3 sm:p-6 sticky top-24 w-full">
+      <div className="flex items-center justify-between mb-3 sm:mb-4">
+        <h3 className="text-lg sm:text-xl font-bold text-gray-900">Live Preview</h3>
         <div className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
           Real-time
         </div>
       </div>
 
-      <div className="bg-gray-900 rounded-lg p-4 font-mono text-xs overflow-x-auto mb-4 max-h-80 overflow-y-auto">
+      <div className="bg-gray-900 rounded-lg p-3 sm:p-4 font-mono text-xs overflow-x-auto mb-3 sm:mb-4 max-h-60 sm:max-h-80 overflow-y-auto">
         <pre className="text-gray-100 whitespace-pre-wrap break-all">
           {content}
         </pre>
@@ -50,7 +50,7 @@ const OutputPreview = ({ content }: OutputPreviewProps) => {
         <button
           onClick={copyToClipboard}
           className={`
-            flex items-center justify-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-300
+            flex items-center justify-center space-x-2 px-3 sm:px-4 py-2 rounded-lg font-medium transition-all duration-300 text-sm sm:text-base
             ${
               copied
                 ? "bg-green-100 text-green-700"
@@ -67,15 +67,15 @@ const OutputPreview = ({ content }: OutputPreviewProps) => {
         </button>
         <button
           onClick={downloadFile}
-          className="flex items-center justify-center space-x-2 bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition-all duration-300"
+          className="flex items-center justify-center space-x-2 bg-purple-600 text-white px-3 sm:px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition-all duration-300 text-sm sm:text-base"
         >
           <Download className="h-4 w-4" />
           <span>Download llms.txt</span>
         </button>
       </div>
 
-      <div className="mt-4 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
-        <p className="text-sm text-gray-700 mb-2">
+      <div className="mt-3 sm:mt-4 p-3 sm:p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
+        <p className="text-xs sm:text-sm text-gray-700 mb-2">
           <strong>Next step:</strong> Upload this file to your website&apos;s
           root directory
         </p>
@@ -84,7 +84,7 @@ const OutputPreview = ({ content }: OutputPreviewProps) => {
         </code>
       </div>
 
-      <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+      <div className="mt-3 sm:mt-4 p-2 sm:p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
         <p className="text-xs text-yellow-800">
           <strong>Note:</strong> This preview updates automatically as you
           modify your rules.

@@ -31,39 +31,39 @@ const HowToUse = () => {
   return (
     <section
       id="how-to-use"
-      className="py-20 bg-gradient-to-br from-gray-50 to-blue-50"
+      className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-gray-50 to-blue-50"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
             Simple 3-Step Process
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto px-2">
             From zero to AI-optimized in minutes. No technical expertise
             required.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 grid-cols-1 gap-8 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12">
           {steps.map((step, index) => (
             <div
               key={index}
               className="text-center group flex flex-col items-center"
             >
-              <div className="relative mb-6">
+              <div className="relative mb-4 sm:mb-6">
                 <div
-                  className={`inline-flex p-6 rounded-full ${step.color} group-hover:scale-110 transition-transform duration-300`}
+                  className={`inline-flex p-4 sm:p-6 rounded-full ${step.color} group-hover:scale-110 transition-transform duration-300`}
                 >
-                  <step.icon className="h-8 w-8" />
+                  <step.icon className="h-6 w-6 sm:h-8 sm:w-8" />
                 </div>
-                <div className="absolute -top-2 -right-2 bg-gray-900 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">
+                <div className="absolute -top-2 -right-2 bg-gray-900 text-white w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold">
                   {index + 1}
                 </div>
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-4">
                 {step.title}
               </h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-sm sm:text-base text-gray-600 leading-relaxed px-2">
                 {step.description}
               </p>
             </div>
@@ -72,7 +72,7 @@ const HowToUse = () => {
 
         <div className="flex justify-center">
           <Link href="/how-to-use">
-            <button className="px-8 py-3 bg-pink-600 hover:bg-pink-700 text-white text-lg font-semibold rounded-full shadow transition-all duration-200 cursor-pointer">
+            <button className="px-6 sm:px-8 py-2 sm:py-3 bg-pink-600 hover:bg-pink-700 text-white text-base sm:text-lg font-semibold rounded-full shadow transition-all duration-200 cursor-pointer">
               Read More
             </button>
           </Link>

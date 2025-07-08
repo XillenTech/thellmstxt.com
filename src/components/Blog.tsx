@@ -172,26 +172,26 @@ const Blog = () => {
   return (
     <section
       id="blog"
-      className="py-20 bg-gradient-to-br from-gray-50 to-blue-50"
+      className="py-12 sm:py-20 bg-gradient-to-br from-gray-50 to-blue-50"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-8 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
             Latest Insights & Tutorials
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
             Stay updated with the latest trends, best practices, and expert
             insights on llms.txt and AI-powered marketing.
           </p>
         </div>
 
         {/* Tag Filter */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12">
           {allTags.map((tag) => (
             <button
               key={tag}
               onClick={() => setSelectedTag(tag)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-colors ${
                 selectedTag === tag
                   ? "bg-blue-600 text-white"
                   : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
@@ -204,8 +204,8 @@ const Blog = () => {
 
         {/* Featured Post */}
         {filteredPosts.filter((post) => post.featured).length > 0 && (
-          <div className="mb-16">
-            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+          <div className="mb-8 sm:mb-16">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 sm:mb-8 text-center">
               Featured Article
             </h3>
             {filteredPosts
@@ -213,33 +213,29 @@ const Blog = () => {
               .map((post) => (
                 <div
                   key={post.id}
-                  className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100"
+                  className="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg border border-gray-100"
                 >
-                  <div className="flex items-center space-x-4 mb-4">
-                    <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="flex items-center space-x-3 sm:space-x-4 mb-3 sm:mb-4">
+                    <span className="bg-blue-100 text-blue-800 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
                       Featured
                     </span>
-                    <div className="flex items-center space-x-2 text-gray-500 text-sm">
-                      <Clock className="w-4 h-4" />
+                    <div className="flex items-center space-x-1 sm:space-x-2 text-gray-500 text-xs sm:text-sm">
+                      <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
                       <span>{post.readTime}</span>
                     </div>
                   </div>
-                  <h4 className="text-2xl font-bold text-gray-900 mb-4">
+                  <h4 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">
                     {post.title}
                   </h4>
-                  <p className="text-gray-600 mb-6 leading-relaxed">
+                  <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 leading-relaxed">
                     {post.excerpt}
                   </p>
                   <div className="flex items-center justify-between">
-                    {/* <div className="flex items-center space-x-2 text-gray-500 text-sm">
-                      <User className="w-4 h-4" />
-                      <span>{post.author}</span>
-                    </div> */}
-                    <div className="flex space-x-2">
+                    <div className="flex flex-wrap gap-1 sm:gap-2">
                       {post.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs"
+                          className="bg-gray-100 text-gray-700 px-2 py-0.5 sm:py-1 rounded text-xs"
                         >
                           {tag}
                         </span>
@@ -248,10 +244,10 @@ const Blog = () => {
                   </div>
                   <Link
                     href={`/blogs/${post.slug}`}
-                    className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium"
+                    className="flex items-center space-x-1 sm:space-x-2 text-blue-600 hover:text-blue-700 font-medium text-sm sm:text-base mt-4"
                   >
                     <span>Read More</span>
-                    <ArrowRight className="w-4 h-4" />
+                    <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
                   </Link>
                 </div>
               ))}
@@ -259,44 +255,40 @@ const Blog = () => {
         )}
 
         {/* Blog Posts Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
           {filteredPosts
             .filter((post) => !post.featured)
             .map((post) => (
               <article
                 key={post.id}
-                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
+                className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100"
               >
-                <div className="flex items-center space-x-4 mb-4">
-                  <div className="flex items-center space-x-2 text-gray-500 text-sm">
-                    <Clock className="w-4 h-4" />
+                <div className="flex items-center space-x-3 sm:space-x-4 mb-3 sm:mb-4">
+                  <div className="flex items-center space-x-1 sm:space-x-2 text-gray-500 text-xs sm:text-sm">
+                    <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
                     <span>{post.readTime}</span>
                   </div>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 line-clamp-2">
                   {post.title}
                 </h3>
-                <p className="text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 leading-relaxed line-clamp-3">
                   {post.excerpt}
                 </p>
                 <div className="flex items-center justify-between">
-                  {/* <div className="flex items-center space-x-2 text-gray-500 text-sm">
-                    <User className="w-4 h-4" />
-                    <span>{post.author}</span>
-                  </div> */}
                   <Link
                     href={`/blogs/${post.slug}`}
-                    className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium text-sm"
+                    className="flex items-center space-x-1 sm:space-x-2 text-blue-600 hover:text-blue-700 font-medium text-xs sm:text-sm"
                   >
                     <span>Read More</span>
-                    <ArrowRight className="w-4 h-4" />
+                    <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
                   </Link>
                 </div>
-                <div className="flex flex-wrap gap-2 mt-4">
+                <div className="flex flex-wrap gap-1 sm:gap-2 mt-3 sm:mt-4">
                   {post.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs"
+                      className="bg-gray-100 text-gray-700 px-2 py-0.5 sm:py-1 rounded text-xs"
                     >
                       {tag}
                     </span>

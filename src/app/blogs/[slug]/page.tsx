@@ -318,17 +318,17 @@ const BlogPostPage = ({ params }: BlogPostPageProps) => {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">
             Blog Post Not Found
           </h1>
-          <p className="text-gray-600 mb-8">
+          <p className="text-sm sm:text-base text-gray-600 mb-8">
             The blog post you&apos;re looking for doesn&apos;t exist.
           </p>
           <Link
             href="/blogs"
-            className="inline-flex items-center space-x-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center space-x-2 bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:bg-blue-700 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Blogs</span>
@@ -339,13 +339,13 @@ const BlogPostPage = ({ params }: BlogPostPageProps) => {
   }
 
   return (
-    <main className="py-12">
+    <main className="py-8 sm:py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <Link
             href="/blogs"
-            className="inline-flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-medium transition-colors"
+            className="inline-flex items-center space-x-2 text-blue-600 hover:text-blue-700 text-sm sm:text-base font-medium transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Blogs</span>
@@ -353,41 +353,41 @@ const BlogPostPage = ({ params }: BlogPostPageProps) => {
         </div>
 
         {/* Blog Post */}
-        <article className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+        <article className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-8 shadow-lg border border-gray-100">
           {/* Post Header */}
-          <header className="mb-8">
-            <div className="flex items-center space-x-4 mb-4">
+          <header className="mb-6 sm:mb-8">
+            <div className="flex flex-wrap gap-2 sm:gap-4 mb-4">
               {post.featured && (
-                <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                <span className="bg-blue-100 text-blue-800 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
                   Featured
                 </span>
               )}
-              <div className="flex items-center space-x-2 text-gray-500 text-sm">
-                <Clock className="w-4 h-4" />
+              <div className="flex items-center space-x-2 text-gray-500 text-xs sm:text-sm">
+                <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
                 <span>{post.readTime}</span>
               </div>
             </div>
 
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {post.title}
             </h1>
 
-            <p className="text-xl text-gray-600 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed">
               {post.excerpt}
             </p>
           </header>
 
           {/* Post Content */}
-          <div className="prose prose-lg max-w-none">
+          <div className="prose prose-sm sm:prose-base lg:prose-lg max-w-none">
             {post.content.map((block, idx) =>
               Array.isArray(block) ? (
-                <ul key={idx} className="list-disc pl-6 mb-4 text-gray-700">
+                <ul key={idx} className="list-disc pl-4 sm:pl-6 mb-4 text-gray-700">
                   {block.map((item, i) => (
-                    <li key={i}>{item}</li>
+                    <li key={i} className="text-sm sm:text-base">{item}</li>
                   ))}
                 </ul>
               ) : (
-                <p key={idx} className="text-gray-700 leading-relaxed mb-4">
+                <p key={idx} className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">
                   {block}
                 </p>
               )
@@ -395,12 +395,12 @@ const BlogPostPage = ({ params }: BlogPostPageProps) => {
           </div>
 
           {/* Tags */}
-          <div className="mt-8 pt-8 border-t border-gray-100">
+          <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-100">
             <div className="flex flex-wrap gap-2">
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
+                  className="bg-gray-100 text-gray-700 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm"
                 >
                   {tag}
                 </span>
