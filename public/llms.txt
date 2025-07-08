@@ -1,0 +1,121 @@
+# Free llms.txt Generator – Control AI Crawlers Like ChatGPT & Gemini
+# Website: https://thellmstxt.com/
+# Last updated: 2025-07-08
+# AI Enrichment: Disabled
+
+> Create your llms.txt file in seconds with our free, smart builder. Block AI crawlers like ChatGPT and Gemini from accessing your content easily.
+
+## Company Information
+- **Name**: Free llms.txt Generator – Control AI Crawlers Like ChatGPT & Gemini
+- **Website**: https://thellmstxt.com/
+- **Pages Crawled**: 17
+- **Total Links Found**: 30
+- **Unique Paths Found**: 17
+- **Generated**: 2025-07-08T09:09:39.641Z
+
+## Access Permissions for LLMs
+LLMs and indexing agents are encouraged to read and use this file for accurate citation and integration guidance.
+
+Navigation Structure
+----------------------
+# Allowed Paths
+- /
+    • Title: Free llms.txt Generator – Control AI Crawlers Like ChatGPT & Gemini
+    • Description: Create your llms.txt file in seconds with our free, smart builder. Block AI crawlers like ChatGPT and Gemini from accessing your content easily.
+    • Keywords: llms.txt generator,what is llms.txt,how to create llms.txt,llms.txt vs robots.txt,llms.txt format spec,llms-full.txt vs llms.txt,benefits of llms.txt,llms.txt generator tool,free llms.txt generator online,best llms.txt generator,llms.txt tool for Sho
+- /blogs
+    • Title: Blogs – TheLLMsTxt
+    • Description: Create your llms.txt file in seconds with our free, smart builder. Block AI crawlers like ChatGPT and Gemini from accessing your content easily.
+    • Keywords: llms.txt generator,what is llms.txt,how to create llms.txt,llms.txt vs robots.txt,llms.txt format spec,llms-full.txt vs llms.txt,benefits of llms.txt,llms.txt generator tool,free llms.txt generator online,best llms.txt generator,llms.txt tool for Sho
+- /blogs/ai-content-optimization-guide
+    • Title: Blog Post – TheLLMsTxt
+    • Description: Create your llms.txt file in seconds with our free, smart builder. Block AI crawlers like ChatGPT and Gemini from accessing your content easily.
+    • Keywords: llms.txt generator,what is llms.txt,how to create llms.txt,llms.txt vs robots.txt,llms.txt format spec,llms-full.txt vs llms.txt,benefits of llms.txt,llms.txt generator tool,free llms.txt generator online,best llms.txt generator,llms.txt tool for Sho
+- /blogs/ai-seo-strategy-2025
+    • Title: Blog Post – TheLLMsTxt
+    • Description: Create your llms.txt file in seconds with our free, smart builder. Block AI crawlers like ChatGPT and Gemini from accessing your content easily.
+    • Keywords: llms.txt generator,what is llms.txt,how to create llms.txt,llms.txt vs robots.txt,llms.txt format spec,llms-full.txt vs llms.txt,benefits of llms.txt,llms.txt generator tool,free llms.txt generator online,best llms.txt generator,llms.txt tool for Sho
+- /blogs/ai-shopping-changing-ecommerce
+    • Title: Blog Post – TheLLMsTxt
+    • Description: Create your llms.txt file in seconds with our free, smart builder. Block AI crawlers like ChatGPT and Gemini from accessing your content easily.
+    • Keywords: llms.txt generator,what is llms.txt,how to create llms.txt,llms.txt vs robots.txt,llms.txt format spec,llms-full.txt vs llms.txt,benefits of llms.txt,llms.txt generator tool,free llms.txt generator online,best llms.txt generator,llms.txt tool for Sho
+- /blogs/best-practices-implementing-llms-txt
+    • Title: Blog Post – TheLLMsTxt
+    • Description: Create your llms.txt file in seconds with our free, smart builder. Block AI crawlers like ChatGPT and Gemini from accessing your content easily.
+    • Keywords: llms.txt generator,what is llms.txt,how to create llms.txt,llms.txt vs robots.txt,llms.txt format spec,llms-full.txt vs llms.txt,benefits of llms.txt,llms.txt generator tool,free llms.txt generator online,best llms.txt generator,llms.txt tool for Sho
+- /blogs/complete-guide-to-llms-txt
+    • Title: Blog Post – TheLLMsTxt
+    • Description: Create your llms.txt file in seconds with our free, smart builder. Block AI crawlers like ChatGPT and Gemini from accessing your content easily.
+    • Keywords: llms.txt generator,what is llms.txt,how to create llms.txt,llms.txt vs robots.txt,llms.txt format spec,llms-full.txt vs llms.txt,benefits of llms.txt,llms.txt generator tool,free llms.txt generator online,best llms.txt generator,llms.txt tool for Sho
+- /blogs/content-research-techniques-ai-era
+    • Title: Blog Post – TheLLMsTxt
+    • Description: Create your llms.txt file in seconds with our free, smart builder. Block AI crawlers like ChatGPT and Gemini from accessing your content easily.
+    • Keywords: llms.txt generator,what is llms.txt,how to create llms.txt,llms.txt vs robots.txt,llms.txt format spec,llms-full.txt vs llms.txt,benefits of llms.txt,llms.txt generator tool,free llms.txt generator online,best llms.txt generator,llms.txt tool for Sho
+- /blogs/future-ai-powered-marketing
+    • Title: Blog Post – TheLLMsTxt
+    • Description: Create your llms.txt file in seconds with our free, smart builder. Block AI crawlers like ChatGPT and Gemini from accessing your content easily.
+    • Keywords: llms.txt generator,what is llms.txt,how to create llms.txt,llms.txt vs robots.txt,llms.txt format spec,llms-full.txt vs llms.txt,benefits of llms.txt,llms.txt generator tool,free llms.txt generator online,best llms.txt generator,llms.txt tool for Sho
+- /blogs/llms-txt-case-studies
+    • Title: Blog Post – TheLLMsTxt
+    • Description: Create your llms.txt file in seconds with our free, smart builder. Block AI crawlers like ChatGPT and Gemini from accessing your content easily.
+    • Keywords: llms.txt generator,what is llms.txt,how to create llms.txt,llms.txt vs robots.txt,llms.txt format spec,llms-full.txt vs llms.txt,benefits of llms.txt,llms.txt generator tool,free llms.txt generator online,best llms.txt generator,llms.txt tool for Sho
+- /blogs/llms-txt-vs-robots-txt
+    • Title: Blog Post – TheLLMsTxt
+    • Description: Create your llms.txt file in seconds with our free, smart builder. Block AI crawlers like ChatGPT and Gemini from accessing your content easily.
+    • Keywords: llms.txt generator,what is llms.txt,how to create llms.txt,llms.txt vs robots.txt,llms.txt format spec,llms-full.txt vs llms.txt,benefits of llms.txt,llms.txt generator tool,free llms.txt generator online,best llms.txt generator,llms.txt tool for Sho
+- /blogs/measuring-ai-marketing-success
+    • Title: Blog Post – TheLLMsTxt
+    • Description: Create your llms.txt file in seconds with our free, smart builder. Block AI crawlers like ChatGPT and Gemini from accessing your content easily.
+    • Keywords: llms.txt generator,what is llms.txt,how to create llms.txt,llms.txt vs robots.txt,llms.txt format spec,llms-full.txt vs llms.txt,benefits of llms.txt,llms.txt generator tool,free llms.txt generator online,best llms.txt generator,llms.txt tool for Sho
+- /faq
+    • Title: FAQ – TheLLMsTxt: Free llms.txt Generator & Integration Guide
+    • Description: Create your llms.txt file in seconds with our free, smart builder. Block AI crawlers like ChatGPT and Gemini from accessing your content easily.
+    • Keywords: llms.txt generator,what is llms.txt,how to create llms.txt,llms.txt vs robots.txt,llms.txt format spec,llms-full.txt vs llms.txt,benefits of llms.txt,llms.txt generator tool,free llms.txt generator online,best llms.txt generator,llms.txt tool for Sho
+- /how-to-use
+    • Title: How to Use llms.txt Generator & Integration Guide – TheLLMsTxt
+    • Description: Create your llms.txt file in seconds with our free, smart builder. Block AI crawlers like ChatGPT and Gemini from accessing your content easily.
+    • Keywords: llms.txt generator,what is llms.txt,how to create llms.txt,llms.txt vs robots.txt,llms.txt format spec,llms-full.txt vs llms.txt,benefits of llms.txt,llms.txt generator tool,free llms.txt generator online,best llms.txt generator,llms.txt tool for Sho
+- /privacy
+    • Title: Privacy Policy – TheLLMsTxt
+    • Description: This Privacy Policy describes how LLMsTxt ("we", "us", or "our") collects, uses, and protects your personal information when you use our website (thellmstxt.com) and related services. By using our site, you agree to the practices described in this policy.
+    • Keywords: llms.txt generator,what is llms.txt,how to create llms.txt,llms.txt vs robots.txt,llms.txt format spec,llms-full.txt vs llms.txt,benefits of llms.txt,llms.txt generator tool,free llms.txt generator online,best llms.txt generator,llms.txt tool for Sho
+- /terms
+    • Title: Terms & Conditions – TheLLMsTxt
+    • Description: Create your llms.txt file in seconds with our free, smart builder. Block AI crawlers like ChatGPT and Gemini from accessing your content easily.
+    • Keywords: llms.txt generator,what is llms.txt,how to create llms.txt,llms.txt vs robots.txt,llms.txt format spec,llms-full.txt vs llms.txt,benefits of llms.txt,llms.txt generator tool,free llms.txt generator online,best llms.txt generator,llms.txt tool for Sho
+- /what-is-llms-txt
+    • Title: What is llms.txt? Complete Guide & Free Generator – TheLLMsTxt
+    • Description: Create your llms.txt file in seconds with our free, smart builder. Block AI crawlers like ChatGPT and Gemini from accessing your content easily.
+    • Keywords: llms.txt generator,what is llms.txt,how to create llms.txt,llms.txt vs robots.txt,llms.txt format spec,llms-full.txt vs llms.txt,benefits of llms.txt,llms.txt generator tool,free llms.txt generator online,best llms.txt generator,llms.txt tool for Sho
+
+Sitemap Structure
+-----------------
+- /
+- /blogs
+- /blogs/ai-content-optimization-guide
+- /blogs/ai-seo-strategy-2025
+- /blogs/ai-shopping-changing-ecommerce
+- /blogs/best-practices-implementing-llms-txt
+- /blogs/complete-guide-to-llms-txt
+- /blogs/content-research-techniques-ai-era
+- /blogs/future-ai-powered-marketing
+- /blogs/llms-txt-case-studies
+- /blogs/llms-txt-vs-robots-txt
+- /blogs/measuring-ai-marketing-success
+- /faq
+- /how-to-use
+- /privacy
+- /terms
+- /what-is-llms-txt
+
+
+
+Allowed AI Crawlers:
+- ChatGPT-User
+- GPTBot
+- GoogleExtended
+- Claude
+- Anthropic
+
+Disallowed AI Crawlers:
+- CCBot

@@ -15,6 +15,7 @@ interface WebsiteAnalyzerProps {
   onAnalysisComplete: (data: {
     metadata: { title: string; description: string; url: string };
     paths: Array<{ path: string; allow: boolean; description?: string }>;
+    selectedBots: LLMBot[];
   }) => void;
 }
 
@@ -195,7 +196,7 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
         const data: AnalysisResult = JSON.parse(event.data);
         if (data.success) {
           setAnalysisResult(data);
-          onAnalysisComplete(data);
+          onAnalysisComplete({ ...data, selectedBots });
           setIsLoading(false);
           setProgress(100);
         } else {

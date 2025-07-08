@@ -10,6 +10,7 @@ import LLMsFullGenerator from "./LLMsFullGenerator";
 import MarkdownGenerator from "./MarkdownGenerator";
 import type { PathSelection } from "../types/backend";
 import { Sparkles, FileText, FolderOpen, Settings } from "lucide-react";
+import { LLM_BOT_CONFIGS, LLMBot } from "../types/backend";
 
 export interface Rule {
   id: string;
@@ -37,8 +38,10 @@ const Generator = () => {
       description?: string;
       keywords?: string;
     }[];
+    selectedBots?: LLMBot[];
   } | null>(null);
   const [selectedPaths, setSelectedPaths] = useState<PathSelection[]>([]);
+  const [selectedBots, setSelectedBots] = useState<LLMBot[]>([]);
   const [currentStep, setCurrentStep] = useState<
     "analyze" | "select" | "generate"
   >("analyze");
@@ -101,6 +104,21 @@ const Generator = () => {
 
     content += `## Access Permissions for LLMs\n`;
     content += `LLMs and indexing agents are encouraged to read and use this file for accurate citation and integration guidance.\n\n`;
+
+    // Add AI tool permissions section
+    const allBots = Object.keys(LLM_BOT_CONFIGS) as LLMBot[];
+    const allowedBots = selectedBots;
+    const disallowedBots = allBots.filter((b) => !allowedBots.includes(b));
+    content += `## AI Tool Permissions\n\n`;
+    content += `Allowed:\n`;
+    allowedBots.forEach((bot) => {
+      content += `- ${bot} (${LLM_BOT_CONFIGS[bot].description})\n`;
+    });
+    content += `\nDisallowed:\n`;
+    disallowedBots.forEach((bot) => {
+      content += `- ${bot} (${LLM_BOT_CONFIGS[bot].description})\n`;
+    });
+    content += `\n`;
 
     // --- PATHS SECTION (format2.txt style) ---
     if (enhancedFeatures.hierarchicalLayout) {
@@ -260,9 +278,11 @@ const Generator = () => {
   const handleAnalysisComplete = (data: {
     metadata: { title: string; description: string; url: string };
     paths: PathSelection[];
+    selectedBots: LLMBot[];
   }) => {
     setAnalysisData(data);
     setSelectedPaths(data.paths);
+    setSelectedBots(data.selectedBots || []);
     setCurrentStep("select");
   };
 
@@ -360,7 +380,9 @@ const Generator = () => {
               >
                 1
               </div>
-              <span className="font-medium text-sm sm:text-base">Analyze Website</span>
+              <span className="font-medium text-sm sm:text-base">
+                Analyze Website
+              </span>
             </div>
             <div className="hidden sm:block w-8 h-1 bg-gray-200"></div>
             <div className="sm:hidden w-1 h-8 bg-gray-200"></div>
@@ -384,7 +406,9 @@ const Generator = () => {
               >
                 2
               </div>
-              <span className="font-medium text-sm sm:text-base">Select Paths</span>
+              <span className="font-medium text-sm sm:text-base">
+                Select Paths
+              </span>
             </div>
             <div className="hidden sm:block w-8 h-1 bg-gray-200"></div>
             <div className="sm:hidden w-1 h-8 bg-gray-200"></div>
@@ -492,7 +516,9 @@ const Generator = () => {
                         }
                         className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
                       />
-                      <span className="text-sm sm:text-base text-gray-700">Hierarchical Layout</span>
+                      <span className="text-sm sm:text-base text-gray-700">
+                        Hierarchical Layout
+                      </span>
                     </label>
                   </div>
                 </div>
