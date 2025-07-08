@@ -8,6 +8,7 @@ const navLinks = [
   { href: "/how-to-use", label: "How To Use" },
   { href: "/blogs", label: "Blog" },
   { href: "/faq", label: "FAQ" },
+  { href: "/contact", label: "Contact" },
 ];
 
 const Header = () => {
