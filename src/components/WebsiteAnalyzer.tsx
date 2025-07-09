@@ -16,6 +16,15 @@ interface WebsiteAnalyzerProps {
     metadata: { title: string; description: string; url: string };
     paths: Array<{ path: string; allow: boolean; description?: string }>;
     selectedBots: LLMBot[];
+    aiGeneratedContent?: Array<{
+      path: string;
+      summary: string;
+      contextSnippet: string;
+      keywords: string[];
+      contentType: string;
+      priority: string;
+      aiUsageDirective: string;
+    }>;
   }) => void;
 }
 
@@ -31,6 +40,15 @@ interface AnalysisResult {
     allow: boolean;
     description?: string;
   }>;
+  aiGeneratedContent?: Array<{
+    path: string;
+    summary: string;
+    contextSnippet: string;
+    keywords: string[];
+    contentType: string;
+    priority: string;
+    aiUsageDirective: string;
+  }>;
   error?: string;
 }
 
@@ -44,7 +62,7 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
   );
   const [aiEnrichment, setAiEnrichment] = useState(false);
   const [progress, setProgress] = useState<number>(0);
-  const [, setProgressMsg] = useState<string>("");
+  const [progressMsg, setProgressMsg] = useState<string>("");
   const [sessionId, setSessionId] = useState<string>("");
   const [eventSource, setEventSource] = useState<EventSource | null>(null);
 
@@ -157,6 +175,15 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
         const data = JSON.parse(event.data);
         setProgress(data.progress);
         setProgressMsg(data.message || "");
+
+        // If AI enrichment is enabled and we're in the AI enrichment phase, ensure we wait
+        if (
+          aiEnrichment &&
+          data.message &&
+          data.message.includes("AI enrichment")
+        ) {
+          console.log("AI enrichment in progress:", data.message);
+        }
       } catch {}
     });
 
@@ -194,9 +221,20 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
     evtSource.addEventListener("result", (event: MessageEvent) => {
       try {
         const data: AnalysisResult = JSON.parse(event.data);
+        console.log("🔍 Frontend received data:", {
+          success: data.success,
+          hasAiContent: !!data.aiGeneratedContent,
+          aiContentLength: data.aiGeneratedContent?.length || 0,
+          aiContentSample: data.aiGeneratedContent?.slice(0, 2),
+        });
+
         if (data.success) {
           setAnalysisResult(data);
-          onAnalysisComplete({ ...data, selectedBots });
+          onAnalysisComplete({
+            ...data,
+            selectedBots,
+            aiGeneratedContent: data.aiGeneratedContent,
+          });
           setIsLoading(false);
           setProgress(100);
         } else {
@@ -288,14 +326,34 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
           {isLoading && (
             <div className="text-xs sm:text-sm text-blue-800 rounded-3xl mt-2 px-3 py-2">
               Analyzing your website will take just couple of minutes.
+              {aiEnrichment && (
+                <div className="text-xs text-purple-700 mt-1">
+                  AI enhancement will take approximately:{" "}
+                  {progressMsg.includes("AI enrichment") &&
+                  progressMsg.match(/\d+\/\d+/)
+                    ? (() => {
+                        const match = progressMsg.match(/(\d+)\/(\d+)/);
+                        if (match) {
+                          const total = parseInt(match[2]);
+                          const seconds = total * 35;
+                          const minutes = Math.round(seconds / 60);
+                          return `${seconds} seconds (${minutes} minutes)`;
+                        }
+                        return "calculating...";
+                      })()
+                    : "calculating..."}
+                </div>
+              )}
             </div>
           )}
-          {/* {isLoading && progressMsg && (
-            <div className="text-xs text-blue-700 mt-1">{progressMsg}</div>
-          )} */}
-          <p className="text-xs text-gray-500 mt-1 px-3">
-            Enter the website URL you want to analyze for LLM crawler paths
-          </p>
+          {isLoading && progressMsg && (
+            <div className="text-xs text-blue-700 px-3">{progressMsg}</div>
+          )}
+          {!url.trim() && (
+            <p className="text-xs text-gray-500 mt-1 px-3">
+              Enter the website URL you want to analyze for LLM crawler paths
+            </p>
+          )}
         </div>
 
         <div className="mb-4 sm:mb-6">
@@ -306,7 +364,7 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
             {llmBots.map((bot) => (
               <label
                 key={bot.value}
-                className="flex items-center space-x-2 sm:space-x-3 cursor-pointer rounded px-2 py-2 transition border border-transparent hover:border-blue-200 select-none group"
+                className="flex items-center space-x-2 sm:space-x-3 cursor-pointer rounded px-2 py-2 transition border border-transparent select-none group"
                 tabIndex={0}
                 onKeyDown={(e) => {
                   if (e.key === " " || e.key === "Enter") {
@@ -418,7 +476,10 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
               <div className="bg-gray-50 p-3 rounded-lg sm:col-span-2 lg:col-span-1">
                 <div className="font-medium text-gray-900">AI Enrichment</div>
                 <div className="text-gray-600">
-                  {aiEnrichment ? "Enabled" : "Disabled"}
+                  {analysisResult.aiGeneratedContent &&
+                  analysisResult.aiGeneratedContent.length > 0
+                    ? "Enabled"
+                    : "Disabled"}
                 </div>
               </div>
             </div>

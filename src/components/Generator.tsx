@@ -39,6 +39,15 @@ const Generator = () => {
       keywords?: string;
     }[];
     selectedBots?: LLMBot[];
+    aiGeneratedContent?: Array<{
+      path: string;
+      summary: string;
+      contextSnippet: string;
+      keywords: string[];
+      contentType: string;
+      priority: string;
+      aiUsageDirective: string;
+    }>;
   } | null>(null);
   const [selectedPaths, setSelectedPaths] = useState<PathSelection[]>([]);
   const [selectedBots, setSelectedBots] = useState<LLMBot[]>([]);
@@ -76,6 +85,28 @@ const Generator = () => {
       Array.isArray(analysisData.pageMetadatas)
     ) {
       analysisData.pageMetadatas.forEach((m) => metaMap.set(m.path, m));
+    }
+
+    // Build AI content lookup
+    const aiContentMap = new Map<
+      string,
+      {
+        path: string;
+        summary: string;
+        contextSnippet: string;
+        keywords: string[];
+        contentType: string;
+        priority: string;
+        aiUsageDirective: string;
+      }
+    >();
+    if (
+      analysisData.aiGeneratedContent &&
+      Array.isArray(analysisData.aiGeneratedContent)
+    ) {
+      analysisData.aiGeneratedContent.forEach((ai) =>
+        aiContentMap.set(ai.path, ai)
+      );
     }
 
     // --- DETAILS SECTION (format1.txt style) ---
@@ -168,26 +199,34 @@ const Generator = () => {
         content += `# Allowed Paths\n`;
         allowedPaths.forEach((rule) => {
           content += `- ${rule.path}\n`;
-          // Find corresponding path data
+          // Find corresponding path data and AI content
           const pathData = selectedPaths.find((p) => p.path === rule.path);
+          const aiContent = aiContentMap.get(rule.path);
+
           if (pathData) {
-            if (enhancedFeatures.includeSummaries && pathData.summary) {
-              content += `    • Summary: ${pathData.summary}\n`;
+            // Use AI content if available, otherwise fall back to path data
+            const summary = aiContent?.summary || pathData.summary;
+            const contextSnippet =
+              aiContent?.contextSnippet || pathData.contextSnippet;
+            const priority = aiContent?.priority || pathData.priority;
+            const contentType = aiContent?.contentType || pathData.contentType;
+            const aiUsageDirective =
+              aiContent?.aiUsageDirective || pathData.aiUsageDirective;
+
+            if (enhancedFeatures.includeSummaries && summary) {
+              content += `    • Summary: ${summary}\n`;
             }
-            if (
-              enhancedFeatures.includeContextSnippets &&
-              pathData.contextSnippet
-            ) {
-              content += `    • Context: ${pathData.contextSnippet}\n`;
+            if (enhancedFeatures.includeContextSnippets && contextSnippet) {
+              content += `    • Context: ${contextSnippet}\n`;
             }
-            if (pathData.priority) {
-              content += `    • Priority: ${pathData.priority}\n`;
+            if (priority) {
+              content += `    • Priority: ${priority}\n`;
             }
-            if (pathData.contentType) {
-              content += `    • Type: ${pathData.contentType}\n`;
+            if (contentType) {
+              content += `    • Type: ${contentType}\n`;
             }
-            if (pathData.aiUsageDirective) {
-              content += `    • AI Usage: ${pathData.aiUsageDirective}\n`;
+            if (aiUsageDirective) {
+              content += `    • AI Usage: ${aiUsageDirective}\n`;
             }
           }
           const meta2 = metaMap.get(rule.path);
@@ -279,10 +318,30 @@ const Generator = () => {
     metadata: { title: string; description: string; url: string };
     paths: PathSelection[];
     selectedBots: LLMBot[];
+    aiGeneratedContent?: Array<{
+      path: string;
+      summary: string;
+      contextSnippet: string;
+      keywords: string[];
+      contentType: string;
+      priority: string;
+      aiUsageDirective: string;
+    }>;
   }) => {
     setAnalysisData(data);
     setSelectedPaths(data.paths);
     setSelectedBots(data.selectedBots || []);
+
+    // Enable enhanced features if AI content is available
+    if (data.aiGeneratedContent && data.aiGeneratedContent.length > 0) {
+      setEnhancedFeatures({
+        includeSummaries: true,
+        includeContextSnippets: true,
+        hierarchicalLayout: false,
+        aiEnrichment: true,
+      });
+    }
+
     setCurrentStep("select");
   };
 
