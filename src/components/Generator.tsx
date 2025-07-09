@@ -9,7 +9,7 @@ import OutputPreview from "./OutputPreview";
 import LLMsFullGenerator from "./LLMsFullGenerator";
 import MarkdownGenerator from "./MarkdownGenerator";
 import type { PathSelection } from "../types/backend";
-import { Sparkles, FileText, FolderOpen, Settings } from "lucide-react";
+import { FileText, FolderOpen, Settings } from "lucide-react";
 import { LLM_BOT_CONFIGS, LLMBot } from "../types/backend";
 
 export interface Rule {
@@ -506,82 +506,6 @@ const Generator = () => {
             {/* Step 2: Path Selection */}
             {currentStep === "select" && analysisData && (
               <div className="space-y-4 sm:space-y-6">
-                {/* Enhanced Features Toggle */}
-                <div className="bg-white rounded-lg p-4 sm:p-6 border border-gray-200">
-                  <div className="flex items-center space-x-2 mb-4">
-                    <Sparkles className="w-5 h-5 text-purple-600" />
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      Enhanced Features
-                    </h3>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                    <label className="flex items-center space-x-3">
-                      <input
-                        type="checkbox"
-                        checked={enhancedFeatures.aiEnrichment}
-                        onChange={(e) =>
-                          setEnhancedFeatures({
-                            ...enhancedFeatures,
-                            aiEnrichment: e.target.checked,
-                          })
-                        }
-                        className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
-                      />
-                      <span className="text-sm sm:text-base text-gray-700">
-                        Enable AI Enrichment
-                      </span>
-                    </label>
-                    <label className="flex items-center space-x-3">
-                      <input
-                        type="checkbox"
-                        checked={enhancedFeatures.includeSummaries}
-                        onChange={(e) =>
-                          setEnhancedFeatures({
-                            ...enhancedFeatures,
-                            includeSummaries: e.target.checked,
-                          })
-                        }
-                        className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
-                      />
-                      <span className="text-sm sm:text-base text-gray-700">
-                        Include AI Summaries
-                      </span>
-                    </label>
-                    <label className="flex items-center space-x-3">
-                      <input
-                        type="checkbox"
-                        checked={enhancedFeatures.includeContextSnippets}
-                        onChange={(e) =>
-                          setEnhancedFeatures({
-                            ...enhancedFeatures,
-                            includeContextSnippets: e.target.checked,
-                          })
-                        }
-                        className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
-                      />
-                      <span className="text-sm sm:text-base text-gray-700">
-                        Include Context Snippets
-                      </span>
-                    </label>
-                    <label className="flex items-center space-x-3">
-                      <input
-                        type="checkbox"
-                        checked={enhancedFeatures.hierarchicalLayout}
-                        onChange={(e) =>
-                          setEnhancedFeatures({
-                            ...enhancedFeatures,
-                            hierarchicalLayout: e.target.checked,
-                          })
-                        }
-                        className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
-                      />
-                      <span className="text-sm sm:text-base text-gray-700">
-                        Hierarchical Layout
-                      </span>
-                    </label>
-                  </div>
-                </div>
-
                 <PathSelector
                   paths={selectedPaths}
                   onSelectionChange={handlePathSelectionChange}
