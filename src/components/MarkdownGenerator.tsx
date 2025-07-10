@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import {
-  Download,
   FileText,
   FolderOpen,
   Loader2,
   CheckCircle,
+  Archive,
 } from "lucide-react";
 import { MarkdownGenerationResponse } from "../types/backend";
 
@@ -21,9 +21,8 @@ const MarkdownGenerator: React.FC<MarkdownGeneratorProps> = ({
   const [isGenerating, setIsGenerating] = useState(false);
   const [result, setResult] = useState<MarkdownGenerationResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
-   const BASE_API_URL =
-     process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
-
+  const BASE_API_URL =
+    process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
 
   const generateMarkdown = async () => {
     setIsGenerating(true);
@@ -31,16 +30,13 @@ const MarkdownGenerator: React.FC<MarkdownGeneratorProps> = ({
     setResult(null);
 
     try {
-      const response = await fetch(
-        `${BASE_API_URL}/api/generate-markdown`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ websiteUrl }),
-        }
-      );
+      const response = await fetch(`${BASE_API_URL}/api/generate-markdown`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ websiteUrl }),
+      });
 
       const data: MarkdownGenerationResponse = await response.json();
 
@@ -59,19 +55,47 @@ const MarkdownGenerator: React.FC<MarkdownGeneratorProps> = ({
   const downloadAllFiles = () => {
     if (!result?.files) return;
 
-    result.files.forEach((file, index) => {
-      setTimeout(() => {
-        const blob = new Blob([file.content], { type: "text/markdown" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = file.filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }, index * 100); // Stagger downloads
-    });
+    // Create a ZIP file using JSZip
+    import("jszip")
+      .then((JSZip) => {
+        const zip = new JSZip.default();
+
+        // Add all files to the ZIP
+        result.files.forEach((file) => {
+          zip.file(file.filename, file.content);
+        });
+
+        // Generate and download the ZIP
+        zip.generateAsync({ type: "blob" }).then((blob) => {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `markdown-pages-${new Date()
+            .toISOString()
+            .slice(0, 10)}.zip`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        });
+      })
+      .catch((error) => {
+        console.error("Failed to create ZIP:", error);
+        // Fallback to individual downloads
+        result.files.forEach((file, index) => {
+          setTimeout(() => {
+            const blob = new Blob([file.content], { type: "text/markdown" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = file.filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          }, index * 100);
+        });
+      });
   };
 
   const downloadSingleFile = (file: {
@@ -110,7 +134,10 @@ const MarkdownGenerator: React.FC<MarkdownGeneratorProps> = ({
 
         <div className="mb-4 sm:mb-6">
           <p className="text-gray-600 mb-4 text-sm sm:text-base">
-            Generate <code className="bg-gray-100 px-1 sm:px-2 py-1 rounded text-xs sm:text-sm">.md</code>{" "}
+            Generate{" "}
+            <code className="bg-gray-100 px-1 sm:px-2 py-1 rounded text-xs sm:text-sm">
+              .md
+            </code>{" "}
             versions of your key pages for better parsing and offline processing
             by LLMs. This creates individual markdown files for each important
             page.
@@ -142,13 +169,17 @@ const MarkdownGenerator: React.FC<MarkdownGeneratorProps> = ({
             {isGenerating ? (
               <>
                 <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
-                <span className="hidden sm:inline">Generating Markdown Files...</span>
+                <span className="hidden sm:inline">
+                  Generating Markdown Files...
+                </span>
                 <span className="sm:hidden">Generating...</span>
               </>
             ) : (
               <>
                 <FolderOpen className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="hidden sm:inline">Generate Markdown Pages</span>
+                <span className="hidden sm:inline">
+                  Generate Markdown Pages
+                </span>
                 <span className="sm:hidden">Generate Pages</span>
               </>
             )}
@@ -183,9 +214,9 @@ const MarkdownGenerator: React.FC<MarkdownGeneratorProps> = ({
                 onClick={downloadAllFiles}
                 className="flex-1 bg-green-600 text-white py-2 px-3 sm:px-4 rounded-lg hover:bg-green-700 flex items-center justify-center space-x-2 text-sm"
               >
-                <Download className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">Download All Files</span>
-                <span className="sm:hidden">Download All</span>
+                <Archive className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Download ZIP</span>
+                <span className="sm:hidden">Download ZIP</span>
               </button>
             </div>
 
