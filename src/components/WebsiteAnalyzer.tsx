@@ -16,6 +16,13 @@ interface WebsiteAnalyzerProps {
     metadata: { title: string; description: string; url: string };
     paths: Array<{ path: string; allow: boolean; description?: string }>;
     selectedBots: LLMBot[];
+    pageMetadatas?: Array<{
+      path: string;
+      title: string;
+      description: string;
+      keywords?: string;
+      bodyContent?: string;
+    }>;
     aiGeneratedContent?: Array<{
       path: string;
       summary: string;
@@ -39,6 +46,13 @@ interface AnalysisResult {
     path: string;
     allow: boolean;
     description?: string;
+  }>;
+  pageMetadatas?: Array<{
+    path: string;
+    title: string;
+    description: string;
+    keywords?: string;
+    bodyContent?: string;
   }>;
   aiGeneratedContent?: Array<{
     path: string;
@@ -226,6 +240,11 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
           hasAiContent: !!data.aiGeneratedContent,
           aiContentLength: data.aiGeneratedContent?.length || 0,
           aiContentSample: data.aiGeneratedContent?.slice(0, 2),
+          hasPageMetadatas: !!data.pageMetadatas,
+          pageMetadatasLength: data.pageMetadatas?.length || 0,
+          hasBodyContent: data.pageMetadatas?.some(
+            (m) => m.bodyContent && m.bodyContent.length > 0
+          ),
         });
 
         if (data.success) {
@@ -233,6 +252,7 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
           onAnalysisComplete({
             ...data,
             selectedBots,
+            pageMetadatas: data.pageMetadatas,
             aiGeneratedContent: data.aiGeneratedContent,
           });
           setIsLoading(false);
@@ -335,9 +355,12 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
                         const match = progressMsg.match(/(\d+)\/(\d+)/);
                         if (match) {
                           const total = parseInt(match[2]);
-                          const seconds = total * 35;
-                          const minutes = Math.round(seconds / 60);
-                          return `${seconds} seconds (${minutes} minutes)`;
+                          // Each AI request takes ~10 seconds due to rate limiting
+                          const seconds = total * 10;
+                          const minutes = Math.ceil(seconds / 60);
+                          return `${seconds} seconds (${minutes} minute${
+                            minutes > 1 ? "s" : ""
+                          })`;
                         }
                         return "calculating...";
                       })()

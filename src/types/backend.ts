@@ -68,6 +68,7 @@ export interface WebsiteAnalysisResponse {
     title: string;
     description: string;
     keywords?: string;
+    bodyContent?: string;
   }>;
   aiGeneratedContent?: AIGeneratedContent[];
   error?: string;

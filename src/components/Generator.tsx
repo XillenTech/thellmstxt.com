@@ -37,6 +37,7 @@ const Generator = () => {
       title?: string;
       description?: string;
       keywords?: string;
+      bodyContent?: string;
     }[];
     selectedBots?: LLMBot[];
     aiGeneratedContent?: Array<{
@@ -63,6 +64,7 @@ const Generator = () => {
     includeContextSnippets: false,
     hierarchicalLayout: false,
     aiEnrichment: false,
+    includeBodyContent: false, // Disabled for llms.txt
   });
 
   useEffect(() => {
@@ -78,13 +80,33 @@ const Generator = () => {
     // Build quick metadata lookup
     const metaMap = new Map<
       string,
-      { title?: string; description?: string; keywords?: string }
+      {
+        title?: string;
+        description?: string;
+        keywords?: string;
+        bodyContent?: string;
+      }
     >();
     if (
       analysisData.pageMetadatas &&
       Array.isArray(analysisData.pageMetadatas)
     ) {
-      analysisData.pageMetadatas.forEach((m) => metaMap.set(m.path, m));
+      console.log(
+        "📋 Frontend received pageMetadatas:",
+        analysisData.pageMetadatas.length
+      );
+      let bodyContentCount = 0;
+      analysisData.pageMetadatas.forEach((m) => {
+        metaMap.set(m.path, m);
+        if (m.bodyContent) {
+          bodyContentCount++;
+          console.log(
+            `📄 ${m.path} has body content: ${m.bodyContent.length} chars`
+          );
+        }
+      });
+      console.log(`📊 Total pages with body content: ${bodyContentCount}`);
+      console.log(`🔧 Enhanced features state:`, enhancedFeatures);
     }
 
     // Build AI content lookup
@@ -185,9 +207,20 @@ const Generator = () => {
           if (meta?.description) {
             content += `  • Description: ${meta.description}\n`;
           }
+          // Include keywords from scraped data
           if (meta?.keywords) {
             content += `  • Keywords: ${meta?.keywords || "N/A"}\n`;
           }
+          // Include AI-generated keywords when AI enrichment is enabled
+          const aiContent = aiContentMap.get(path.path);
+          if (
+            enhancedFeatures.aiEnrichment &&
+            aiContent?.keywords &&
+            aiContent.keywords.length > 0
+          ) {
+            content += `  • AI Keywords: ${aiContent.keywords.join(", ")}\n`;
+          }
+          // Body content removed from llms.txt - only for llms-full.txt
         });
         content += `\n`;
       });
@@ -236,9 +269,19 @@ const Generator = () => {
           if (meta2?.description) {
             content += `    • Description: ${meta2.description}\n`;
           }
+          // Include keywords from scraped data
           if (meta2?.keywords) {
             content += `    • Keywords: ${meta2?.keywords || "N/A"}\n`;
           }
+          // Include AI-generated keywords when AI enrichment is enabled
+          if (
+            enhancedFeatures.aiEnrichment &&
+            aiContent?.keywords &&
+            aiContent.keywords.length > 0
+          ) {
+            content += `    • AI Keywords: ${aiContent.keywords.join(", ")}\n`;
+          }
+          // Body content removed from llms.txt - only for llms-full.txt
         });
       }
       // List disallowed paths
@@ -318,6 +361,13 @@ const Generator = () => {
     metadata: { title: string; description: string; url: string };
     paths: PathSelection[];
     selectedBots: LLMBot[];
+    pageMetadatas?: Array<{
+      path: string;
+      title: string;
+      description: string;
+      keywords?: string;
+      bodyContent?: string;
+    }>;
     aiGeneratedContent?: Array<{
       path: string;
       summary: string;
@@ -332,6 +382,11 @@ const Generator = () => {
     setSelectedPaths(data.paths);
     setSelectedBots(data.selectedBots || []);
 
+    // Body content is not enabled for llms.txt - only for llms-full.txt
+    console.log(
+      `🔍 Analysis complete - Body content available but disabled for llms.txt`
+    );
+
     // Enable enhanced features if AI content is available
     if (data.aiGeneratedContent && data.aiGeneratedContent.length > 0) {
       setEnhancedFeatures({
@@ -339,6 +394,7 @@ const Generator = () => {
         includeContextSnippets: true,
         hierarchicalLayout: false,
         aiEnrichment: true,
+        includeBodyContent: false, // Always false for llms.txt
       });
     }
 
@@ -392,6 +448,7 @@ const Generator = () => {
       includeContextSnippets: false,
       hierarchicalLayout: false,
       aiEnrichment: false,
+      includeBodyContent: false,
     });
   };
 
@@ -551,7 +608,7 @@ const Generator = () => {
                   </button>
                 </div>
 
-                {/* Enhanced Generation Options */}
+                {/* Enhanced Features Controls */}
                 <div className="bg-white rounded-lg p-6 border border-gray-200">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">
                     Generation Options
