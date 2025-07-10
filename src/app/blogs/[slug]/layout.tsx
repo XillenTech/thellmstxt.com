@@ -9,6 +9,10 @@ export async function generateMetadata({
 
   return {
     title: "Blog Post – TheLLMsTxt",
+    description:
+      "Read our latest blog post about llms.txt, AI crawlers, website optimization, and LLM integration best practices.",
+    keywords:
+      "llms.txt blog, AI crawler articles, website optimization blog, LLM integration posts, AI training content",
     alternates: {
       canonical: `https://thellmstxt.com/blogs/${slug}`,
     },
@@ -20,9 +24,5 @@ export default function BlogSlugLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {children}
-    </div>
-  );
+  return <div className="min-h-screen bg-gray-50">{children}</div>;
 }

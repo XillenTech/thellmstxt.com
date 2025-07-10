@@ -4,6 +4,10 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Blogs – TheLLMsTxt",
+  description:
+    "Explore our latest blog posts about llms.txt, AI crawlers, website optimization, and LLM integration best practices.",
+  keywords:
+    "llms.txt, AI crawlers, website optimization, LLM integration, blog posts, AI training, web crawling, machine learning",
   alternates: {
     canonical: "https://thellmstxt.com/blogs/",
   },
