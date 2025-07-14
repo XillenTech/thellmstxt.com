@@ -1,8 +1,9 @@
 "use client";
 import React from "react";
-import { FileText, Bot, ExternalLink, ShoppingCart } from "lucide-react";
+import { ExternalLink, ShoppingCart } from "lucide-react";
 import { FaXTwitter } from "react-icons/fa6";
 import Link from "next/link";
+import Logo from "./Logo";
 
 const Footer = () => {
   return (
@@ -10,14 +11,8 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
           <div className="sm:col-span-2">
-            <div className="flex items-center space-x-2 mb-3 sm:mb-4">
-              <div className="relative">
-                <FileText className="h-6 w-6 sm:h-8 sm:w-8 text-blue-400" />
-                <Bot className="h-3 w-3 sm:h-4 sm:w-4 text-green-400 absolute -top-1 -right-1" />
-              </div>
-              <span className="text-lg sm:text-xl font-bold">
-                TheLLMsTxt.com
-              </span>
+            <div className="mb-3 sm:mb-4">
+              <Logo size="md" variant="footer" />
             </div>
             <p className="text-gray-400 mb-4 sm:mb-6 max-w-md text-sm sm:text-base">
               The easiest way to create llms.txt files for any website. Take

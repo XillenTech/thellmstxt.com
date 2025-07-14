@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { FileText, Bot } from "lucide-react";
 import Link from "next/link";
+import Logo from "./Logo";
 
 const navLinks = [
   { href: "/what-is-llms-txt", label: "What is llms.txt?" },
@@ -46,18 +46,8 @@ const Header = () => {
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link
-            href="/"
-            className="flex items-center space-x-2"
-            onClick={handleNavClick}
-          >
-            <div className="relative">
-              <FileText className="h-8 w-8 text-blue-600" />
-              <Bot className="h-4 w-4 text-green-500 absolute -top-1 -right-1" />
-            </div>
-            <span className="text-lg sm:text-xl font-bold text-gray-900">
-              TheLLMsTxt
-            </span>
+          <Link href="/" className="flex items-center" onClick={handleNavClick}>
+            <Logo size="md" variant="header" />
           </Link>
 
           {/* Desktop Navigation */}
