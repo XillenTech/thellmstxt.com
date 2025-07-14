@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   keywords:
     "llms.txt, AI crawlers, website optimization, LLM integration, blog posts, AI training, web crawling, machine learning",
   alternates: {
-    canonical: "https://thellmstxt.com/blogs/",
+    canonical: "https://thellmstxt.com/blogs",
   },
 };
 

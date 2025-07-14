@@ -15,7 +15,9 @@ const Footer = () => {
                 <FileText className="h-6 w-6 sm:h-8 sm:w-8 text-blue-400" />
                 <Bot className="h-3 w-3 sm:h-4 sm:w-4 text-green-400 absolute -top-1 -right-1" />
               </div>
-              <span className="text-lg sm:text-xl font-bold">TheLLMsTxt.com</span>
+              <span className="text-lg sm:text-xl font-bold">
+                TheLLMsTxt.com
+              </span>
             </div>
             <p className="text-gray-400 mb-4 sm:mb-6 max-w-md text-sm sm:text-base">
               The easiest way to create llms.txt files for any website. Take
@@ -23,7 +25,7 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <a
-                href="https://x.com/Xillentech01"
+                href="https://x.com/thellmstxt"
                 target="_blank"
                 className="text-gray-400 hover:text-white transition-colors"
                 aria-label="X (Twitter)"
@@ -34,7 +36,9 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Resources</h4>
+            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">
+              Resources
+            </h4>
             <ul className="space-y-1 sm:space-y-2">
               <li>
                 <Link
@@ -68,11 +72,21 @@ const Footer = () => {
                   FAQ
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base"
+                >
+                  Contact
+                </Link>
+              </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Learn More</h4>
+            <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">
+              Learn More
+            </h4>
             <ul className="space-y-1 sm:space-y-2">
               <li>
                 <Link
@@ -107,7 +121,9 @@ const Footer = () => {
                 className="inline-flex items-center justify-center space-x-2 bg-purple-600 text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium hover:bg-purple-700 transition-colors w-full md:w-auto"
               >
                 <ShoppingCart className="h-3 w-3 sm:h-4 sm:w-4" />
-                <span className="text-center">Premium eCommerce llms.txt by llmstxt.store</span>
+                <span className="text-center">
+                  Premium eCommerce llms.txt by llmstxt.store
+                </span>
                 <ExternalLink className="h-2 w-2 sm:h-3 sm:w-3" />
               </a>
             </div>

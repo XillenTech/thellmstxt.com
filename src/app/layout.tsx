@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     "llms.txt for AI content optimization",
   ],
   alternates: {
-    canonical: "https://thellmstxt.com/",
+    canonical: "https://thellmstxt.com",
   },
 };
 
