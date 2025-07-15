@@ -34,56 +34,56 @@ const blogPosts: BlogPost[] = [
     slug: "llms-txt-vs-robots-txt",
     title: "llms.txt vs robots.txt in 2025: Key Differences",
     excerpt:
-      "Understand the crucial differences between llms.txt and robots.txt in 2025. Learn when to use each protocol for optimal AI and search engine visibility.",
+      "Understand the crucial differences between llms.txt and robots.txt in 2025. Learn when to use each protocol for optimal AI and search engine visibility and brand safety.",
     tags: ["llms.txt", "robots.txt", "Technical", "2025", "SEO"],
   },
   {
     slug: "best-practices-implementing-llms-txt",
     title: "Best Practices for Implementing llms.txt in 2025",
     excerpt:
-      "Discover proven strategies and common pitfalls to avoid when setting up llms.txt for optimal AI crawler control and SEO in 2025.",
+      "Discover proven strategies and common pitfalls to avoid when setting up llms.txt for optimal AI crawler control and SEO in 2025. Learn how to protect your content.",
     tags: ["Implementation", "Best Practices", "Technical", "2025", "SEO"],
   },
   {
     slug: "future-ai-powered-marketing",
     title: "The Future of AI-Powered Marketing in 2025",
     excerpt:
-      "Explore the top 2025 trends in AI marketing and discover how businesses can prepare for the next wave of AI-driven customer interactions.",
+      "Explore the top 2025 trends in AI marketing and discover how businesses can prepare for the next wave of AI-driven customer interactions and content optimization.",
     tags: ["AI Marketing", "Future Trends", "Strategy", "2025", "SEO"],
   },
   {
     slug: "ai-content-optimization-guide",
     title: "AI Content Optimization Guide 2025",
     excerpt:
-      "Learn proven strategies to optimize your content for AI systems and search engines in 2025. Discover actionable tips for structure and markup.",
+      "Learn proven strategies to optimize your content for AI systems and search engines in 2025. Discover actionable tips for structure, markup, and comprehensive coverage.",
     tags: ["Content Optimization", "AI Marketing", "SEO", "2025"],
   },
   {
     slug: "measuring-ai-marketing-success",
     title: "Measuring AI Marketing Success in 2025",
     excerpt:
-      "Discover the essential 2025 metrics and analytics tools to track your AI marketing and SEO performance.",
+      "Discover the essential 2025 metrics and analytics tools to track your AI marketing and SEO performance. Learn how to optimize your strategy for maximum impact.",
     tags: ["Analytics", "AI Marketing", "Performance", "2025", "SEO"],
   },
   {
     slug: "llms-txt-case-studies",
     title: "Real-World llms.txt Case Studies 2025",
     excerpt:
-      "Explore real-world 2025 examples of businesses that have successfully implemented llms.txt. Learn how it can boost your AI visibility and SEO.",
+      "Explore real-world 2025 examples of businesses that have successfully implemented llms.txt. Learn how it can boost your AI visibility, SEO, and digital marketing results.",
     tags: ["Case Studies", "llms.txt", "Success Stories", "2025", "SEO"],
   },
   {
     slug: "ai-seo-strategy-2025",
     title: "AI SEO Strategy 2025: Beyond Traditional Search",
     excerpt:
-      "Develop a comprehensive 2025 AI SEO strategy that works with both traditional search engines and AI systems.",
+      "Develop a comprehensive 2025 AI SEO strategy that works with both traditional search engines and AI systems. Learn how to use semantic search and structured data.",
     tags: ["AI SEO", "Search Optimization", "Strategy", "2025", "SEO"],
   },
   {
     slug: "content-research-techniques-ai-era",
     title: "Content Research Techniques for the AI Era 2025",
     excerpt:
-      "Master advanced 2025 content research techniques to create content optimized for both human readers and AI systems.",
+      "Master advanced 2025 content research techniques to create content optimized for both human readers and AI systems. Use AI tools and keyword research.",
     tags: [
       "Content Research",
       "AI Optimization",
