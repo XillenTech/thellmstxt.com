@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Free llms.txt Generator – Control AI Crawlers Like ChatGPT & Gemini",
+  title: "Free llms.txt Generator – Control AI Crawlers",
   description:
     "Create your llms.txt file in seconds with our free, smart builder. Block AI crawlers like ChatGPT and Gemini from accessing your content easily.",
   keywords: [
