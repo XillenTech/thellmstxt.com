@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Loader } from "lucide-react";
 
 const interests = ["General Inquiry", "Support", "Feedback", "Other"];
 
@@ -15,6 +15,7 @@ export default function ContactPage() {
     message: "",
   });
   const [status, setStatus] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -27,21 +28,35 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("");
+    setIsSubmitting(true);
+
     try {
-      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+      const API_BASE_URL =
+        process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
       const res = await fetch(`${API_BASE_URL}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
+
       if (res.ok) {
-        setStatus("Thank you for your inquiry! We'll get back to you soon.");
+        const data = await res.json();
+        setStatus(
+          data.message ||
+            "Thank you for your inquiry! We'll get back to you soon."
+        );
         setForm({ name: "", email: "", phone: "", interest: "", message: "" });
       } else {
-        setStatus("Something went wrong. Please try again later.");
+        const errorData = await res.json();
+        setStatus(
+          errorData.error || "Something went wrong. Please try again later."
+        );
       }
-    } catch {
-      setStatus("Something went wrong. Please try again later.");
+    } catch (error) {
+      console.error("Contact form error:", error);
+      setStatus("Network error. Please check your connection and try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -64,6 +79,19 @@ export default function ContactPage() {
           {/* Contact Form */}
           <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
             <form className="space-y-6" onSubmit={handleSubmit}>
+              {/* Status Messages */}
+              {status && (
+                <div
+                  className={`text-center py-3 px-4 rounded-lg ${
+                    status.includes("Thank you")
+                      ? "bg-green-50 text-green-700 border border-green-200"
+                      : "bg-red-50 text-red-700 border border-red-200"
+                  }`}
+                >
+                  {status}
+                </div>
+              )}
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label
@@ -179,23 +207,19 @@ export default function ContactPage() {
               <div className="pt-4">
                 <button
                   type="submit"
-                  className="w-full bg-blue-600 text-white font-semibold py-4 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
+                  disabled={isSubmitting}
+                  className="w-full bg-blue-600 text-white font-semibold py-4 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
-                  Send Message
+                  {isSubmitting ? (
+                    <>
+                      <Loader className="animate-spin h-5 w-5 inline mr-2" />
+                      Sending...
+                    </>
+                  ) : (
+                    "Send Message"
+                  )}
                 </button>
               </div>
-
-              {status && (
-                <div
-                  className={`text-center py-3 px-4 rounded-lg ${
-                    status.includes("Thank you")
-                      ? "bg-green-50 text-green-700 border border-green-200"
-                      : "bg-red-50 text-red-700 border border-red-200"
-                  }`}
-                >
-                  {status}
-                </div>
-              )}
             </form>
           </div>
         </div>

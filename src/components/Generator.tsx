@@ -11,6 +11,7 @@ import MarkdownGenerator from "./MarkdownGenerator";
 import type { PathSelection } from "../types/backend";
 import { FileText, FolderOpen, Settings } from "lucide-react";
 import { LLM_BOT_CONFIGS, LLMBot } from "../types/backend";
+import { useAuth } from "./AuthProvider";
 
 export interface Rule {
   id: string;
@@ -20,6 +21,7 @@ export interface Rule {
 }
 
 const Generator = () => {
+  const { user } = useAuth();
   const [rules, setRules] = useState<Rule[]>([]);
   const [generatedContent, setGeneratedContent] = useState("");
   const [analysisData, setAnalysisData] = useState<{
@@ -66,6 +68,9 @@ const Generator = () => {
     aiEnrichment: false,
     includeBodyContent: false, // Disabled for llms.txt
   });
+
+  // Add state to track if blur overlay has been dismissed
+  const [blurOverlayDismissed, setBlurOverlayDismissed] = useState(false);
 
   useEffect(() => {
     generateContent();
@@ -443,6 +448,7 @@ const Generator = () => {
     setSelectedPaths([]);
     setRules([]);
     setCurrentStep("analyze");
+    setBlurOverlayDismissed(false);
     setEnhancedFeatures({
       includeSummaries: false,
       includeContextSnippets: false,
@@ -566,6 +572,8 @@ const Generator = () => {
                 <PathSelector
                   paths={selectedPaths}
                   onSelectionChange={handlePathSelectionChange}
+                  isAuthenticated={!!user || blurOverlayDismissed}
+                  onBlurOverlayDismiss={() => setBlurOverlayDismissed(true)}
                 />
                 <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
                   <button

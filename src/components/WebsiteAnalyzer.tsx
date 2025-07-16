@@ -79,6 +79,8 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
   const [progressMsg, setProgressMsg] = useState<string>("");
   const [sessionId, setSessionId] = useState<string>("");
   const [eventSource, setEventSource] = useState<EventSource | null>(null);
+  const [showAsyncModal, setShowAsyncModal] = useState(false);
+  const [asyncMessage, setAsyncMessage] = useState<string | null>(null);
 
   const llmBots: Array<{ value: LLMBot; label: string; description: string }> =
     [
@@ -234,7 +236,14 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
     // Listen for final result event
     evtSource.addEventListener("result", (event: MessageEvent) => {
       try {
-        const data: AnalysisResult = JSON.parse(event.data);
+        const data: AnalysisResult & {
+          demo?: boolean;
+          remainingPages?: number;
+          demoMessage?: string;
+          asyncJob?: boolean;
+          message?: string;
+        } = JSON.parse(event.data);
+        console.log("[FRONTEND] Received result event:", data);
         console.log("🔍 Frontend received data:", {
           success: data.success,
           hasAiContent: !!data.aiGeneratedContent,
@@ -257,6 +266,15 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
           });
           setIsLoading(false);
           setProgress(100);
+
+          // ASYNC JOB: Show modal if asyncJob response
+          if (data.asyncJob && data.message) {
+            setAsyncMessage(data.message);
+            setShowAsyncModal(true);
+          } else {
+            setAsyncMessage(null);
+            setShowAsyncModal(false);
+          }
         } else {
           setError(data.error || "Analysis failed");
           setIsLoading(false);
@@ -285,6 +303,23 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+      {/* ASYNC JOB MODAL */}
+      {showAsyncModal && asyncMessage && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+          <div className="bg-white rounded-xl shadow-xl p-6 max-w-md w-full text-center">
+            <h4 className="text-lg font-bold mb-2 text-purple-700">
+              Long Job in Progress
+            </h4>
+            <p className="mb-4 text-gray-700">{asyncMessage}</p>
+            <button
+              onClick={() => setShowAsyncModal(false)}
+              className="mt-2 text-xs text-gray-500 underline"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
       <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
         Website Analyzer
       </h3>
@@ -310,7 +345,7 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder="https://example.com"
-                autoFocus
+                // autoFocus
                 autoComplete="on"
                 className={`w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-3xl focus:outline-none focus:ring-blue-500 transition-all text-black placeholder:text-gray-400 relative z-10 bg-transparent text-sm sm:text-base ${
                   isLoading ? "cursor-not-allowed" : ""
