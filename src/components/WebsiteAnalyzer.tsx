@@ -10,6 +10,7 @@ import {
   Square,
 } from "lucide-react";
 import type { LLMBot } from "../types/backend";
+import { useAuth } from "./AuthProvider";
 
 interface WebsiteAnalyzerProps {
   onAnalysisComplete: (data: {
@@ -81,6 +82,7 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
   const [eventSource, setEventSource] = useState<EventSource | null>(null);
   const [showAsyncModal, setShowAsyncModal] = useState(false);
   const [asyncMessage, setAsyncMessage] = useState<string | null>(null);
+  const { token } = useAuth();
 
   const llmBots: Array<{ value: LLMBot; label: string; description: string }> =
     [
@@ -174,7 +176,6 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
     const newSessionId = generateSessionId();
     setSessionId(newSessionId);
 
-    // Listen to SSE for progress
     const apiBase =
       process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
     const sseUrl = `${apiBase}/api/analyze-website?url=${encodeURIComponent(
@@ -183,118 +184,153 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
       selectedBots.join(",")
     )}&aiEnrichment=${aiEnrichment}&sessionId=${newSessionId}`;
 
-    const evtSource = new EventSource(sseUrl);
-    setEventSource(evtSource);
-
-    evtSource.addEventListener("progress", (event: MessageEvent) => {
+    // If logged in, use fetch with Authorization header and manual SSE parsing
+    if (token) {
       try {
-        const data = JSON.parse(event.data);
-        setProgress(data.progress);
-        setProgressMsg(data.message || "");
-
-        // If AI enrichment is enabled and we're in the AI enrichment phase, ensure we wait
-        if (
-          aiEnrichment &&
-          data.message &&
-          data.message.includes("AI enrichment")
-        ) {
-          console.log("AI enrichment in progress:", data.message);
+        const response = await fetch(sseUrl, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (!response.body) throw new Error("No response body");
+        const reader = response.body.getReader();
+        let buffer = "";
+        let done = false;
+        while (!done) {
+          const { value, done: doneReading } = await reader.read();
+          done = doneReading;
+          if (value) {
+            buffer += new TextDecoder().decode(value);
+            let eventMatch;
+            // Process all complete events in the buffer
+            while (
+              (eventMatch = buffer.match(/event: (\w+)\ndata: ([^\n]+)\n\n/))
+            ) {
+              const [, event, data] = eventMatch;
+              buffer = buffer.slice(eventMatch.index! + eventMatch[0].length);
+              handleSSEEvent(event, data);
+            }
+          }
         }
-      } catch {}
-    });
+      } catch {
+        setError("Analysis failed or connection lost.");
+        setIsLoading(false);
+        setProgress(0);
+        setEventSource(null);
+        setSessionId("");
+      }
+    } else {
+      // Not logged in: use EventSource (no custom headers)
+      const evtSource = new EventSource(sseUrl);
+      setEventSource(evtSource);
+      evtSource.addEventListener("progress", (event: MessageEvent) => {
+        try {
+          const data = JSON.parse(event.data);
+          setProgress(data.progress);
+          setProgressMsg(data.message || "");
+          if (
+            aiEnrichment &&
+            data.message &&
+            data.message.includes("AI enrichment")
+          ) {
+            console.log("AI enrichment in progress:", data.message);
+          }
+        } catch {}
+      });
+      evtSource.addEventListener("cancelled", () => {
+        setError("Analysis was cancelled");
+        setIsLoading(false);
+        setProgress(0);
+        setEventSource(null);
+        setSessionId("");
+      });
+      evtSource.addEventListener("error", () => {
+        setError("Analysis failed or connection lost.");
+        setIsLoading(false);
+        setProgress(0);
+        setEventSource(null);
+        setSessionId("");
+      });
+      evtSource.addEventListener("open", () => {});
+      evtSource.addEventListener("message", () => {});
+      evtSource.addEventListener("end", () => {
+        evtSource.close();
+        setEventSource(null);
+        setSessionId("");
+      });
+      evtSource.addEventListener("result", (event: MessageEvent) => {
+        try {
+          handleSSEEvent("result", event.data);
+        } catch {
+          setError("Failed to parse analysis result");
+          setIsLoading(false);
+          setProgress(0);
+        } finally {
+          evtSource.close();
+          setEventSource(null);
+          setSessionId("");
+        }
+      });
+    }
+  };
 
-    evtSource.addEventListener("cancelled", () => {
+  // Helper to handle SSE events for both fetch and EventSource
+  function handleSSEEvent(event: string, data: string) {
+    if (event === "progress") {
+      try {
+        const parsed = JSON.parse(data);
+        setProgress(parsed.progress);
+        setProgressMsg(parsed.message || "");
+      } catch {}
+    } else if (event === "cancelled") {
       setError("Analysis was cancelled");
       setIsLoading(false);
       setProgress(0);
-      setEventSource(null);
       setSessionId("");
-    });
-
-    evtSource.addEventListener("error", () => {
+    } else if (event === "error") {
       setError("Analysis failed or connection lost.");
       setIsLoading(false);
       setProgress(0);
-      setEventSource(null);
       setSessionId("");
-    });
-
-    evtSource.addEventListener("open", () => {
-      // Connection opened, progress will be updated by server events
-    });
-
-    evtSource.addEventListener("message", () => {
-      // fallback for generic messages
-    });
-
-    evtSource.addEventListener("end", () => {
-      evtSource.close();
-      setEventSource(null);
-      setSessionId("");
-    });
-
-    // Listen for final result event
-    evtSource.addEventListener("result", (event: MessageEvent) => {
+    } else if (event === "result") {
       try {
-        const data: AnalysisResult & {
+        const dataObj: AnalysisResult & {
           demo?: boolean;
           remainingPages?: number;
           demoMessage?: string;
           asyncJob?: boolean;
           message?: string;
-        } = JSON.parse(event.data);
-        console.log("[FRONTEND] Received result event:", data);
-        console.log("🔍 Frontend received data:", {
-          success: data.success,
-          hasAiContent: !!data.aiGeneratedContent,
-          aiContentLength: data.aiGeneratedContent?.length || 0,
-          aiContentSample: data.aiGeneratedContent?.slice(0, 2),
-          hasPageMetadatas: !!data.pageMetadatas,
-          pageMetadatasLength: data.pageMetadatas?.length || 0,
-          hasBodyContent: data.pageMetadatas?.some(
-            (m) => m.bodyContent && m.bodyContent.length > 0
-          ),
-        });
-
-        if (data.success) {
-          setAnalysisResult(data);
+        } = JSON.parse(data);
+        if (dataObj.success) {
+          setAnalysisResult(dataObj);
           onAnalysisComplete({
-            ...data,
+            ...dataObj,
             selectedBots,
-            pageMetadatas: data.pageMetadatas,
-            aiGeneratedContent: data.aiGeneratedContent,
+            pageMetadatas: dataObj.pageMetadatas,
+            aiGeneratedContent: dataObj.aiGeneratedContent,
           });
           setIsLoading(false);
           setProgress(100);
-
-          // ASYNC JOB: Show modal if asyncJob response
-          if (data.asyncJob && data.message) {
-            setAsyncMessage(data.message);
+          if (dataObj.asyncJob && dataObj.message) {
+            setAsyncMessage(dataObj.message);
             setShowAsyncModal(true);
           } else {
             setAsyncMessage(null);
             setShowAsyncModal(false);
           }
         } else {
-          setError(data.error || "Analysis failed");
+          setError(dataObj.error || "Analysis failed");
           setIsLoading(false);
           setProgress(0);
         }
-      } catch (err) {
-        const message =
-          err instanceof Error
-            ? err.message
-            : "Failed to parse analysis result";
-        setError(message);
+      } catch {
+        setError("Failed to parse analysis result");
         setIsLoading(false);
         setProgress(0);
-      } finally {
-        evtSource.close();
-        setEventSource(null);
-        setSessionId("");
       }
-    });
-  };
+    }
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
