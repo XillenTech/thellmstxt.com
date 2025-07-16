@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   keywords: [
     "llms.txt FAQ",
     "AI crawler questions",
-    "website optimization FAQ",
     "llms.txt generator help",
     "AI training FAQ",
     "web crawling questions",
