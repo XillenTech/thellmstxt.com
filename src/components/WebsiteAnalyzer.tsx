@@ -80,8 +80,9 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
   const [progressMsg, setProgressMsg] = useState<string>("");
   const [sessionId, setSessionId] = useState<string>("");
   const [eventSource, setEventSource] = useState<EventSource | null>(null);
-  const [showAsyncModal, setShowAsyncModal] = useState(false);
-  const [asyncMessage, setAsyncMessage] = useState<string | null>(null);
+  const [showAsyncPrompt, setShowAsyncPrompt] = useState(false);
+  const [asyncPromptMsg, setAsyncPromptMsg] = useState<string | null>(null);
+  const [closeError, setCloseError] = useState<string | null>(null);
   const { token } = useAuth();
 
   const llmBots: Array<{ value: LLMBot; label: string; description: string }> =
@@ -272,6 +273,13 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
           setSessionId("");
         }
       });
+      evtSource.addEventListener("asyncPrompt", (event: MessageEvent) => {
+        try {
+          const data = JSON.parse(event.data);
+          setAsyncPromptMsg(data.message || "This may take a while...");
+          setShowAsyncPrompt(true);
+        } catch {}
+      });
     }
   };
 
@@ -282,6 +290,12 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
         const parsed = JSON.parse(data);
         setProgress(parsed.progress);
         setProgressMsg(parsed.message || "");
+      } catch {}
+    } else if (event === "asyncPrompt") {
+      try {
+        const parsed = JSON.parse(data);
+        setAsyncPromptMsg(parsed.message || "This may take a while...");
+        setShowAsyncPrompt(true);
       } catch {}
     } else if (event === "cancelled") {
       setError("Analysis was cancelled");
@@ -312,13 +326,6 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
           });
           setIsLoading(false);
           setProgress(100);
-          if (dataObj.asyncJob && dataObj.message) {
-            setAsyncMessage(dataObj.message);
-            setShowAsyncModal(true);
-          } else {
-            setAsyncMessage(null);
-            setShowAsyncModal(false);
-          }
         } else {
           setError(dataObj.error || "Analysis failed");
           setIsLoading(false);
@@ -338,21 +345,40 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
-      {/* ASYNC JOB MODAL */}
-      {showAsyncModal && asyncMessage && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-          <div className="bg-white rounded-xl shadow-xl p-6 max-w-md w-full text-center">
+    <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 relative">
+      {/* ASYNC PROMPT MODAL (Blur Overlay) */}
+      {showAsyncPrompt && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm">
+          <div className="bg-white rounded-xl shadow-xl p-6 max-w-md w-full text-center relative">
             <h4 className="text-lg font-bold mb-2 text-purple-700">
               Long Job in Progress
             </h4>
-            <p className="mb-4 text-gray-700">{asyncMessage}</p>
-            <button
-              onClick={() => setShowAsyncModal(false)}
-              className="mt-2 text-xs text-gray-500 underline"
-            >
-              Close
-            </button>
+            <p className="mb-4 text-gray-700">
+              {asyncPromptMsg ||
+                "Generating llms.txt for your website may take more time. You can leave this website while it is under process. We will send you the file in your email when it is completed."}
+            </p>
+            {closeError && (
+              <div className="mb-2 text-xs text-red-600">{closeError}</div>
+            )}
+            <div className="flex justify-center gap-4 mt-4">
+              <button
+                onClick={() => {
+                  setShowAsyncPrompt(false);
+                  setCloseError(null);
+                }}
+                className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 font-medium"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  window.location.href = "/safe-to-close";
+                }}
+                className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 font-medium"
+              >
+                Confirm
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -545,7 +571,7 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
           </div>
         )}
 
-        {analysisResult && (
+        {analysisResult && analysisResult.metadata && (
           <div className="space-y-3 sm:space-y-4">
             <div className="flex items-center space-x-2 p-3 bg-green-50 border border-green-200 rounded-lg">
               <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 flex-shrink-0" />

@@ -77,7 +77,7 @@ const Generator = () => {
   }, [rules, analysisData, enhancedFeatures]);
 
   const generateContent = () => {
-    if (!analysisData) {
+    if (!analysisData || !analysisData.metadata) {
       setGeneratedContent("");
       return;
     }
@@ -382,6 +382,8 @@ const Generator = () => {
       priority: string;
       aiUsageDirective: string;
     }>;
+    asyncJob?: boolean;
+    message?: string;
   }) => {
     setAnalysisData(data);
     setSelectedPaths(data.paths);
@@ -403,7 +405,10 @@ const Generator = () => {
       });
     }
 
-    setCurrentStep("select");
+    // Only advance step if not asyncJob
+    if (!data.asyncJob) {
+      setCurrentStep("select");
+    }
   };
 
   const handlePathSelectionChange = (paths: PathSelection[]) => {
