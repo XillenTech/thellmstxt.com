@@ -23,9 +23,6 @@ Allow: /faq/          # Frequently asked questions
 Allow: /privacy/      # Privacy policy
 Allow: /terms/        # Terms of service
 
-# Rate limiting
-Crawl-delay: 10
-
 # Sitemap locations
 Sitemap: https://thellmstxt.com/sitemap.xml
 Sitemap: https://thellmstxt.com/blog-sitemap.xml
