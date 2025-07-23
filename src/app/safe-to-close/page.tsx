@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { CheckCircle } from "lucide-react";
+import Link from "next/link";
 
 const SafeToClosePage = () => {
   return (
@@ -16,17 +17,15 @@ const SafeToClosePage = () => {
         <p className="text-md text-purple-700 font-semibold mb-6">
           It is now safe to close this tab.
         </p>
-        <button
-          className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-all duration-150 text-lg mb-2"
-          onClick={() => window.close()}
-        >
-          Close Tab
-        </button>
-        <p className="text-xs text-gray-400 mt-2 text-center">
-          If the tab does not close automatically, you can close it manually.
-          <br />
-          You’ll receive an email when your file is ready.
-        </p>
+          {/* Use Link for client-side navigation */}
+        <Link href="/">
+          <button
+            className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-all duration-150 text-lg mb-2 cursor-pointer"
+            type="button"
+          >
+            Go to Home
+          </button>
+        </Link>
       </div>
     </div>
   );
