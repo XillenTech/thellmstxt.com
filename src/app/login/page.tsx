@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useAuth } from "@/components/AuthProvider";
 import { useRouter } from "next/navigation";
 import { validateEmail, validatePassword } from "@/utils/validation";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -13,6 +14,7 @@ export default function LoginPage() {
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -38,6 +40,10 @@ export default function LoginPage() {
         setPasswordError(validation.error || null);
       }
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -104,17 +110,31 @@ export default function LoginPage() {
           <label className="block text-gray-700 mb-2 font-medium">
             Password
           </label>
-          <input
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 bg-blue-50 text-gray-900 placeholder:text-gray-400 transition ${
-              passwordError
-                ? "border-red-300 focus:ring-red-400 focus:border-red-400"
-                : "border-blue-200"
-            }`}
-            required
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={handlePasswordChange}
+              className={`w-full px-4 py-2 pr-12 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 bg-blue-50 text-gray-900 placeholder:text-gray-400 transition ${
+                passwordError
+                  ? "border-red-300 focus:ring-red-400 focus:border-red-400"
+                  : "border-blue-200"
+              }`}
+              required
+            />
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 transition-colors focus:outline-none focus:text-gray-600 cursor-pointer"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              {showPassword ? (
+                <EyeOff className="h-5 w-5" />
+              ) : (
+                <Eye className="h-5 w-5" />
+              )}
+            </button>
+          </div>
           {passwordError && (
             <p className="mt-1 text-sm text-red-600">{passwordError}</p>
           )}
