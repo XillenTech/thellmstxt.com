@@ -179,11 +179,23 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
 
     const apiBase =
       process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
+
+    // Get user's IP first
+    let userIP = "";
+    try {
+      const ipResponse = await fetch("https://api.ipify.org?format=json");
+      const ipData = await ipResponse.json();
+      userIP = ipData.ip;
+    } catch (error) {
+      console.error("Failed to get user IP:", error);
+      // Continue without user IP
+    }
+
     const sseUrl = `${apiBase}/api/analyze-website?url=${encodeURIComponent(
       url.trim()
     )}&bots=${encodeURIComponent(
       selectedBots.join(",")
-    )}&aiEnrichment=${aiEnrichment}&sessionId=${newSessionId}`;
+    )}&aiEnrichment=${aiEnrichment}&sessionId=${newSessionId}&userIP=${userIP}`;
 
     // If logged in, use fetch with Authorization header and manual SSE parsing
     if (token) {

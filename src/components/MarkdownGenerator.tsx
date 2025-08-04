@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { useAuth } from "@/components/AuthProvider";
 import {
   FileText,
   FolderOpen,
@@ -18,11 +19,48 @@ const MarkdownGenerator: React.FC<MarkdownGeneratorProps> = ({
   websiteUrl,
   onClose,
 }) => {
+  const { user } = useAuth();
   const [isGenerating, setIsGenerating] = useState(false);
   const [result, setResult] = useState<MarkdownGenerationResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const BASE_API_URL =
     process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
+
+  if (!user) {
+    return (
+      <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-lg p-6 max-w-md w-full flex flex-col items-center">
+          <h2 className="text-xl font-bold mb-2 text-gray-900">
+            Sign Up or Log In Required
+          </h2>
+          <p className="text-gray-700 mb-4 text-center">
+            Please sign up or log in to generate and download your markdown
+            file.
+          </p>
+          <div className="flex flex-col w-full gap-3 mb-2">
+            <a
+              href="/signup"
+              className="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-medium text-sm shadow-lg hover:shadow-xl transform hover:scale-105"
+            >
+              Sign Up Free
+            </a>
+            <a
+              href="/login"
+              className="w-full flex items-center justify-center px-4 py-3 bg-white border-2 border-gray-200 text-gray-700 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 font-medium text-sm"
+            >
+              Log In
+            </a>
+          </div>
+          <button
+            onClick={onClose}
+            className="mt-2 text-gray-400 hover:text-gray-600"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const generateMarkdown = async () => {
     setIsGenerating(true);
@@ -30,12 +68,23 @@ const MarkdownGenerator: React.FC<MarkdownGeneratorProps> = ({
     setResult(null);
 
     try {
+      // Get user's public IP first
+      let userIP = "";
+      try {
+        const ipResponse = await fetch("https://api.ipify.org?format=json");
+        const ipData = await ipResponse.json();
+        userIP = ipData.ip;
+      } catch (error) {
+        console.error("Failed to get user IP:", error);
+        // Continue without user IP
+      }
+
       const response = await fetch(`${BASE_API_URL}/api/generate-markdown`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ websiteUrl }),
+        body: JSON.stringify({ websiteUrl, userIP }),
       });
 
       const data: MarkdownGenerationResponse = await response.json();

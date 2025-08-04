@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Download, FileText, Settings, Sparkles, Loader2 } from "lucide-react";
 import { LLMsFullPayload, LLMsFullGenerationResponse } from "../types/backend";
+import { useAuth } from "@/components/AuthProvider";
 
 interface LLMsFullGeneratorProps {
   websiteUrl: string;
@@ -12,6 +13,7 @@ const LLMsFullGenerator: React.FC<LLMsFullGeneratorProps> = ({
   websiteUrl,
   onClose,
 }) => {
+  const { user } = useAuth();
   const [isGenerating, setIsGenerating] = useState(false);
   const [result, setResult] = useState<LLMsFullGenerationResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -32,9 +34,21 @@ const LLMsFullGenerator: React.FC<LLMsFullGeneratorProps> = ({
     setResult(null);
 
     try {
+      // Get user's public IP first
+      let userIP = "";
+      try {
+        const ipResponse = await fetch("https://api.ipify.org?format=json");
+        const ipData = await ipResponse.json();
+        userIP = ipData.ip;
+      } catch (error) {
+        console.error("Failed to get user IP:", error);
+        // Continue without user IP
+      }
+
       const payload: LLMsFullPayload = {
         websiteUrl,
         ...settings,
+        userIP, // Add user's public IP to payload
       };
 
       const response = await fetch(`${BASE_API_URL}/api/generate-llms-full`, {
@@ -73,6 +87,42 @@ const LLMsFullGenerator: React.FC<LLMsFullGeneratorProps> = ({
     URL.revokeObjectURL(url);
   };
 
+  if (!user) {
+    return (
+      <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-lg p-6 max-w-md w-full flex flex-col items-center">
+          <h2 className="text-xl font-bold mb-2 text-gray-900">
+            Sign Up or Log In Required
+          </h2>
+          <p className="text-gray-700 mb-4 text-center">
+            Please sign up or log in to generate and download your full llms.txt
+            file.
+          </p>
+          <div className="flex flex-col w-full gap-3 mb-2">
+            <a
+              href="/signup"
+              className="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-medium text-sm shadow-lg hover:shadow-xl transform hover:scale-105"
+            >
+              Sign Up Free
+            </a>
+            <a
+              href="/login"
+              className="w-full flex items-center justify-center px-4 py-3 bg-white border-2 border-gray-200 text-gray-700 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 font-medium text-sm"
+            >
+              Log In
+            </a>
+          </div>
+          <button
+            onClick={onClose}
+            className="mt-2 text-gray-400 hover:text-gray-600"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="fixed inset-0 bg-black/10 backdrop-blur-sm flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg p-4 sm:p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
@@ -94,7 +144,9 @@ const LLMsFullGenerator: React.FC<LLMsFullGeneratorProps> = ({
         <div className="mb-4 sm:mb-6">
           <p className="text-gray-600 mb-4 text-sm sm:text-base">
             Generate a comprehensive{" "}
-            <code className="bg-gray-100 px-2 py-1 rounded text-xs sm:text-sm">llms-full.txt</code>{" "}
+            <code className="bg-gray-100 px-2 py-1 rounded text-xs sm:text-sm">
+              llms-full.txt
+            </code>{" "}
             file containing all your website content, links, and optional AI
             enrichment for better LLM understanding.
           </p>
@@ -138,7 +190,9 @@ const LLMsFullGenerator: React.FC<LLMsFullGeneratorProps> = ({
                   }
                   className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
-                <span className="text-gray-700 text-sm sm:text-base">Include image URLs</span>
+                <span className="text-gray-700 text-sm sm:text-base">
+                  Include image URLs
+                </span>
               </label>
 
               <label className="flex items-center space-x-2 sm:space-x-3">
@@ -150,7 +204,9 @@ const LLMsFullGenerator: React.FC<LLMsFullGeneratorProps> = ({
                   }
                   className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
-                <span className="text-gray-700 text-sm sm:text-base">Include internal links</span>
+                <span className="text-gray-700 text-sm sm:text-base">
+                  Include internal links
+                </span>
               </label>
 
               <label className="flex items-center space-x-2 sm:space-x-3">
@@ -162,7 +218,9 @@ const LLMsFullGenerator: React.FC<LLMsFullGeneratorProps> = ({
                   }
                   className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
-                <span className="text-gray-700 text-sm sm:text-base">Enable AI enrichment</span>
+                <span className="text-gray-700 text-sm sm:text-base">
+                  Enable AI enrichment
+                </span>
               </label>
             </div>
 

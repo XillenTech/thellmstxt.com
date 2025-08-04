@@ -22,6 +22,9 @@ Allow: /how-to-use/   # Implementation guides
 Allow: /faq/          # Frequently asked questions
 Allow: /privacy/      # Privacy policy
 Allow: /terms/        # Terms of service
+Allow: /contact/      # Contact information
+Allow: /llms-full/    # LLMs Full
+Allow: /markdown/     # Markdown
 
 # Sitemap locations
 Sitemap: https://thellmstxt.com/sitemap.xml

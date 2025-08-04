@@ -7,48 +7,38 @@ import WhatIsLLMsTxt from "@/components/WhatIsLLMsTxt";
 import HowToUse from "@/components/HowToUse";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
-import LLMsFullGenerator from "@/components/LLMsFullGenerator";
-import MarkdownGenerator from "@/components/MarkdownGenerator";
-import { useSearchParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import CookieConsent from "@/components/CookieConsent";
 
 export default function HomeClient() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const llmsfull = searchParams.get("llmsfull");
-  const markdown = searchParams.get("markdown");
-  const url = searchParams.get("url") || "";
-  const [showLLMsFull, setShowLLMsFull] = useState(!!llmsfull);
-  const [showMarkdown, setShowMarkdown] = useState(!!markdown);
-
-  // If modal is closed, remove the query param and return to homepage
-  const handleCloseLLMsFull = () => {
-    setShowLLMsFull(false);
-    router.replace("/");
+  const handleCookieAccept = () => {
+    console.log("Cookies accepted");
+    // You can add analytics tracking here
   };
-  const handleCloseMarkdown = () => {
-    setShowMarkdown(false);
-    router.replace("/");
+
+  const handleCookieReject = () => {
+    console.log("Cookies rejected");
+    // You can disable analytics tracking here
   };
 
   return (
     <>
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white flex flex-col">
         <Header />
-        <Hero />
-        <Generator />
-        <EcommerceUpsell />
-        <WhatIsLLMsTxt />
-        <HowToUse />
-        {/* <WhyItMatters /> */}
-        <FAQ />
+        <div className="flex-1">
+          <Hero />
+          <Generator />
+          <EcommerceUpsell />
+          <WhatIsLLMsTxt />
+          <HowToUse />
+          <FAQ />
+        </div>
         <Footer />
-        {showLLMsFull && (
-          <LLMsFullGenerator websiteUrl={url} onClose={handleCloseLLMsFull} />
-        )}
-        {showMarkdown && (
-          <MarkdownGenerator websiteUrl={url} onClose={handleCloseMarkdown} />
-        )}
+
+        {/* Cookie Consent */}
+        <CookieConsent
+          onAccept={handleCookieAccept}
+          onReject={handleCookieReject}
+        />
       </div>
     </>
   );

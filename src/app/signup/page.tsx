@@ -2,19 +2,63 @@
 import React, { useState } from "react";
 import { useAuth } from "@/components/AuthProvider";
 import { useRouter } from "next/navigation";
+import { validateEmail, validatePassword } from "@/utils/validation";
 
 export default function SignupPage() {
   const { signup } = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+    setEmailError(null);
+
+    if (value) {
+      const validation = validateEmail(value);
+      if (!validation.isValid) {
+        setEmailError(validation.error || null);
+      }
+    }
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setPassword(value);
+    setPasswordError(null);
+
+    if (value) {
+      const validation = validatePassword(value);
+      if (!validation.isValid) {
+        setPasswordError(validation.error || null);
+      }
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     setError(null);
+
+    // Validate inputs
+    const emailValidation = validateEmail(email);
+    const passwordValidation = validatePassword(password);
+
+    if (!emailValidation.isValid) {
+      setEmailError(emailValidation.error || null);
+      return;
+    }
+
+    if (!passwordValidation.isValid) {
+      setPasswordError(passwordValidation.error || null);
+      return;
+    }
+
+    setLoading(true);
     const res = await signup(email, password);
     setLoading(false);
     if (res.success) {
@@ -43,11 +87,18 @@ export default function SignupPage() {
           <input
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 bg-blue-50 text-gray-900 placeholder:text-gray-400 transition"
+            onChange={handleEmailChange}
+            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 bg-blue-50 text-gray-900 placeholder:text-gray-400 transition ${
+              emailError
+                ? "border-red-300 focus:ring-red-400 focus:border-red-400"
+                : "border-blue-200"
+            }`}
             required
             autoFocus
           />
+          {emailError && (
+            <p className="mt-1 text-sm text-red-600">{emailError}</p>
+          )}
         </div>
         <div className="mb-6">
           <label className="block text-gray-700 mb-2 font-medium">
@@ -56,14 +107,21 @@ export default function SignupPage() {
           <input
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 bg-blue-50 text-gray-900 placeholder:text-gray-400 transition"
+            onChange={handlePasswordChange}
+            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 bg-blue-50 text-gray-900 placeholder:text-gray-400 transition ${
+              passwordError
+                ? "border-red-300 focus:ring-red-400 focus:border-red-400"
+                : "border-blue-200"
+            }`}
             required
           />
+          {passwordError && (
+            <p className="mt-1 text-sm text-red-600">{passwordError}</p>
+          )}
         </div>
         <button
           type="submit"
-          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
+          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-400 focus:outline-none transition cursor-pointer"
           disabled={loading}
         >
           {loading ? "Signing up..." : "Sign Up"}
@@ -72,7 +130,7 @@ export default function SignupPage() {
           Already have an account?{" "}
           <a
             href="/login"
-            className="text-purple-700 hover:underline font-semibold transition-colors hover:text-blue-700"
+            className="text-purple-700 hover:underline font-semibold transition-colors hover:text-blue-700 cursor-pointer"
           >
             Log In
           </a>

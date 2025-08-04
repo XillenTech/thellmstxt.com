@@ -101,6 +101,7 @@ export interface LLMsFullPayload {
   includeLinks?: boolean;
   maxDepth?: number;
   aiEnrichment?: boolean;
+  userIP?: string;
 }
 
 export interface LLMsFullGenerationResponse {

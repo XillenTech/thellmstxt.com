@@ -119,4 +119,7 @@ Sitemap Structure
 - /privacy
 - /terms
 - /what-is-llms-txt
+- /contact
+- /llms-full
+- /markdown
 
