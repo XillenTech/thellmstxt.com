@@ -17,6 +17,17 @@ Disallow: /settings/  # User settings
 # Allow public content pages
 Allow: /              # Homepage
 Allow: /blogs/        # Blog posts and articles
+Allow: /blogs/complete-guide-to-llms-txt # Complete Guide to LLMs TXT
+Allow: /blogs/ai-shopping-changing-ecommerce # AI Shopping Changing Ecommerce
+Allow: /blogs/llms-txt-vs-robots-txt # LLMs TXT vs Robots TXT
+Allow: /blogs/best-practices-implementing-llms-txt # Best Practices Implementing LLMs TXT
+Allow: /blogs/future-ai-powered-marketing # Future AI Powered Marketing
+Allow: /blogs/ai-content-optimization-guide # AI Content Optimization Guide
+Allow: /blogs/measuring-ai-marketing-success # Measuring AI Marketing Success
+Allow: /blogs/llms-txt-case-studies # LLMs TXT Case Studies
+Allow: /blogs/ai-seo-strategy-2025 # AI SEO Strategy 2025
+Allow: /blogs/content-research-techniques-ai-era # Content Research Techniques in the AI Era
+
 Allow: /what-is-llms-txt/  # Educational content
 Allow: /how-to-use/   # Implementation guides
 Allow: /faq/          # Frequently asked questions
