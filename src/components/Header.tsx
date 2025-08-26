@@ -18,7 +18,7 @@ import {
 const navLinks = [
   { href: "/what-is-llms-txt", label: "What is llms.txt?" },
   { href: "/how-to-use", label: "How To Use" },
-  { href: "/blogs", label: "Blog" },
+  { href: "/blogs", label: "Blogs" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];

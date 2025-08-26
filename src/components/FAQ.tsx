@@ -27,6 +27,11 @@ const FAQ = () => {
       answer:
         "When considering llms.txt generator vs manual creation, our llms.txt generator API offers automated updates and validation. For eCommerce sites, the generator ensures proper protection of sensitive areas while maintaining product visibility. Many hosts supporting llms.txt recommend using a generator for accuracy.",
     },
+    {
+      question: "ChatGPT, Claude, Gemini: Which AI Models Support LLMs.txt Files?",
+      answer:
+        "Most major AI models including ChatGPT (OpenAI), Claude (Anthropic), Gemini (Google), LLaMA (Meta), and Mistral AI recognize llms.txt files. The format is becoming an industry standard for AI governance and transparency. These models use llms.txt to understand content access permissions and respect your website's AI interaction policies.",
+    },
   ];
 
   const toggleFAQ = (index: number) => {

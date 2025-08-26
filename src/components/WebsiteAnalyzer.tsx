@@ -399,6 +399,55 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
       </h3>
 
       <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+        {/* Configuration Settings Section */}
+        <div className="bg-gradient-to-br from-gray-50 to-blue-50 border border-gray-200 rounded-xl p-4 sm:p-6">
+          <div className="mb-4">
+            <h4 className="text-lg font-semibold text-gray-900 mb-2">
+              Configuration Settings
+            </h4>
+            <p className="text-sm text-gray-600 mb-4">
+              The LLMs.txt file will be generated based on the content of your website, and will use AI to categorize the content. First, the website will be crawled, and then the content will be analyzed to create a comprehensive LLMs.txt file.
+            </p>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+              <p className="text-sm text-blue-800">
+                <strong>Note:</strong> The generated LLMs.txt file will be based on the content of your website and the configuration settings you provide.
+              </p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="bg-white border border-gray-200 rounded-lg p-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-700">Max Crawl Depth</span>
+                <span className="text-sm font-semibold text-blue-600">6 levels</span>
+              </div>
+            </div>
+            
+            <div className="bg-white border border-gray-200 rounded-lg p-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-700">Max Rate Limit</span>
+                <span className="text-sm font-semibold text-blue-600">25 req/sec</span>
+              </div>
+              <span className="text-xs text-blue-500">(40ms interval)</span>
+            </div>
+            
+            <div className="bg-white border border-gray-200 rounded-lg p-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-700">Max Crawled Pages</span>
+                <span className="text-sm font-semibold text-blue-600">5 (demo) / 1000 (signed in)</span>
+              </div>
+              <span className="text-xs text-blue-500">(1000 max)</span>
+            </div>
+            
+            <div className="bg-white border border-gray-200 rounded-lg p-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-700">AI Categorization</span>
+                <span className="text-sm font-semibold text-blue-600">Optional</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div>
           <label className="text-sm font-medium text-gray-700 mb-2 block">
             Website URL

@@ -8,6 +8,8 @@ import HowToUse from "@/components/HowToUse";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 import CookieConsent from "@/components/CookieConsent";
+import WhyUseLLMsTxt from "@/components/WhyUseLLMsTxt";
+import GeneratedFileFormats from "@/components/GeneratedFileFormats";
 
 export default function HomeClient() {
   const handleCookieAccept = () => {
@@ -29,6 +31,8 @@ export default function HomeClient() {
           <Generator />
           <EcommerceUpsell />
           <WhatIsLLMsTxt />
+          <WhyUseLLMsTxt />
+          <GeneratedFileFormats />
           <HowToUse />
           <FAQ />
         </div>

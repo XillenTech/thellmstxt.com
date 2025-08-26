@@ -92,6 +92,27 @@ const blogPosts: BlogPost[] = [
       "SEO",
     ],
   },
+  {
+    slug: "ai-models-support-llmstxt",
+    title: "ChatGPT, Claude, Gemini: Which AI Models Support LLMs.txt Files?",
+    excerpt:
+      "A comprehensive guide to AI model compatibility with the llms.txt protocol. Learn which major AI models recognize and respect llms.txt files for content access control.",
+    tags: ["AI Models", "ChatGPT", "Claude", "Gemini", "Technical"],
+  },
+  {
+    slug: "llmstxt-llm-text-optimization-ai-seo",
+    title: "What is LLMs.txt and LLM Text Optimization for AI SEO",
+    excerpt:
+      "Discover how LLMs.txt revolutionizes AI content optimization and helps large language models access and understand your website content more effectively.",
+    tags: ["LLMs.txt", "AI SEO", "Content Optimization", "Technical"],
+  },
+  {
+    slug: "llm-text-llmstxt-benefits-seo-strategy",
+    title: "LLM Text and LLMs.txt Benefits for SEO Strategy",
+    excerpt:
+      "Discover the significant advantages of implementing LLMs.txt for AI SEO (GEO - Generative Engine Optimization) and how it positions your website for the future of AI-powered search.",
+    tags: ["LLMs.txt", "AI SEO", "SEO Strategy", "GEO", "Technical"],
+  },
 ];
 
 // Function to find blog post by slug

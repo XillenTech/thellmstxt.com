@@ -27,6 +27,9 @@ Allow: /blogs/measuring-ai-marketing-success # Measuring AI Marketing Success
 Allow: /blogs/llms-txt-case-studies # LLMs TXT Case Studies
 Allow: /blogs/ai-seo-strategy-2025 # AI SEO Strategy 2025
 Allow: /blogs/content-research-techniques-ai-era # Content Research Techniques in the AI Era
+Allow: /blogs/ai-models-support-llmstxt # AI Models Support LLMs TXT
+Allow: /blogs/llmstxt-llm-text-optimization-ai-seo # LLMs TXT and LLM Text Optimization for AI SEO
+Allow: /blogs/llm-text-llmstxt-benefits-seo-strategy # LLM Text and LLMs TXT Benefits for SEO Strategy
 
 Allow: /what-is-llms-txt/  # Educational content
 Allow: /how-to-use/   # Implementation guides
