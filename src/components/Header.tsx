@@ -310,16 +310,10 @@ const Header = () => {
               ) : (
                 <div className="flex items-center space-x-2">
                   <Link
-                    href="/login"
+                    href="/signup"
                     className="text-sm font-semibold bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg shadow hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-400 focus:outline-none transition whitespace-nowrap cursor-pointer"
                   >
-                    Login
-                  </Link>
-                  <Link
-                    href="/signup"
-                    className="text-sm font-semibold bg-white border border-blue-600 text-blue-700 px-4 py-2 rounded-lg shadow hover:bg-blue-50 focus:ring-2 focus:ring-blue-400 focus:outline-none transition whitespace-nowrap cursor-pointer"
-                  >
-                    Sign Up
+                    Get Started
                   </Link>
                 </div>
               )}
@@ -439,22 +433,13 @@ const Header = () => {
                       </button>
                     </>
                   ) : (
-                    <>
-                      <Link
-                        href="/login"
-                        className="text-base font-semibold bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg shadow hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-400 focus:outline-none transition text-center"
-                        onClick={handleNavClick}
-                      >
-                        Login
-                      </Link>
-                      <Link
-                        href="/signup"
-                        className="text-base font-semibold bg-white border border-blue-600 text-blue-700 px-4 py-2 rounded-lg shadow hover:bg-blue-50 focus:ring-2 focus:ring-blue-400 focus:outline-none transition text-center"
-                        onClick={handleNavClick}
-                      >
-                        Sign Up
-                      </Link>
-                    </>
+                    <Link
+                      href="/signup"
+                      className="text-base font-semibold bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg shadow hover:from-blue-700 hover:to-purple-700 focus:ring-2 focus:ring-blue-400 focus:outline-none transition text-center"
+                      onClick={handleNavClick}
+                    >
+                      Get Started
+                    </Link>
                   )}
                 </div>
               </div>

@@ -371,10 +371,10 @@ const PathSelector = ({
                         <ArrowRight className="w-4 h-4" />
                       </a>
                       <a
-                        href="/login"
+                        href="/signup"
                         className="w-full flex items-center justify-center px-4 py-3 bg-white border-2 border-gray-200 text-gray-700 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 font-medium text-sm"
                       >
-                        Log In
+                        Get Magic Link
                       </a>
                     </div>
 

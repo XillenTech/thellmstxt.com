@@ -12,6 +12,12 @@ interface AuthContextType {
     email: string,
     password: string
   ) => Promise<{ success: boolean; error?: string }>;
+  sendMagicLink: (
+    email: string
+  ) => Promise<{ success: boolean; error?: string }>;
+  loginWithMagicLink: (
+    token: string
+  ) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
 }
 
@@ -85,6 +91,44 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const sendMagicLink = async (email: string) => {
+    try {
+      const res = await fetch(`${API_BASE}/api/send-magic-link`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      return { success: data.success, error: data.error };
+    } catch (err) {
+      console.error("Send magic link error:", err);
+      return { success: false, error: "Failed to send magic link" };
+    }
+  };
+
+  const loginWithMagicLink = async (token: string) => {
+    try {
+      const res = await fetch(`${API_BASE}/api/verify-magic-link`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      });
+      const data = await res.json();
+      if (data.success && data.token) {
+        setToken(data.token);
+        setUser({ email: data.email });
+        localStorage.setItem("auth_token", data.token);
+        localStorage.setItem("auth_email", data.email);
+        return { success: true };
+      } else {
+        return { success: false, error: data.error || "Magic link verification failed" };
+      }
+    } catch (err) {
+      console.error("Magic link login error:", err);
+      return { success: false, error: "Magic link verification failed" };
+    }
+  };
+
   const logout = async () => {
     try {
       await fetch(`${API_BASE}/api/logout`, { method: "POST" });
@@ -99,7 +143,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, token, login, signup, sendMagicLink, loginWithMagicLink, logout }}>
       {children}
     </AuthContext.Provider>
   );

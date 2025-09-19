@@ -35,7 +35,7 @@ export default function HistoryPage() {
   useEffect(() => {
     // Redirect if not logged in
     if (!user || !token) {
-      router.push("/login");
+      router.push("/signup");
       return;
     }
 
@@ -57,7 +57,7 @@ export default function HistoryPage() {
 
       if (!response.ok) {
         if (response.status === 401 || response.status === 403) {
-          router.push("/login");
+          router.push("/signup");
           return;
         }
         throw new Error("Failed to fetch history");
