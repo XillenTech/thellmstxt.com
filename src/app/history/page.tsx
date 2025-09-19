@@ -25,8 +25,9 @@ interface HistoryItem {
   pagesCrawled: number;
   linksFound: number;
   pathsFound: number;
-  type: 'website-analysis' | 'broken-link-detection';
+  type: 'website-analysis' | 'broken-link-detection' | 'seo-analysis';
   brokenLinksFound?: number;
+  seoIssuesFound?: number;
   scanId?: string;
 }
 
@@ -181,6 +182,8 @@ export default function HistoryPage() {
                     <div className="flex items-center mb-2">
                       {item.type === 'broken-link-detection' ? (
                         <Search className="w-5 h-5 text-red-600 mr-2" />
+                      ) : item.type === 'seo-analysis' ? (
+                        <AlertTriangle className="w-5 h-5 text-yellow-600 mr-2" />
                       ) : (
                         <Globe className="w-5 h-5 text-blue-600 mr-2" />
                       )}
@@ -196,6 +199,11 @@ export default function HistoryPage() {
                       {item.type === 'broken-link-detection' && (
                         <span className="ml-2 px-2 py-1 bg-red-100 text-red-800 text-xs font-medium rounded-full">
                           Broken Link Scan
+                        </span>
+                      )}
+                      {item.type === 'seo-analysis' && (
+                        <span className="ml-2 px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded-full">
+                          SEO Analysis
                         </span>
                       )}
                     </div>
@@ -241,6 +249,32 @@ export default function HistoryPage() {
                         <span className="text-sm">
                           <span className="font-semibold">{item.brokenLinksFound || 0}</span>{" "}
                           broken links
+                        </span>
+                      </div>
+                    </>
+                  ) : item.type === 'seo-analysis' ? (
+                    <>
+                      <div className="flex items-center text-gray-600">
+                        <FileText className="w-4 h-4 mr-2 text-blue-600" />
+                        <span className="text-sm">
+                          <span className="font-semibold">{item.pagesCrawled}</span>{" "}
+                          pages analyzed
+                        </span>
+                      </div>
+
+                      <div className="flex items-center text-gray-600">
+                        <AlertTriangle className="w-4 h-4 mr-2 text-yellow-600" />
+                        <span className="text-sm">
+                          <span className="font-semibold">{item.seoIssuesFound || 0}</span>{" "}
+                          SEO issues
+                        </span>
+                      </div>
+
+                      <div className="flex items-center text-gray-600">
+                        <Clock className="w-4 h-4 mr-2 text-green-600" />
+                        <span className="text-sm">
+                          <span className="font-semibold">{item.linksFound}</span>{" "}
+                          avg issues/page
                         </span>
                       </div>
                     </>

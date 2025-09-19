@@ -28,6 +28,10 @@ const seoLinks = [
     href: "/seo-services",
     label: "Broken Link Detection",
   },
+  {
+    href: "/seo-analysis",
+    label: "SEO Analysis",
+  },
 ];
 
 const generatorLinks = [
