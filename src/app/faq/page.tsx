@@ -58,6 +58,16 @@ const FAQPage = () => {
       answer:
         "After using our llms.txt generator tool, verify the file at yourdomain.com/llms.txt. For advanced validation, compare llms.txt tools that offer testing features. Many hosts supporting llms.txt provide verification tools to ensure proper implementation.",
     },
+    {
+      question: "What is the difference between sitemap.xml and llms.txt?",
+      answer:
+        "While sitemap.xml provides a complete list of all website URLs for search engines, llms.txt offers a curated selection of high-value content specifically for AI systems. Our sitemap-to-llms.txt generator automatically converts your sitemap into a focused llms.txt file, filtering out low-value pages and organizing content into logical sections for better AI understanding and indexing.",
+    },
+    {
+      question: "How does AI SEO differ from traditional SEO with llms.txt?",
+      answer:
+        "AI SEO focuses on optimizing content for AI systems like ChatGPT, Claude, and Gemini, while traditional SEO targets search engines. llms.txt plays a crucial role in AI SEO by providing structured, curated content that helps AI systems better understand and recommend your website. Our free llms.txt generator creates files that improve AI visibility, content discovery, and AI-powered search rankings.",
+    },
   ];
 
   const toggleFAQ = (index: number) => {

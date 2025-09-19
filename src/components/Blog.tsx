@@ -199,6 +199,28 @@ const Blog = () => {
       readTime: "12 min read",
       tags: ["Content Research", "AI Optimization", "Research Techniques"],
     },
+    {
+      id: "14",
+      slug: "sitemap-to-llms-txt-converter-guide",
+      title: "Sitemap to llms.txt Converter: Complete Guide to AI-Optimized Content Curation",
+      excerpt: "Learn how to convert your sitemap.xml into a curated llms.txt file using our free sitemap-to-llms.txt generator. Discover the benefits of automated content filtering, intelligent grouping, and AI-friendly formatting for better visibility.",
+      content: "In 2025, the relationship between sitemap.xml and llms.txt is becoming increasingly important for AI SEO. While sitemap.xml provides a comprehensive list of all your website URLs, llms.txt offers a curated selection specifically designed for AI systems. Our sitemap-to-llms.txt converter bridges this gap, automatically transforming your complete sitemap into a focused, AI-optimized llms.txt file. The conversion process involves intelligent filtering to remove low-value pages like login forms, admin areas, and duplicate content. Our system then organizes remaining URLs into logical sections such as Primary, Docs, Blog, Help, and Products for better AI comprehension. Advanced features include content enrichment that fetches page titles and descriptions, section capping to prevent overwhelming AI systems, and rate limiting to respect target site limitations. This automated approach ensures your llms.txt file is not only comprehensive but also optimized for AI consumption, improving your visibility in AI-powered search results and recommendations.",
+      // author: "AI SEO Expert",
+      date: "2025-01-28",
+      readTime: "10 min read",
+      tags: ["Sitemap", "llms.txt", "AI SEO", "Content Curation", "2025", "Free Tool"],
+    },
+    {
+      id: "15",
+      slug: "ai-seo-strategy-2025-beyond-traditional-search",
+      title: "AI SEO Strategy 2025: Beyond Traditional Search to AI-Powered Discovery",
+      excerpt: "Develop a comprehensive 2025 AI SEO strategy that works with both traditional search engines and AI systems. Learn how to use semantic search, structured data, and llms.txt for maximum visibility in the AI era.",
+      content: "The landscape of digital discovery is rapidly evolving in 2025, with AI systems becoming as important as traditional search engines for content discovery. A successful AI SEO strategy now requires understanding both traditional SEO principles and the unique requirements of AI-powered platforms. This comprehensive guide helps you develop a strategy that excels in both worlds. The evolution from keyword-focused SEO to AI understanding involves creating content that answers user intent, implementing semantic markup with Schema.org, and using llms.txt files to bridge traditional crawling and AI-specific content access. Key components include content structure with clear headings and logical flow, semantic markup for explicit context, proper llms.txt implementation, user intent optimization, and cross-platform consistency. Technical implementation involves using free llms.txt generators, implementing semantic HTML structure, creating comprehensive content clusters, optimizing for voice search, and monitoring AI crawler activity. Success measurement includes tracking AI-sourced traffic, monitoring brand mention accuracy, analyzing content discovery speed, measuring engagement rates from AI-recommended content, and using tools that track presence in AI-powered search results.",
+      // author: "AI SEO Strategist",
+      date: "2025-01-30",
+      readTime: "15 min read",
+      tags: ["AI SEO", "Search Strategy", "Semantic Search", "2025", "Technical SEO", "llms.txt"],
+    },
   ];
 
   const allTags = [

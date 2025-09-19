@@ -38,6 +38,13 @@ const generatorLinks = [
     icon: FileText,
     color: "green",
   },
+  {
+    href: "/sitemap-to-llms",
+    label: "Sitemap to llms.txt",
+    requiresAuth: false,
+    icon: FileText,
+    color: "purple",
+  },
 ];
 
 const Header = () => {

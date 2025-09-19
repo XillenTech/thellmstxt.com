@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useAuth } from "@/components/AuthProvider";
+// import { useAuth } from "@/components/AuthProvider";
 import { useRouter } from "next/navigation";
 import {
   Globe,
@@ -37,7 +37,7 @@ interface ApiResponse {
 }
 
 export default function TestPage() {
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const router = useRouter();
   const [crawlResults, setCrawlResults] = useState<CrawlResult[]>([]);
   const [loading, setLoading] = useState(false);
