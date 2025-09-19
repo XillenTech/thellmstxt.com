@@ -28,6 +28,7 @@ const Generator = () => {
   const [rules, setRules] = useState<Rule[]>([]);
   const [generatedContent, setGeneratedContent] = useState("");
   const [showFeedbackPopup, setShowFeedbackPopup] = useState(false);
+  const [pendingDownload, setPendingDownload] = useState(false);
   const [analysisData, setAnalysisData] = useState<{
     metadata: {
       title: string;
@@ -422,21 +423,16 @@ const Generator = () => {
   const generateFromSelectedPaths = () => {
     if (!analysisData) return;
 
-    // Show feedback popup first
-    setShowFeedbackPopup(true);
-  };
-
-  const handleFeedbackSubmit = async (feedback: string, email?: string) => {
-    try {
-      await submitFeedback(feedback, email, "llms-generator");
-    } catch (error) {
-      console.error("Error submitting feedback:", error);
+    // Always proceed with generation first
+    proceedWithGeneration();
+    
+    // Show feedback popup for non-authenticated users (in background)
+    if (!user) {
+      setShowFeedbackPopup(true);
     }
   };
 
-  const handleFeedbackClose = () => {
-    setShowFeedbackPopup(false);
-    // Continue with the original generation logic
+  const proceedWithGeneration = () => {
     if (!analysisData) return;
 
     const newRules: Rule[] = [];
@@ -467,6 +463,36 @@ const Generator = () => {
 
     setRules(newRules);
     setCurrentStep("generate");
+  };
+
+  const handleDownload = () => {
+    // Show feedback popup before download for all users
+    setPendingDownload(true);
+    setShowFeedbackPopup(true);
+  };
+
+  const handleFeedbackSubmit = async (feedback: string, email?: string) => {
+    try {
+      await submitFeedback(feedback, email, "llms-generator");
+    } catch (error) {
+      console.error("Error submitting feedback:", error);
+    }
+  };
+
+  const handleFeedbackClose = () => {
+    setShowFeedbackPopup(false);
+    
+    if (pendingDownload) {
+      // Trigger download
+      setPendingDownload(false);
+      const link = document.createElement('a');
+      link.href = `data:text/plain;charset=utf-8,${encodeURIComponent(generatedContent)}`;
+      link.download = 'llms.txt';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+    // No need to handle generation case since it's already done
   };
 
   const resetAnalysis = () => {
@@ -679,11 +705,8 @@ const Generator = () => {
                       </div>
                     </button>
 
-                    <a
-                      href={`data:text/plain;charset=utf-8,${encodeURIComponent(
-                        generatedContent
-                      )}`}
-                      download="llms.txt"
+                    <button
+                      onClick={handleDownload}
                       className="flex items-center space-x-3 p-4 border border-gray-200 rounded-lg hover:border-purple-300 hover:bg-purple-50 transition-colors"
                     >
                       <Settings className="w-6 h-6 text-purple-600" />
@@ -695,7 +718,7 @@ const Generator = () => {
                           Basic configuration
                         </div>
                       </div>
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>

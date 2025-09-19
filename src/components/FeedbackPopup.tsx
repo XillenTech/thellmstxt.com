@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { X, Send, MessageCircle } from "lucide-react";
 
 interface FeedbackPopupProps {
@@ -15,9 +16,27 @@ export default function FeedbackPopup({ isOpen, onClose, onSubmit, page = "llms-
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const popupRef = useRef<HTMLDivElement>(null);
 
   // Debug logging
   console.log("FeedbackPopup render - isOpen:", isOpen, "page:", page);
+
+  // Handle click outside to close
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+        handleClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,6 +78,7 @@ export default function FeedbackPopup({ isOpen, onClose, onSubmit, page = "llms-
 
   return (
     <div 
+      ref={popupRef}
       className="fixed bottom-4 left-2 right-2 sm:left-4 sm:right-auto sm:max-w-md"
       style={{ 
         zIndex: 999999, 
