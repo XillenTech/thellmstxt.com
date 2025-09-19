@@ -13,6 +13,8 @@ import {
   Calendar,
   ExternalLink,
   Loader2,
+  Search,
+  AlertTriangle,
 } from "lucide-react";
 
 interface HistoryItem {
@@ -23,6 +25,9 @@ interface HistoryItem {
   pagesCrawled: number;
   linksFound: number;
   pathsFound: number;
+  type: 'website-analysis' | 'broken-link-detection';
+  brokenLinksFound?: number;
+  scanId?: string;
 }
 
 export default function HistoryPage() {
@@ -174,7 +179,11 @@ export default function HistoryPage() {
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
                     <div className="flex items-center mb-2">
-                      <Globe className="w-5 h-5 text-blue-600 mr-2" />
+                      {item.type === 'broken-link-detection' ? (
+                        <Search className="w-5 h-5 text-red-600 mr-2" />
+                      ) : (
+                        <Globe className="w-5 h-5 text-blue-600 mr-2" />
+                      )}
                       <a
                         href={item.url}
                         target="_blank"
@@ -184,6 +193,11 @@ export default function HistoryPage() {
                         {item.url}
                         <ExternalLink className="w-4 h-4 ml-1" />
                       </a>
+                      {item.type === 'broken-link-detection' && (
+                        <span className="ml-2 px-2 py-1 bg-red-100 text-red-800 text-xs font-medium rounded-full">
+                          Broken Link Scan
+                        </span>
+                      )}
                     </div>
 
                     <div className="flex items-center text-sm text-gray-500 mb-3">
@@ -204,29 +218,59 @@ export default function HistoryPage() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-gray-100">
-                  <div className="flex items-center text-gray-600">
-                    <FileText className="w-4 h-4 mr-2 text-blue-600" />
-                    <span className="text-sm">
-                      <span className="font-semibold">{item.pagesCrawled}</span>{" "}
-                      pages crawled
-                    </span>
-                  </div>
+                  {item.type === 'broken-link-detection' ? (
+                    <>
+                      <div className="flex items-center text-gray-600">
+                        <FileText className="w-4 h-4 mr-2 text-blue-600" />
+                        <span className="text-sm">
+                          <span className="font-semibold">{item.pagesCrawled}</span>{" "}
+                          pages scanned
+                        </span>
+                      </div>
 
-                  <div className="flex items-center text-gray-600">
-                    <Link className="w-4 h-4 mr-2 text-green-600" />
-                    <span className="text-sm">
-                      <span className="font-semibold">{item.linksFound}</span>{" "}
-                      links found
-                    </span>
-                  </div>
+                      <div className="flex items-center text-gray-600">
+                        <Link className="w-4 h-4 mr-2 text-green-600" />
+                        <span className="text-sm">
+                          <span className="font-semibold">{item.linksFound}</span>{" "}
+                          links checked
+                        </span>
+                      </div>
 
-                  <div className="flex items-center text-gray-600">
-                    <FileText className="w-4 h-4 mr-2 text-purple-600" />
-                    <span className="text-sm">
-                      <span className="font-semibold">{item.pathsFound}</span>{" "}
-                      unique paths
-                    </span>
-                  </div>
+                      <div className="flex items-center text-gray-600">
+                        <AlertTriangle className="w-4 h-4 mr-2 text-red-600" />
+                        <span className="text-sm">
+                          <span className="font-semibold">{item.brokenLinksFound || 0}</span>{" "}
+                          broken links
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex items-center text-gray-600">
+                        <FileText className="w-4 h-4 mr-2 text-blue-600" />
+                        <span className="text-sm">
+                          <span className="font-semibold">{item.pagesCrawled}</span>{" "}
+                          pages crawled
+                        </span>
+                      </div>
+
+                      <div className="flex items-center text-gray-600">
+                        <Link className="w-4 h-4 mr-2 text-green-600" />
+                        <span className="text-sm">
+                          <span className="font-semibold">{item.linksFound}</span>{" "}
+                          links found
+                        </span>
+                      </div>
+
+                      <div className="flex items-center text-gray-600">
+                        <FileText className="w-4 h-4 mr-2 text-purple-600" />
+                        <span className="text-sm">
+                          <span className="font-semibold">{item.pathsFound}</span>{" "}
+                          unique paths
+                        </span>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             ))}

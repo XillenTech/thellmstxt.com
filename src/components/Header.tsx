@@ -23,6 +23,13 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
+const seoLinks = [
+  {
+    href: "/seo-services",
+    label: "Broken Link Detection",
+  },
+];
+
 const generatorLinks = [
   {
     href: "/llms-full",
@@ -260,6 +267,19 @@ const Header = () => {
                   </div>
                 )}
               </div>
+
+              {/* SEO Services */}
+              {seoLinks.map((link) => {
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="flex items-center space-x-2 text-gray-700 hover:text-red-600 transition-colors font-medium px-2 py-1 rounded-lg hover:bg-red-50 text-sm xl:text-base whitespace-nowrap"
+                  >
+                    <span>{link.label}</span>
+                  </Link>
+                );
+              })}
             </nav>
 
             {/* Desktop User Actions */}
@@ -394,6 +414,25 @@ const Header = () => {
                                 : "text-green-500"
                             }`}
                           />
+                          <span>{link.label}</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+
+                  {/* Mobile SEO Services Section */}
+                  <div className="border-t border-gray-200 pt-4 mt-4">
+                    <div className="px-3 py-2 text-sm font-semibold text-gray-500 uppercase tracking-wide">
+                      SEO Services
+                    </div>
+                    {seoLinks.map((link) => {
+                      return (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          onClick={handleNavClick}
+                          className="flex items-center space-x-3 px-3 py-3 text-base sm:text-lg text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg font-medium transition-colors"
+                        >
                           <span>{link.label}</span>
                         </Link>
                       );
