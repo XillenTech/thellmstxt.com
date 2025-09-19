@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { Download, FileText, Settings, Sparkles, Loader2 } from "lucide-react";
 import { LLMsFullPayload, LLMsFullGenerationResponse } from "../types/backend";
 import { useAuth } from "@/components/AuthProvider";
+import FeedbackPopup from "./FeedbackPopup";
+import { useFeedback } from "../hooks/useFeedback";
 
 interface LLMsFullGeneratorProps {
   websiteUrl: string;
@@ -14,9 +16,11 @@ const LLMsFullGenerator: React.FC<LLMsFullGeneratorProps> = ({
   onClose,
 }) => {
   const { user } = useAuth();
+  const { submitFeedback } = useFeedback();
   const [isGenerating, setIsGenerating] = useState(false);
   const [result, setResult] = useState<LLMsFullGenerationResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [showFeedbackPopup, setShowFeedbackPopup] = useState(false);
   const [settings, setSettings] = useState({
     includeImages: false,
     includeLinks: true,
@@ -76,6 +80,7 @@ const LLMsFullGenerator: React.FC<LLMsFullGeneratorProps> = ({
   const downloadFile = () => {
     if (!result?.content) return;
 
+    // Download the file first
     const blob = new Blob([result.content], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -85,6 +90,21 @@ const LLMsFullGenerator: React.FC<LLMsFullGeneratorProps> = ({
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    
+    // Show feedback popup after download
+    setShowFeedbackPopup(true);
+  };
+
+  const handleFeedbackSubmit = async (feedback: string, email?: string) => {
+    try {
+      await submitFeedback(feedback, email, "llms-full-download");
+    } catch (error) {
+      console.error("Error submitting feedback:", error);
+    }
+  };
+
+  const handleFeedbackClose = () => {
+    setShowFeedbackPopup(false);
   };
 
   if (!user) {
@@ -337,6 +357,14 @@ const LLMsFullGenerator: React.FC<LLMsFullGeneratorProps> = ({
           </div>
         )}
       </div>
+
+      {/* Feedback Popup */}
+      <FeedbackPopup
+        isOpen={showFeedbackPopup}
+        onClose={handleFeedbackClose}
+        onSubmit={handleFeedbackSubmit}
+        page="llms-full-download"
+      />
     </div>
   );
 };

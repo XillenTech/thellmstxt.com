@@ -8,10 +8,12 @@ import OutputPreview from "./OutputPreview";
 
 import LLMsFullGenerator from "./LLMsFullGenerator";
 import MarkdownGenerator from "./MarkdownGenerator";
+import FeedbackPopup from "./FeedbackPopup";
 import type { PathSelection } from "../types/backend";
 import { FileText, FolderOpen, Settings } from "lucide-react";
 import { LLM_BOT_CONFIGS, LLMBot } from "../types/backend";
 import { useAuth } from "./AuthProvider";
+import { useFeedback } from "../hooks/useFeedback";
 
 export interface Rule {
   id: string;
@@ -22,8 +24,10 @@ export interface Rule {
 
 const Generator = () => {
   const { user } = useAuth();
+  const { submitFeedback } = useFeedback();
   const [rules, setRules] = useState<Rule[]>([]);
   const [generatedContent, setGeneratedContent] = useState("");
+  const [showFeedbackPopup, setShowFeedbackPopup] = useState(false);
   const [analysisData, setAnalysisData] = useState<{
     metadata: {
       title: string;
@@ -418,6 +422,23 @@ const Generator = () => {
   const generateFromSelectedPaths = () => {
     if (!analysisData) return;
 
+    // Show feedback popup first
+    setShowFeedbackPopup(true);
+  };
+
+  const handleFeedbackSubmit = async (feedback: string, email?: string) => {
+    try {
+      await submitFeedback(feedback, email, "llms-generator");
+    } catch (error) {
+      console.error("Error submitting feedback:", error);
+    }
+  };
+
+  const handleFeedbackClose = () => {
+    setShowFeedbackPopup(false);
+    // Continue with the original generation logic
+    if (!analysisData) return;
+
     const newRules: Rule[] = [];
 
     // Add allow rules
@@ -579,6 +600,7 @@ const Generator = () => {
                   onSelectionChange={handlePathSelectionChange}
                   isAuthenticated={!!user || blurOverlayDismissed}
                   onBlurOverlayDismiss={() => setBlurOverlayDismissed(true)}
+                  onContinueWithFeedback={() => setShowFeedbackPopup(true)}
                 />
                 <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
                   <button
@@ -703,6 +725,14 @@ const Generator = () => {
           onClose={() => setShowMarkdown(false)}
         />
       )}
+
+      {/* Feedback Popup */}
+      <FeedbackPopup
+        isOpen={showFeedbackPopup}
+        onClose={handleFeedbackClose}
+        onSubmit={handleFeedbackSubmit}
+        page="llms-generator"
+      />
     </section>
   );
 };

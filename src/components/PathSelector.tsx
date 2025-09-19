@@ -16,6 +16,7 @@ interface PathSelectorProps {
   onSelectionChange: (paths: PathSelection[]) => void;
   isAuthenticated?: boolean;
   onBlurOverlayDismiss?: () => void;
+  onContinueWithFeedback?: () => void;
 }
 
 const PathSelector = ({
@@ -23,6 +24,7 @@ const PathSelector = ({
   onSelectionChange,
   isAuthenticated = true,
   onBlurOverlayDismiss,
+  onContinueWithFeedback,
 }: PathSelectorProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState<"all" | "allow" | "disallow">(
@@ -381,7 +383,7 @@ const PathSelector = ({
                     {/* Demo option */}
                     {onBlurOverlayDismiss && (
                       <button
-                        onClick={onBlurOverlayDismiss}
+                        onClick={onContinueWithFeedback || onBlurOverlayDismiss}
                         className="text-md  text-gray-500 hover:text-blue-600 transition-colors duration-200 cursor-pointer"
                       >
                         Continue (5 paths only)

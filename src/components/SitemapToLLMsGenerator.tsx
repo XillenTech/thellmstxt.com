@@ -3,6 +3,8 @@
 import React, { useState, useRef } from "react";
 import { useAuth } from "./AuthProvider";
 import { Upload, X, FileText } from "lucide-react";
+import FeedbackPopup from "./FeedbackPopup";
+import { useFeedback } from "../hooks/useFeedback";
 
 interface SitemapValidation {
   isValid: boolean;
@@ -39,6 +41,7 @@ interface LLMsTxtResult {
 
 export default function SitemapToLLMsGenerator() {
   const { token } = useAuth();
+  const { submitFeedback } = useFeedback();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [sitemapUrl, setSitemapUrl] = useState("");
   const [siteTitle, setSiteTitle] = useState("");
@@ -51,6 +54,7 @@ export default function SitemapToLLMsGenerator() {
   const [result, setResult] = useState<LLMsTxtResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
+  const [showFeedbackPopup, setShowFeedbackPopup] = useState(false);
 
   // Configuration options
   const [enableEnrichment, setEnableEnrichment] = useState(true);
@@ -290,6 +294,7 @@ export default function SitemapToLLMsGenerator() {
   const downloadFile = () => {
     if (!result?.content) return;
 
+    // Download the file first
     const blob = new Blob([result.content], { type: "text/markdown" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -299,6 +304,21 @@ export default function SitemapToLLMsGenerator() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    
+    // Show feedback popup after download
+    setShowFeedbackPopup(true);
+  };
+
+  const handleFeedbackSubmit = async (feedback: string, email?: string) => {
+    try {
+      await submitFeedback(feedback, email, "sitemap-download");
+    } catch (error) {
+      console.error("Error submitting feedback:", error);
+    }
+  };
+
+  const handleFeedbackClose = () => {
+    setShowFeedbackPopup(false);
   };
 
   // Copy content to clipboard
@@ -698,6 +718,14 @@ export default function SitemapToLLMsGenerator() {
           <p>• <strong>Generate:</strong> Creates a spec-compliant llms.txt file</p>
         </div>
       </div>
+
+      {/* Feedback Popup */}
+      <FeedbackPopup
+        isOpen={showFeedbackPopup}
+        onClose={handleFeedbackClose}
+        onSubmit={handleFeedbackSubmit}
+        page="sitemap-download"
+      />
     </div>
   );
 }

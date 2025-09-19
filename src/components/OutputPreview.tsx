@@ -1,6 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Copy, Download, Check } from "lucide-react";
+import FeedbackPopup from "./FeedbackPopup";
+import { useFeedback } from "../hooks/useFeedback";
 
 interface OutputPreviewProps {
   content: string;
@@ -8,6 +10,13 @@ interface OutputPreviewProps {
 
 const OutputPreview = ({ content }: OutputPreviewProps) => {
   const [copied, setCopied] = useState(false);
+  const [showFeedbackPopup, setShowFeedbackPopup] = useState(false);
+  const { submitFeedback } = useFeedback();
+
+  // Debug logging for state changes
+  useEffect(() => {
+    console.log("showFeedbackPopup state changed:", showFeedbackPopup);
+  }, [showFeedbackPopup]);
 
   const copyToClipboard = async () => {
     try {
@@ -20,6 +29,9 @@ const OutputPreview = ({ content }: OutputPreviewProps) => {
   };
 
   const downloadFile = () => {
+    console.log("Download button clicked");
+    
+    // Download the file first
     const blob = new Blob([content], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -29,6 +41,23 @@ const OutputPreview = ({ content }: OutputPreviewProps) => {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    
+    console.log("File downloaded, showing feedback popup");
+    // Show feedback popup after download
+    setShowFeedbackPopup(true);
+    console.log("showFeedbackPopup state set to true");
+  };
+
+  const handleFeedbackSubmit = async (feedback: string, email?: string) => {
+    try {
+      await submitFeedback(feedback, email, "llms-download");
+    } catch (error) {
+      console.error("Error submitting feedback:", error);
+    }
+  };
+
+  const handleFeedbackClose = () => {
+    setShowFeedbackPopup(false);
   };
 
   return (
@@ -90,6 +119,14 @@ const OutputPreview = ({ content }: OutputPreviewProps) => {
           modify your rules.
         </p>
       </div>
+
+      {/* Feedback Popup */}
+      <FeedbackPopup
+        isOpen={showFeedbackPopup}
+        onClose={handleFeedbackClose}
+        onSubmit={handleFeedbackSubmit}
+        page="llms-download"
+      />
     </div>
   );
 };
