@@ -18,6 +18,8 @@ interface AuthContextType {
   loginWithMagicLink: (
     token: string
   ) => Promise<{ success: boolean; error?: string }>;
+  refreshToken: () => Promise<{ success: boolean; error?: string }>;
+  validateToken: (tokenToValidate: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -36,14 +38,149 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<{ email: string } | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
-  useEffect(() => {
-    const t = localStorage.getItem("auth_token");
-    const email = localStorage.getItem("auth_email");
-    if (t && email) {
-      setToken(t);
-      setUser({ email });
+  // Helper function to check if token is expired
+  const isTokenExpired = (token: string): boolean => {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const currentTime = Math.floor(Date.now() / 1000);
+      return payload.exp < currentTime;
+    } catch {
+      return true;
     }
+  };
+
+  // Helper function to check if token needs refresh (within 7 days of expiry)
+  const shouldRefreshToken = (token: string): boolean => {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const currentTime = Math.floor(Date.now() / 1000);
+      const timeUntilExpiry = payload.exp - currentTime;
+      const sevenDaysInSeconds = 7 * 24 * 60 * 60; // 7 days
+      return timeUntilExpiry < sevenDaysInSeconds;
+    } catch {
+      return true;
+    }
+  };
+
+  // Helper function to validate token before API calls
+  const validateToken = async (tokenToValidate: string): Promise<boolean> => {
+    if (!tokenToValidate) return false;
+    
+    if (isTokenExpired(tokenToValidate)) {
+      return false;
+    }
+    
+    // If token is close to expiry, try to refresh it
+    if (shouldRefreshToken(tokenToValidate)) {
+      try {
+        const refreshResult = await refreshToken();
+        return refreshResult.success;
+      } catch {
+        return false;
+      }
+    }
+    
+    return true;
+  };
+
+  // Define refreshToken function first
+  const refreshToken = async () => {
+    try {
+      const currentToken = localStorage.getItem("auth_token");
+      if (!currentToken) {
+        return { success: false, error: "No token to refresh" };
+      }
+
+      const res = await fetch(`${API_BASE}/api/refresh-token`, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${currentToken}`
+        },
+      });
+      const data = await res.json();
+      
+      if (data.success && data.token) {
+        setToken(data.token);
+        setUser({ email: data.email });
+        localStorage.setItem("auth_token", data.token);
+        localStorage.setItem("auth_email", data.email);
+        return { success: true };
+      } else {
+        return { success: false, error: data.error || "Token refresh failed" };
+      }
+    } catch (err) {
+      console.error("Token refresh error:", err);
+      return { success: false, error: "Token refresh failed" };
+    }
+  };
+
+  useEffect(() => {
+    const initializeAuth = async () => {
+      const t = localStorage.getItem("auth_token");
+      const email = localStorage.getItem("auth_email");
+      
+      if (t && email) {
+        // Check if token is expired
+        if (isTokenExpired(t)) {
+          // Token is expired, clear auth state
+          localStorage.removeItem("auth_token");
+          localStorage.removeItem("auth_email");
+          setToken(null);
+          setUser(null);
+          return;
+        }
+
+        // Check if token needs refresh
+        if (shouldRefreshToken(t)) {
+          try {
+            const refreshResult = await refreshToken();
+            if (!refreshResult.success) {
+              // Refresh failed, clear auth state
+              localStorage.removeItem("auth_token");
+              localStorage.removeItem("auth_email");
+              setToken(null);
+              setUser(null);
+              return;
+            }
+          } catch {
+            // Refresh failed, clear auth state
+            localStorage.removeItem("auth_token");
+            localStorage.removeItem("auth_email");
+            setToken(null);
+            setUser(null);
+            return;
+          }
+        } else {
+          // Token is still valid, set auth state
+          setToken(t);
+          setUser({ email });
+        }
+      }
+    };
+
+    initializeAuth();
   }, []);
+
+  // Set up periodic token refresh
+  useEffect(() => {
+    if (!token) return;
+
+    const checkAndRefreshToken = async () => {
+      if (shouldRefreshToken(token)) {
+        try {
+          await refreshToken();
+        } catch (error) {
+          console.error("Automatic token refresh failed:", error);
+        }
+      }
+    };
+
+    // Check token every hour
+    const interval = setInterval(checkAndRefreshToken, 60 * 60 * 1000);
+
+    return () => clearInterval(interval);
+  }, [token]);
 
   const login = async (email: string, password: string) => {
     try {
@@ -143,7 +280,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, signup, sendMagicLink, loginWithMagicLink, logout }}>
+    <AuthContext.Provider value={{ user, token, login, signup, sendMagicLink, loginWithMagicLink, refreshToken, validateToken, logout }}>
       {children}
     </AuthContext.Provider>
   );

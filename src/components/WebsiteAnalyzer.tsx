@@ -83,7 +83,7 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
   const [showAsyncPrompt, setShowAsyncPrompt] = useState(false);
   const [asyncPromptMsg, setAsyncPromptMsg] = useState<string | null>(null);
   const [closeError, setCloseError] = useState<string | null>(null);
-  const { token } = useAuth();
+  const { token, validateToken } = useAuth();
 
   const llmBots: Array<{ value: LLMBot; label: string; description: string }> =
     [
@@ -199,6 +199,13 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
 
     // If logged in, use fetch with Authorization header and manual SSE parsing
     if (token) {
+      // Validate token before making API call
+      if (!(await validateToken(token))) {
+        setError("Authentication expired. Please log in again.");
+        setIsLoading(false);
+        return;
+      }
+
       try {
         const response = await fetch(sseUrl, {
           method: "GET",

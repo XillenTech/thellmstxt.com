@@ -40,7 +40,7 @@ interface LLMsTxtResult {
 }
 
 export default function SitemapToLLMsGenerator() {
-  const { token } = useAuth();
+  const { token, validateToken } = useAuth();
   const { submitFeedback } = useFeedback();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [sitemapUrl, setSitemapUrl] = useState("");
@@ -224,6 +224,12 @@ export default function SitemapToLLMsGenerator() {
   const generateLLMsTxt = async () => {
     if (!sitemapUrl && !uploadedFile) {
       setError("Please enter a sitemap URL or upload a file");
+      return;
+    }
+
+    // Validate token if user is logged in
+    if (token && !(await validateToken(token))) {
+      setError("Authentication expired. Please log in again.");
       return;
     }
 

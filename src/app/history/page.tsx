@@ -32,7 +32,7 @@ interface HistoryItem {
 }
 
 export default function HistoryPage() {
-  const { user, token } = useAuth();
+  const { user, token, validateToken } = useAuth();
   const router = useRouter();
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -52,6 +52,12 @@ export default function HistoryPage() {
     try {
       setLoading(true);
       setError(null);
+
+      // Validate token before making API call
+      if (token && !(await validateToken(token))) {
+        router.push("/signup");
+        return;
+      }
 
       const API_BASE_URL =
         process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
