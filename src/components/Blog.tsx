@@ -251,9 +251,9 @@ const Blog = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
             Latest Insights & Tutorials
-          </h2>
+          </h1>
           <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
             Stay updated with the latest trends, best practices, and expert
             insights on llms.txt and AI-powered marketing.

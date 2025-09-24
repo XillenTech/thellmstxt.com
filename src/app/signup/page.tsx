@@ -54,9 +54,9 @@ export default function SignupPage() {
       <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md border border-blue-100">
         {!magicLinkSent ? (
           <form onSubmit={handleSubmit}>
-            <h2 className="text-3xl font-extrabold mb-6 text-center text-blue-700">
+            <h1 className="text-3xl font-extrabold mb-6 text-center text-blue-700">
               Sign Up
-            </h2>
+            </h1>
             <p className="text-gray-600 text-center mb-6">
               Enter your email and we&apos;ll send you a magic link to sign in
             </p>
