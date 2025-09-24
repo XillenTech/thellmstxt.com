@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { generate404Title, generateBlogTitle, generateCanonicalUrl, generateMetaDescription } from "@/utils/seo";
 
 // Blog data - imported from the same source as the page
 interface BlogPost {
@@ -113,6 +114,24 @@ const blogPosts: BlogPost[] = [
       "Discover the significant advantages of implementing LLMs.txt for AI SEO (GEO - Generative Engine Optimization) and how it positions your website for the future of AI-powered search.",
     tags: ["LLMs.txt", "AI SEO", "SEO Strategy", "GEO", "Technical"],
   },
+  {
+    slug: "sitemap-to-llms-txt-converter-guide",
+    title: "Sitemap to llms.txt Converter: Complete Guide to AI-Optimized Content Curation",
+    excerpt: "Learn how to convert your sitemap.xml into a curated llms.txt file using our free sitemap-to-llms.txt generator. Discover the benefits of automated content filtering and AI-friendly formatting.",
+    tags: ["Sitemap", "llms.txt", "AI SEO", "Content Curation", "2025", "Free Tool"],
+  },
+  {
+    slug: "ai-seo-strategy-2025-beyond-traditional-search",
+    title: "AI SEO Strategy 2025: Beyond Traditional Search to AI-Powered Discovery",
+    excerpt: "Develop a comprehensive 2025 AI SEO strategy that works with both traditional search engines and AI systems. Learn how to use semantic search and llms.txt for maximum visibility.",
+    tags: ["AI SEO", "Search Strategy", "Semantic Search", "2025", "Technical SEO", "llms.txt"],
+  },
+  {
+    slug: "broken-link-detection-seo-tool",
+    title: "Broken Link Detection: The Ultimate SEO Tool for Website Health",
+    excerpt: "Discover how our advanced broken link detection tool helps you identify and fix broken links on your website. Improve SEO, user experience, and site performance with comprehensive link analysis.",
+    tags: ["Broken Links", "SEO Tool", "Website Health", "Link Analysis", "SEO Audit"],
+  },
 ];
 
 // Function to find blog post by slug
@@ -129,29 +148,33 @@ export async function generateMetadata({
   const post = findBlogPostBySlug(slug);
 
   if (!post) {
+    const cleanSlug = slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    const description = generateMetaDescription(
+      `The blog post "${cleanSlug}" you're looking for doesn't exist. Browse our latest articles about llms.txt, AI crawlers, and website optimization.`
+    );
+    
     return {
-      title: "Blog Post Not Found – TheLLMsTxt",
-      description:
-        "The blog post you're looking for doesn't exist. Browse our latest articles about llms.txt, AI crawlers, and website optimization.",
+      title: generate404Title(slug, "Blog Post Not Found"),
+      description,
       keywords: [
         "llms.txt blog",
-        "AI crawler articles",
+        "AI crawler articles", 
         "website optimization blog",
         "LLM integration posts",
         "AI training content",
       ],
       alternates: {
-        canonical: `https://thellmstxt.com/blogs/${slug}`,
+        canonical: generateCanonicalUrl(`/blogs/${slug}`),
       },
     };
   }
 
   return {
-    title: `${post.title} – TheLLMsTxt`,
+    title: generateBlogTitle(post.title),
     description: post.excerpt,
     keywords: post.tags.join(", "),
     alternates: {
-      canonical: `https://thellmstxt.com/blogs/${slug}`,
+      canonical: generateCanonicalUrl(`/blogs/${slug}`),
     },
     openGraph: {
       title: post.title,

@@ -1,5 +1,15 @@
 import Link from "next/link";
 import { ArrowLeft, Home, Search } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Page Not Found - 404 Error | TheLLMsTxt",
+  description: "Sorry, the page you're looking for doesn't exist. Explore our llms.txt generator, guides, and tools to control AI crawlers on your website.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function NotFound() {
   return (

@@ -565,7 +565,7 @@ const BlogPostPage = ({ params }: BlogPostPageProps) => {
             Blog Post Not Found
           </h1>
           <p className="text-sm sm:text-base text-gray-600 mb-8">
-            The blog post you&apos;re looking for doesn&apos;t exist.
+            The blog post you&apos;re looking for doesn&apos;t exist or may have been moved.
           </p>
           <Link
             href="/blogs"
