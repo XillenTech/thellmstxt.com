@@ -146,6 +146,11 @@ export default function TestPage() {
   }, [isAuthenticated]);
 
   const filteredResults = crawlResults.filter((result) => {
+    // Filter out internal URLs (thellmstxt.com and xillentech.com)
+    if (result.url.includes('thellmstxt.com') || result.url.includes('xillentech.com')) {
+      return false;
+    }
+    
     if (filter === "all") return true;
     return result.type === filter;
   });
