@@ -345,7 +345,7 @@ export default function TestPage() {
                   <p className="text-sm font-medium text-gray-600">Completed</p>
                   <p className="text-2xl font-bold text-gray-900">
                     {
-                      crawlResults.filter((r) => r.status === "completed")
+                      crawlResults.filter((r) => r.status === "completed" && !shouldExcludeUrl(r.url))
                         .length
                     }
                   </p>
@@ -361,7 +361,7 @@ export default function TestPage() {
                 <div className="ml-4">
                   <p className="text-sm font-medium text-gray-600">Pending</p>
                   <p className="text-2xl font-bold text-gray-900">
-                    {crawlResults.filter((r) => r.status === "pending").length}
+                    {crawlResults.filter((r) => r.status === "pending" && !shouldExcludeUrl(r.url)).length}
                   </p>
                 </div>
               </div>
@@ -375,7 +375,7 @@ export default function TestPage() {
                 <div className="ml-4">
                   <p className="text-sm font-medium text-gray-600">Failed</p>
                   <p className="text-2xl font-bold text-gray-900">
-                    {crawlResults.filter((r) => r.status === "failed").length}
+                    {crawlResults.filter((r) => r.status === "failed" && !shouldExcludeUrl(r.url)).length}
                   </p>
                 </div>
               </div>
