@@ -147,7 +147,7 @@ export default function TestPage() {
 
   const filteredResults = crawlResults.filter((result) => {
     // Filter out internal URLs (thellmstxt.com and xillentech.com)
-    if (result.url.includes('thellmstxt.com') || result.url.includes('xillentech.com')) {
+    if (result.url.includes('thellmstxt.com') || result.url.includes('xillentech.com') || result.url.includes('anshu.portfolio.vercel.app') || result.url.includes('anshu-portfolio.vercel.app') || result.url.includes('emovid.com') || result.url.includes('llmstxt.store') || result.url.includes('anshu-freelance.vercel.app') || result.url.includes('mobivogue.com')) {
       return false;
     }
     
