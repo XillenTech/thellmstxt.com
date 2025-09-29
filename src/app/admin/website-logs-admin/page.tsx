@@ -145,15 +145,30 @@ export default function TestPage() {
     }
   }, [isAuthenticated]);
 
+  // Helper function to check if URL should be excluded
+  const shouldExcludeUrl = (url: string) => {
+    return url.includes('thellmstxt.com') || 
+           url.includes('xillentech.com') || 
+           url.includes('anshu.portfolio.vercel.app') || 
+           url.includes('anshu-portfolio.vercel.app') || 
+           url.includes('emovid.com') || 
+           url.includes('llmstxt.store') || 
+           url.includes('anshu-freelance.vercel.app') || 
+           url.includes('mobivogue.com');
+  };
+
   const filteredResults = crawlResults.filter((result) => {
-    // Filter out internal URLs (thellmstxt.com and xillentech.com)
-    if (result.url.includes('thellmstxt.com') || result.url.includes('xillentech.com') || result.url.includes('anshu.portfolio.vercel.app') || result.url.includes('anshu-portfolio.vercel.app') || result.url.includes('emovid.com') || result.url.includes('llmstxt.store') || result.url.includes('anshu-freelance.vercel.app') || result.url.includes('mobivogue.com')) {
+    // Filter out internal URLs
+    if (shouldExcludeUrl(result.url)) {
       return false;
     }
     
     if (filter === "all") return true;
     return result.type === filter;
   });
+
+  // Calculate filtered total count excluding internal URLs
+  const filteredTotalCount = crawlResults.filter((result) => !shouldExcludeUrl(result.url)).length;
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -314,7 +329,7 @@ export default function TestPage() {
                     Total Crawls
                   </p>
                   <p className="text-2xl font-bold text-gray-900">
-                    {totalCount}
+                    {filteredTotalCount}
                   </p>
                 </div>
               </div>
@@ -544,7 +559,7 @@ export default function TestPage() {
           {/* Footer Info */}
           <div className="mt-8 text-center text-sm text-gray-500">
             <p>
-              Showing {filteredResults.length} of {totalCount} total crawl
+              Showing {filteredResults.length} of {filteredTotalCount} total crawl
               results
             </p>
             {filter !== "all" && <p className="mt-1">Filtered by: {filter}</p>}
