@@ -261,7 +261,7 @@ const Blog = () => {
         </div>
 
         {/* Tag Filter */}
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12">
+        {/* <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12">
           {allTags.map((tag) => (
             <button
               key={tag}
@@ -275,7 +275,7 @@ const Blog = () => {
               {tag === "all" ? "All Posts" : tag}
             </button>
           ))}
-        </div>
+        </div> */}
 
         {/* Featured Post */}
         {filteredPosts.filter((post) => post.featured).length > 0 && (
