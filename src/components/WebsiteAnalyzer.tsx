@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Search,
   // Loader2,
@@ -33,6 +33,8 @@ interface WebsiteAnalyzerProps {
       priority: string;
       aiUsageDirective: string;
     }>;
+    seoAnalysisResult?: any;
+    isSEOAnalyzing?: boolean;
   }) => void;
 }
 
@@ -84,6 +86,12 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
   const [asyncPromptMsg, setAsyncPromptMsg] = useState<string | null>(null);
   const [closeError, setCloseError] = useState<string | null>(null);
   const { token, validateToken } = useAuth();
+
+  // SEO Analysis state
+  const [seoAnalysisResult, setSeoAnalysisResult] = useState<any>(null);
+  const [isSEOAnalyzing, setIsSEOAnalyzing] = useState(false);
+  const [seoSessionId, setSeoSessionId] = useState<string | null>(null);
+  const currentAnalysisDataRef = useRef<any>(null);
 
   const llmBots: Array<{ value: LLMBot; label: string; description: string }> =
     [
@@ -154,6 +162,66 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
     setProgress(0);
     setProgressMsg("");
     setSessionId("");
+  };
+
+  // Function to poll for SEO analysis results
+  const pollSEOAnalysis = async (sessionId: string) => {
+    console.log("🔄 Starting SEO polling for session:", sessionId);
+    setIsSEOAnalyzing(true);
+    setSeoSessionId(sessionId);
+    
+    const pollInterval = setInterval(async () => {
+      try {
+        const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
+        console.log("🔍 Polling SEO status for:", sessionId);
+        const response = await fetch(`${API_BASE_URL}/api/seo-analysis/status/${sessionId}`);
+        const data = await response.json();
+        console.log("📊 SEO polling response:", data);
+        
+        if (data.success && data.status === "completed") {
+          setSeoAnalysisResult(data.data);
+          setIsSEOAnalyzing(false);
+          clearInterval(pollInterval);
+          console.log("✅ SEO analysis completed:", data.data);
+          console.log("📊 currentAnalysisData exists:", !!currentAnalysisDataRef.current);
+          
+          // Update parent with SEO results
+          if (currentAnalysisDataRef.current) {
+            const updatedAnalysisData = {
+              ...currentAnalysisDataRef.current,
+              seoAnalysisResult: data.data,
+              isSEOAnalyzing: false,
+            };
+            console.log("🔄 Calling onAnalysisComplete with SEO results:", updatedAnalysisData);
+            currentAnalysisDataRef.current = updatedAnalysisData;
+            console.log("📞 About to call onAnalysisComplete...");
+            onAnalysisComplete(updatedAnalysisData);
+            console.log("✅ onAnalysisComplete called successfully");
+          } else {
+            console.log("❌ currentAnalysisData is null, cannot update parent");
+          }
+        } else if (data.success && data.status === "not_found") {
+          // Analysis not found, stop polling
+          setIsSEOAnalyzing(false);
+          clearInterval(pollInterval);
+          console.log("❌ SEO analysis not found");
+        }
+        // If status is "running", continue polling
+      } catch (error) {
+        console.error("Error polling SEO analysis:", error);
+        setIsSEOAnalyzing(false);
+        clearInterval(pollInterval);
+      }
+    }, 2000); // Poll every 2 seconds
+
+    // Stop polling after 5 minutes
+    setTimeout(() => {
+      clearInterval(pollInterval);
+      if (isSEOAnalyzing) {
+        setIsSEOAnalyzing(false);
+        console.log("⏰ SEO analysis polling timeout");
+      }
+    }, 300000);
   };
 
   const analyzeWebsite = async () => {
@@ -326,6 +394,15 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
       setIsLoading(false);
       setProgress(0);
       setSessionId("");
+    } else if (event === "seoSessionId") {
+      try {
+        const parsed = JSON.parse(data);
+        console.log("🔍 Received SEO session ID:", parsed.seoSessionId);
+        // Start polling for SEO analysis results
+        pollSEOAnalysis(parsed.seoSessionId);
+      } catch (error) {
+        console.error("Error parsing SEO session ID:", error);
+      }
     } else if (event === "result") {
       try {
         const dataObj: AnalysisResult & {
@@ -337,12 +414,17 @@ const WebsiteAnalyzer = ({ onAnalysisComplete }: WebsiteAnalyzerProps) => {
         } = JSON.parse(data);
         if (dataObj.success) {
           setAnalysisResult(dataObj);
-          onAnalysisComplete({
+          const analysisData = {
             ...dataObj,
             selectedBots,
             pageMetadatas: dataObj.pageMetadatas,
             aiGeneratedContent: dataObj.aiGeneratedContent,
-          });
+            seoAnalysisResult,
+            isSEOAnalyzing,
+          };
+          console.log("📊 Initial analysis complete, setting currentAnalysisData:", analysisData);
+          currentAnalysisDataRef.current = analysisData;
+          onAnalysisComplete(analysisData);
           setIsLoading(false);
           setProgress(100);
         } else {

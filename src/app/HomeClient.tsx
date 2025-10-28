@@ -1,7 +1,7 @@
 "use client";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import Generator from "@/components/Generator";
+import TabbedGenerator from "@/components/TabbedGenerator";
 import EcommerceUpsell from "@/components/EcommerceUpsell";
 import WhatIsLLMsTxt from "@/components/WhatIsLLMsTxt";
 import HowToUse from "@/components/HowToUse";
@@ -28,7 +28,7 @@ export default function HomeClient() {
         <Header />
         <div className="flex-1">
           <Hero />
-          <Generator />
+          <TabbedGenerator />
           <EcommerceUpsell />
           <WhatIsLLMsTxt />
           <WhyUseLLMsTxt />

@@ -19,7 +19,7 @@ const navLinks = [
   { href: "/what-is-llms-txt", label: "What is llms.txt?" },
   { href: "/how-to-use", label: "How To Use" },
   { href: "/blogs", label: "Blogs" },
-  { href: "/faq", label: "FAQ" },
+  // { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -210,15 +210,15 @@ const Header = () => {
                   key={link.href}
                   href={link.href}
                   onClick={(e) => handleNavLinkClick(link, e)}
-                  className="text-gray-700 hover:text-blue-600 transition-colors font-medium px-2 py-1 rounded-lg hover:bg-blue-50 text-sm xl:text-base whitespace-nowrap"
+                  className="text-gray-700 hover:text-blue-600 transition-colors font-medium px-2 py-1 rounded-lg text-sm xl:text-base whitespace-nowrap"
                 >
                   {link.label}
                 </Link>
               ))}
 
               {/* Generators Dropdown */}
-              <div className="relative" ref={generatorsDropdownRef}>
-                <button
+              {/* <div className="relative" ref={generatorsDropdownRef}> */}
+                {/* <button
                   onClick={() =>
                     setGeneratorsDropdownOpen(!generatorsDropdownOpen)
                   }
@@ -230,10 +230,10 @@ const Header = () => {
                   ) : (
                     <ChevronDown className="w-4 h-4" />
                   )}
-                </button>
+                </button> */}
 
                 {/* Dropdown Menu */}
-                {generatorsDropdownOpen && (
+                {/* {generatorsDropdownOpen && (
                   <div className="absolute top-full left-0 mt-1 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
                     {generatorLinks.map((link) => {
                       const IconComponent = link.icon;
@@ -263,13 +263,13 @@ const Header = () => {
                       );
                     })}
                   </div>
-                )}
-              </div>
+                )} */}
+              {/* </div> */}
 
               {/* SEO Tools */}
               <Link
                 href={seoLink.href}
-                className="flex items-center space-x-2 text-gray-700 hover:text-red-600 transition-colors font-medium px-2 py-1 rounded-lg hover:bg-red-50 text-sm xl:text-base whitespace-nowrap"
+                className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors font-medium px-2 py-1 rounded-lg text-sm xl:text-base whitespace-nowrap"
               >
                 <span>{seoLink.label}</span>
               </Link>
@@ -380,7 +380,7 @@ const Header = () => {
                   ))}
 
                   {/* Mobile Generators Section */}
-                  <div className="border-t border-gray-200 pt-4 mt-4">
+                  {/* <div className="border-t border-gray-200 pt-4 mt-4">
                     <div className="px-3 py-2 text-sm font-semibold text-gray-500 uppercase tracking-wide">
                       Generators
                     </div>
@@ -411,7 +411,7 @@ const Header = () => {
                         </Link>
                       );
                     })}
-                  </div>
+                  </div> */}
 
                   {/* Mobile SEO Tools Section */}
                   <div className="border-t border-gray-200 pt-4 mt-4">
