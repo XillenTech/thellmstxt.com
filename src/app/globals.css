@@ -5,17 +5,17 @@
   --foreground: #171717;
   
   /* CopilotKit Custom Theme - Blue Icon */
-  --copilot-kit-primary-color: #2563eb; /* Blue-600 to match site theme */
-  --copilot-kit-button-background: #2563eb;
+  --copilot-kit-primary-color: #8125eb; /* Blue-600 to match site theme */
+  --copilot-kit-button-background: #8125eb;
   --copilot-kit-button-color: #ffffff;
-  --copilot-kit-button-hover-background: #1d4ed8; /* Blue-700 for hover */
+  --copilot-kit-button-hover-background: #6618c3; /* Blue-700 for hover */
 }
 
 /* CopilotKit Button Styling - Correct class names */
 .copilotKitButton {
-  background-color: #2563eb !important;
+  background-color: #8125eb !important;
   color: #ffffff !important;
-  border-color: #2563eb !important;
+  border-color: #8125eb !important;
 }
 
 .copilotKitButtonIcon svg {

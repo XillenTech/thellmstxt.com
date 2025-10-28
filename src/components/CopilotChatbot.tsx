@@ -79,7 +79,7 @@ export default function CopilotChatbot() {
     <div className="copilot-blue-theme">
       <style jsx global>{`
         .copilot-blue-theme .copilotKitButton {
-          background-color: #2563eb !important;
+          background-color: #8125eb !important;
           color: #ffffff !important;
         }
         .copilot-blue-theme .copilotKitButtonIcon svg {
