@@ -40,6 +40,5 @@ Allow: /contact/      # Contact information
 Allow: /llms-full/    # LLMs Full
 Allow: /markdown/     # Markdown
 
-# Sitemap locations
+# Sitemap location
 Sitemap: https://thellmstxt.com/sitemap.xml
-Sitemap: https://thellmstxt.com/blog-sitemap.xml

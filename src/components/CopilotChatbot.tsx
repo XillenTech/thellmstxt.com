@@ -76,17 +76,27 @@ export default function CopilotChatbot() {
   });
 
   return (
-    <CopilotPopup
-      labels={{
-        title: "LLMs.txt & SEO Assistant",
-        initial: "Hello! I'm here to help you with llms.txt files, SEO analysis, and broken link detection. What would you like to know?",
-        placeholder: "Ask me about llms.txt, SEO analysis, broken links, or our tools...",
-      }}
-      defaultOpen={false}
-      clickOutsideToClose={true}
-      hitEscapeToClose={true}
-      shortcut="/"
-      instructions={`
+    <div className="copilot-blue-theme">
+      <style jsx global>{`
+        .copilot-blue-theme .copilotKitButton {
+          background-color: #2563eb !important;
+          color: #ffffff !important;
+        }
+        .copilot-blue-theme .copilotKitButtonIcon svg {
+          color: #ffffff !important;
+        }
+      `}</style>
+      <CopilotPopup
+        labels={{
+          title: "LLMs.txt & SEO Assistant",
+          initial: "Hello! I'm here to help you with llms.txt files, SEO analysis, and broken link detection. What would you like to know?",
+          placeholder: "Ask me about llms.txt, SEO analysis, broken links, or our tools...",
+        }}
+        defaultOpen={false}
+        clickOutsideToClose={true}
+        hitEscapeToClose={true}
+        shortcut="/"
+        instructions={`
         You are a helpful assistant for the LLMs.txt Generator website. 
         You can help users with:
         
@@ -121,6 +131,7 @@ export default function CopilotChatbot() {
         Always be helpful, accurate, and encourage users to try our free tools.
         If you don't know something specific about our website, direct them to the relevant page or contact support.
       `}
-    />
+      />
+    </div>
   );
 }

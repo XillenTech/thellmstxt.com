@@ -1,657 +1,129 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowLeft, Clock } from "lucide-react";
+import { blogPosts, getAllBlogSlugs, getBlogPostBySlug, type BlogPost } from "@/data/blogPosts";
 
-interface BlogPost {
-  id: string;
-  slug: string;
-  title: string;
-  excerpt: string;
-  content: (string | string[])[];
-  readTime: string;
-  tags: string[];
-  featured?: boolean;
+// Generate static params for all blog posts
+export async function generateStaticParams() {
+  return getAllBlogSlugs().map((slug) => ({
+    slug: slug,
+  }));
 }
 
-// Blog data - in a real app, this would come from a CMS or API
-const blogPosts: BlogPost[] = [
-  {
-    id: "1",
-    slug: "complete-guide-to-llms-txt",
-    title: "What is llms.txt? The Complete Guide to Implementation in 2025",
-    excerpt:
-      "Learn how to create llms.txt files and discover the benefits of llms.txt for your website. Compare the best llms.txt generator options and understand the llms.txt format spec in this comprehensive guide.",
-    content: [
-      "Wondering what is llms.txt and how it can help your website? This revolutionary protocol is changing how websites interact with AI systems in 2025. The llms.txt format spec provides a standardized way to control how AI language models access your content. Our llms.txt integration guide will show you exactly how to use llms.txt for SEO and AI presence.",
-      "A common question is about llms.txt vs robots.txt differences. While robots.txt manages traditional search engine crawlers, llms.txt specifically instructs AI crawlers. Understanding this distinction helps you choose between llms.txt generator vs manual creation approaches. One of the key benefits of llms.txt is the granular control it provides over your intellectual property.",
-      "How to Create llms.txt for SEO and AI Optimization:",
-      [
-        "First, decide between using a free llms.txt generator online or manual creation. While manual gives full control, the best llms.txt generator tools prevent syntax errors.",
-        "Follow the llms.txt format spec when creating your file to ensure maximum compatibility with hosts supporting llms.txt.",
-        "Consider using an llms.txt generator API to automate llms.txt generation as your site grows.",
-        "For ecommerce platforms, specialized solutions like the llms.txt tool for Shopify can simplify implementation.",
-        "Compare llms.txt tools to find the right balance of features and ease of use for your needs.",
-      ],
-      "Key Benefits of llms.txt Implementation:",
-      [
-        "When you compare llms.txt tools vs plugins, dedicated tools often provide better control and flexibility.",
-        "The llms.txt for eCommerce site implementations can protect pricing while allowing product discovery.",
-        "Understanding llms-full.txt vs llms.txt helps you choose the right protocol for your needs.",
-        "Using an llms.txt generator tool ensures your directives are properly formatted.",
-        "Regular updates through automated llms.txt generation keep your rules current.",
-      ],
-      "Recent developments show that major AI platforms are increasingly respecting llms.txt directives. Whether you use a free llms.txt generator online or create your file manually, it significantly impacts how your brand appears in AI-driven conversations.",
-      "As AI continues to evolve, having a properly configured llms.txt file is essential. This is not just a technical task but a core part of a modern SEO strategy for any business wanting to maintain control in an AI-driven world.",
-    ],
-    readTime: "8 min read",
-    tags: ["llms.txt", "AI Marketing", "SEO", "2025"],
-    featured: true,
-  },
-  {
-    id: "2",
-    slug: "ai-shopping-changing-ecommerce",
-    title:
-      "How AI Shopping is Changing E-commerce in 2025: The Ultimate Guide to Conversational Commerce",
-    excerpt:
-      "Explore the 2025 trend of conversational commerce and discover how AI assistants are transforming product discovery and online shopping. Learn how to optimize your e-commerce site for AI, llms.txt, and SEO to boost sales and visibility.",
-    content: [
-      "In 2025, the landscape of online shopping is being transformed by AI assistants like ChatGPT, Claude, and Google Gemini. For businesses, this means mastering a new set of rules, including the critical implementation of llms.txt for eCommerce site success. This file is your gateway to controlling how AI interacts with your product catalog.",
-      "Why AI Shopping Matters for E-commerce in 2025:",
-      [
-        "Voice-activated shopping through smart speakers, which pull data based on crawler permissions.",
-        "Hyper-personalized product recommendations powered by AI models that have scraped your site.",
-        "Automated price comparison and deal finding, making competitive visibility crucial.",
-        "Seamless shopping experiences where AI assists the user from discovery to checkout.",
-        "Social commerce integrations where AI chatbots recommend your products.",
-      ],
-      "To succeed, your business must optimize for AI discovery. This involves structuring product data for AI crawlers and protecting checkout processes and customer data with a robust llms.txt file. For platforms like Shopify, using a dedicated llms.txt tool for Shopify can simplify this process immensely, ensuring you follow best practices without deep technical knowledge.",
-      "2025 E-commerce Optimization Checklist:",
-      [
-        "Implement and maintain an llms.txt file; consider a specialized llms.txt generator tool to avoid errors.",
-        "Structure product data with schemas that both AI and search engines can understand.",
-        "Automate llms.txt generation to keep rules updated as your product inventory changes.",
-        "Choose from one of the many hosts supporting llms.txt to ensure your directives are served correctly.",
-        "Continuously monitor AI-driven traffic and update your content strategy based on performance data.",
-      ],
-      "Major retailers are already seeing significant gains from AI recommendations. The common thread among them is an effective llms.txt for eCommerce site strategy. They understand that controlling AI access is as important as attracting it. As you scale, you may even consider using an llms.txt generator API to programmatically manage access rules based on inventory or promotions.",
-      "Stay ahead in 2025 by making your e-commerce site AI-ready. The benefits of llms.txt in this sector—from protecting pricing strategies to guiding AIs to new product lines—are too significant to ignore.",
-    ],
-    readTime: "12 min read",
-    tags: [
-      "E-commerce",
-      "AI Shopping",
-      "Conversational Commerce",
-      "2025",
-      "SEO",
-    ],
-  },
-  {
-    id: "3",
-    slug: "llms-txt-vs-robots-txt",
-    title:
-      "llms.txt vs robots.txt in 2025: Key Differences, SEO Impact, and Best Practices",
-    excerpt:
-      "Understand the crucial differences between llms.txt and robots.txt in 2025. Learn when to use each protocol for optimal AI and search engine visibility, and how to structure your files for maximum SEO and brand safety.",
-    content: [
-      "In 2025, the discussion around llms.txt vs robots.txt is central to modern technical SEO. While both are text files placed in your site's root directory to manage crawler access, their targets and purposes are fundamentally different, and using them correctly is key to digital strategy.",
-      "Key Differences Between llms.txt and robots.txt:",
-      [
-        "Purpose: robots.txt primarily guides search engine crawlers (like Googlebot) for indexing, while llms.txt specifically instructs AI crawlers (like ChatGPT-User) for data collection and training.",
-        "Impact: robots.txt affects your visibility in traditional search engine results pages (SERPs). In contrast, llms.txt influences how your brand and content are represented in AI-generated responses and recommendations.",
-        "Directives: While syntactically similar, the user-agents and specific rules can differ. You might allow a search bot to a page you disallow an AI from, or vice-versa.",
-      ],
-      "Another important distinction to understand is llms-full.txt vs llms.txt. The standard 'llms.txt' file provides crawler access rules, similar to robots.txt. However, the proposed 'llms-full.txt' standard could offer richer information, such as licensing details, preferred citation formats, and contact information for licensing inquiries, giving content creators even more control.",
-      "When choosing how to create these files, you can compare llms.txt tools available on the market. The debate of llms.txt tools vs plugin solutions often comes down to your platform (e.g., WordPress vs. a custom build) and your need for automation. A plugin might be easier, but a standalone tool could offer more advanced features.",
-      "2025 Best Practices for Both Files:",
-      [
-        "Maintain separate, up-to-date llms.txt and robots.txt files in your root directory.",
-        "Use clear, unambiguous rules in each file to avoid misinterpretation by crawlers.",
-        "Audit both files regularly to ensure they align with your current content and privacy strategy.",
-        "Utilize testing tools to validate syntax and ensure they are working as intended.",
-      ],
-      "As AI becomes more prevalent, mastering the nuances of the llms.txt vs robots.txt protocols is no longer optional. It's an essential skill for anyone serious about controlling their digital footprint in 2025.",
-    ],
-    readTime: "6 min read",
-    tags: ["llms.txt", "robots.txt", "Technical", "2025", "SEO"],
-  },
-  {
-    id: "4",
-    slug: "best-practices-implementing-llms-txt",
-    title:
-      "Best Practices for Implementing llms.txt in 2025: A Step-by-Step SEO Guide",
-    excerpt:
-      "Discover proven strategies and common pitfalls to avoid when setting up llms.txt for optimal AI crawler control and SEO in 2025. Learn how to protect your content, boost AI visibility, and improve your digital marketing results.",
-    content: [
-      "Effectively implementing llms.txt in 2025 is more than just creating a file; it's a strategic process. This llms.txt integration guide will walk you through the best practices. The first decision is often the 'llms.txt generator vs manual' approach. While a manual approach offers custom control, using the best llms.txt generator for your needs can prevent costly syntax errors and save time.",
-      "2025 Implementation Steps:",
-      [
-        "Content Audit: Before writing a single rule, identify which content is public, which is proprietary, and which is sensitive.",
-        "Choose Your Tool: Decide if you will write the file by hand or use a tool. Many a free llms.txt generator online can handle basic needs, but premium tools offer more features.",
-        "Draft Clear Rules: Following the llms.txt format spec, create simple Allow and Disallow rules for different AI user-agents.",
-        "Test Rigorously: Before deploying, validate your file's syntax and test its logic to ensure it behaves as expected.",
-        "Monitor and Update: Your website is dynamic, and so your llms.txt should be too. Revisit it quarterly or after major site changes.",
-      ],
-      "A key best practice is to always allow access to your homepage and primary landing pages. Conversely, be vigilant about blocking admin panels, user account pages, and internal search results to protect privacy and prevent AI from learning from irrelevant content. Knowing how to create llms.txt properly is a critical skill.",
-      "2025 Best Practices:",
-      [
-        "Use comments (#) in your file to explain complex rules for future reference.",
-        "Test against multiple AI user-agents (e.g., from Google, OpenAI, Anthropic).",
-        "Keep the file size minimal for faster processing by crawlers.",
-        "Be specific with your rules; avoid overly broad wildcards (*) that might have unintended consequences.",
-        "When in doubt, compare llms.txt tools to find one that includes validation and best-practice suggestions.",
-      ],
-      "Proper llms.txt implementation is now a critical component of any successful digital marketing and SEO strategy in 2025.",
-    ],
-    readTime: "10 min read",
-    tags: ["Implementation", "Best Practices", "Technical", "2025", "SEO"],
-  },
-  {
-    id: "5",
-    slug: "future-ai-powered-marketing",
-    title:
-      "The Future of AI-Powered Marketing in 2025: Trends, Strategies, and SEO Insights",
-    excerpt:
-      "Explore the top 2025 trends in AI marketing and discover how businesses can prepare for the next wave of AI-driven customer interactions. Learn how to optimize your content for both AI and search engines to stay ahead.",
-    content: [
-      "In 2025, AI technology is no longer a futuristic concept but a core driver of digital marketing. As AI assistants become the primary interface for discovery, marketers must adapt. A key part of this adaptation is understanding how to use llms.txt for SEO, as this file controls the very data that fuels these AI systems.",
-      "Emerging AI Marketing Trends for 2025:",
-      [
-        "Conversational AI for customer service and sales, trained on your approved content.",
-        "AI-driven content personalization delivered at an unprecedented scale.",
-        "Predictive analytics for anticipating customer needs and reducing churn.",
-        "Automated campaign optimization using real-time performance data.",
-        "Technical controls like llms.txt to manage brand representation in AI.",
-        "Leveraging the full benefits of llms.txt, such as protecting intellectual property while guiding AIs to marketing materials.",
-      ],
-      "2025 Optimization Tips:",
-      [
-        "Ensure your key marketing content is accessible to AI crawlers via your llms.txt file.",
-        "Use an llms.txt generator to quickly create and update your rules, ensuring you keep pace with marketing campaigns.",
-        "Implement structured data to give AI and search engines clear context about your content.",
-        "Create comprehensive, authoritative content that positions you as a leader in AI-driven search.",
-        "Monitor AI-driven traffic and engagement to measure the ROI of your AI SEO efforts.",
-      ],
-      "The future of AI-powered marketing hinges on a dual strategy: creating exceptional content for humans and providing clear instructions for machines. By harnessing tools like llms.txt, marketers can ensure their brand remains visible, accurate, and influential in an increasingly automated and search-optimized marketplace.",
-    ],
-    readTime: "15 min read",
-    tags: ["AI Marketing", "Future Trends", "Strategy", "2025", "SEO"],
-  },
-  {
-    id: "6",
-    slug: "ai-models-support-llmstxt",
-    title:
-      "ChatGPT, Claude, Gemini: Which AI Models Support LLMs.txt Files?",
-    excerpt:
-      "A comprehensive guide to AI model compatibility with the llms.txt protocol. Learn which major AI models recognize and respect llms.txt files for content access control.",
-    content: [
-      "As AI models become increasingly sophisticated, website owners need effective ways to control how these systems interact with their content. The llms.txt protocol has emerged as a standard for AI governance, but which models actually support it? Let's explore the current state of AI model compatibility with llms.txt files.",
-      "Major AI Models Supporting LLMs.txt:",
-      [
-        "ChatGPT (OpenAI): ChatGPT-User and GPTBot user agents recognize llms.txt files for content access control and training data management.",
-        "Claude (Anthropic): Claude-Web and anthropic-ai user agents respect llms.txt directives for ethical AI training and content interaction.",
-        "Gemini (Google): Google-Extended user agent follows llms.txt guidelines for responsible AI development and content access.",
-        "LLaMA (Meta): LLaMA models implement llms.txt compliance for transparent AI training practices.",
-        "Mistral AI: Mistral models recognize llms.txt files for ethical AI development and content governance.",
-      ],
-      "Why AI Model Support Matters:",
-      [
-        "Content Protection: Control which parts of your website AI models can access for training, ensuring sensitive content remains protected.",
-        "Ethical AI Development: Promote responsible AI development by providing clear guidelines for content usage and training data collection.",
-        "Industry Standard: As more AI models adopt llms.txt, it's becoming the de facto standard for AI content governance.",
-        "Future-Proofing: Implementing llms.txt now ensures your website is ready for future AI model developments and regulations.",
-      ],
-      "Implementation Best Practices:",
-      [
-        "Generate your llms.txt file using a reliable generator tool to ensure proper syntax and formatting.",
-        "Upload to your website root at yourdomain.com/llms.txt for maximum accessibility.",
-        "Test accessibility by visiting the URL directly to confirm it's properly served.",
-        "Monitor compliance through your website analytics to track AI crawler behavior.",
-        "Update regularly as your content and policies change to maintain effectiveness.",
-      ],
-      "The landscape of AI model support for llms.txt is rapidly evolving. Major players like OpenAI, Anthropic, and Google are leading the adoption, while smaller AI companies are following suit. This widespread support makes llms.txt an essential tool for any website owner looking to maintain control over their content in the AI era.",
-      "As AI continues to advance, having a properly configured llms.txt file is no longer optional—it's a critical component of modern web governance. Whether you're protecting sensitive business information or simply want to guide AI models to your most valuable content, understanding which models support llms.txt is the first step toward effective AI content management.",
-    ],
-    readTime: "5 min read",
-    tags: ["AI Models", "ChatGPT", "Claude", "Gemini", "Technical", "2025"],
-  },
-  {
-    id: "7",
-    slug: "llmstxt-llm-text-optimization-ai-seo",
-    title:
-      "What is LLMs.txt and LLM Text Optimization for AI SEO",
-    excerpt:
-      "Discover how LLMs.txt revolutionizes AI content optimization and helps large language models access and understand your website content more effectively.",
-    content: [
-      "LLMs.txt is a revolutionary new standard for AI content optimization that helps large language models access and understand your website content more effectively. This LLM text optimization protocol, created by Jeremy Howard from Answer.AI, addresses a critical challenge in the age of artificial intelligence.",
-      "The Problem LLMs.txt Solves:",
-      [
-        "Context Window Limitations: AI models can only process limited amounts of text at once, making full website analysis difficult.",
-        "Complex HTML Parsing: Converting HTML pages with navigation, ads, and JavaScript into clean text is imprecise and resource-intensive.",
-        "Content Accessibility: AI systems need structured, expert-level information in a single, accessible location.",
-      ],
-      "For Content Creators:",
-      [
-        "Control how AI models access your content",
-        "Improve visibility in AI-powered search results",
-        "Protect proprietary content with structured access",
-        "Enhance brand reputation in AI responses",
-      ],
-      "For AI Systems:",
-      [
-        "Efficient content extraction without HTML parsing",
-        "Standardized format for consistent processing",
-        "Reduced computational overhead for crawling",
-        "Access to curated, high-quality content",
-      ],
-      "LLMs.txt represents a fundamental shift in how websites communicate with AI systems. By providing structured, clean content in a standardized format, it eliminates the need for complex HTML parsing and enables more efficient AI content processing. This protocol is becoming essential for any website that wants to be properly understood and represented by AI systems.",
-    ],
-    readTime: "8 min read",
-    tags: ["LLMs.txt", "AI SEO", "Content Optimization", "Technical"],
-  },
-  {
-    id: "8",
-    slug: "ai-content-optimization-guide",
-    title:
-      "AI Content Optimization Guide 2025: Make Your Content AI & SEO Friendly",
-    excerpt:
-      "Learn proven strategies to optimize your content for AI systems and search engines in 2025. Discover actionable tips for structure, markup, and comprehensive coverage to boost your rankings and AI visibility.",
-    content: [
-      "Creating content that excels in the age of AI requires a new playbook. In 2025, your content must be easily digestible for AI crawlers while remaining engaging for human readers. This dual focus is the key to visibility. However, great content is useless if it's invisible, which is why understanding how to use llms.txt for SEO is a foundational step.",
-      "2025 Content Optimization Strategies:",
-      [
-        "Use clear, descriptive headings (H1, H2, H3) to create a logical structure that both users and machines can follow.",
-        "Ensure your llms.txt file explicitly allows crawlers access to your pillar content and blog posts.",
-        "Write in a natural, conversational tone that answers user questions directly, making it perfect for AI to use in responses.",
-        "Implement structured data (Schema.org) to provide explicit context about your content's meaning.",
-        "Adhere to the llms.txt format spec to ensure your crawling instructions are interpreted correctly by all major AI models.",
-      ],
-      "AI systems and modern search engines are designed to reward content that demonstrates expertise, authoritativeness, and trustworthiness (E-E-A-T). Prioritizing high-quality, comprehensive content over old-school keyword stuffing not only improves your AI and SEO visibility but also builds a loyal human audience.",
-      "Before publishing, always double-check your technical setup. An incorrectly configured llms.txt file could inadvertently block the very content you've worked so hard to optimize. In 2025, content strategy and technical SEO, particularly your llms.txt configuration, are inextricably linked.",
-    ],
-    readTime: "11 min read",
-    tags: ["Content Optimization", "AI Marketing", "SEO", "2025"],
-  },
-  {
-    id: "8",
-    slug: "measuring-ai-marketing-success",
-    title:
-      "Measuring AI Marketing Success in 2025: Key Metrics, Analytics, and SEO Performance",
-    excerpt:
-      "Discover the essential 2025 metrics and analytics tools to track your AI marketing and SEO performance. Learn how to optimize your strategy for maximum impact in the AI-driven digital landscape.",
-    content: [
-      "In 2025, measuring the ROI of AI marketing requires looking beyond traditional metrics like traffic and conversions. Success is now measured by your brand's presence and accuracy within AI-generated responses. This involves a new suite of KPIs and tools that connect directly to your technical SEO setup.",
-      "2025 AI Marketing Metrics:",
-      [
-        "AI-Sourced Traffic: Segmenting visitors who arrive from a link in an AI chat response.",
-        "Brand Mention Accuracy: Tracking how accurately AI models represent your products and services.",
-        "llms.txt Compliance Rate: Analyzing server logs to see which AI crawlers are respecting your llms.txt directives.",
-        "Content Discovery Speed: Measuring the time it takes for new content to be picked up by AI systems.",
-        "For advanced users, you can even automate llms.txt generation based on performance, using an llms.txt generator API to block crawlers that provide low-quality traffic.",
-      ],
-      "Monitoring your llms.txt effectiveness is crucial. Check server logs to see which hosts supporting llms.txt are sending crawlers and if they are accessing the intended sections. This data can reveal which AI platforms are driving the most value, allowing you to refine your access rules for better performance.",
-      "2025 Analytics Tools:",
-      [
-        "AI Visibility Trackers: Tools that monitor your brand's presence in major AI chatbots.",
-        "Log File Analyzers: Software to parse server logs for AI crawler activity.",
-        "Programmatic SEO Platforms: Systems that can leverage an llms.txt generator API to manage rules at scale.",
-        "Real-time Interaction Monitors: Dashboards that track how users engage with your brand via AI interfaces.",
-      ],
-      "Success in 2025 is about quality of interaction. It's not just about being seen by AI, but about being understood correctly. Your analytics should reflect this, tying directly back to the control you exert through your llms.txt file.",
-    ],
-    readTime: "9 min read",
-    tags: ["Analytics", "AI Marketing", "Performance", "2025", "SEO"],
-  },
-  {
-    id: "9",
-    slug: "llms-txt-case-studies",
-    title:
-      "Real-World llms.txt Case Studies 2025: Success Stories, SEO Wins, and Lessons Learned",
-    excerpt:
-      "Explore real-world 2025 examples of businesses that have successfully implemented llms.txt. Learn how llms.txt can boost your AI visibility, SEO, and digital marketing results with actionable case studies.",
-    content: [
-      "In 2025, the theoretical benefits of llms.txt are being proven by real-world results. Businesses across sectors are leveraging this simple text file to achieve significant gains in AI visibility and brand control. These case studies highlight the impact of a well-crafted strategy.",
-      "Case Study 1: The E-commerce Retailer. A mid-sized business using Shopify struggled with AI assistants recommending outdated products. By implementing a specific llms.txt for eCommerce site strategy with an llms.txt tool for Shopify, they guided crawlers to in-stock items and new arrivals. The result was a 30% increase in AI-referred sales and a dramatic decrease in customer complaints about incorrect information.",
-      "2025 Case Study Highlights:",
-      [
-        "A SaaS company saw improved brand representation after blocking AI access to their internal development wikis.",
-        "A publisher protected its premium content by disallowing AI crawlers while still allowing them to index article abstracts, driving subscriptions.",
-        "Many companies found success by first using a free llms.txt generator online to establish a baseline before refining rules manually.",
-        "The common theme is discovering the direct benefits of llms.txt through strategic implementation.",
-      ],
-      "Case Study 2: The B2B Tech Firm. This company wanted to become a thought leader. They used what they considered the best llms.txt generator to create a file that disallowed crawlers from their sales-oriented pages but gave full access to their blog and whitepapers. Within three months, their CEO was being cited in AI-generated reports on industry trends, establishing clear topical authority.",
-      "These 2025 case studies prove that llms.txt is a powerful strategic lever. From learning how to create llms.txt for a specific goal to seeing tangible SEO and marketing wins, the lessons from these pioneers provide a clear roadmap for others.",
-    ],
-    readTime: "13 min read",
-    tags: ["Case Studies", "llms.txt", "Success Stories", "2025", "SEO"],
-  },
-  {
-    id: "10",
-    slug: "ai-seo-strategy-2025",
-    title:
-      "AI SEO Strategy 2025: Beyond Traditional Search Optimization for Maximum Visibility",
-    excerpt:
-      "Develop a comprehensive 2025 AI SEO strategy that works with both traditional search engines and AI systems. Learn how to use semantic search, structured data, and topical authority to boost your rankings.",
-    content: [
-      "AI SEO in 2025 is a holistic discipline that merges classic SEO with new directives for artificial intelligence. A winning strategy must cater to both Google's search crawlers and the data-gathering bots of AI models like Gemini and ChatGPT. This requires a nuanced approach that starts with your site's foundational instructions.",
-      "A core pillar of any modern AI SEO strategy is understanding how to use llms.txt for SEO. This file is your first and most direct line of communication with AI systems. It dictates the boundaries of what data they can learn from, directly impacting how they perceive your brand's expertise and offerings.",
-      "2025 AI SEO Best Practices:",
-      [
-        "Create authoritative, comprehensive content that answers user questions thoroughly.",
-        "Master the llms.txt vs robots.txt distinction, creating separate, clear rules for both AI and search crawlers.",
-        "Implement detailed Schema.org structured data to give machines unambiguous context about your content.",
-        "Focus on building topical authority across a niche, not just ranking for isolated keywords.",
-        "Optimize for 'zero-click' environments by structuring content to be easily used in featured snippets and AI answers.",
-      ],
-      "In 2025, your strategy must account for the different ways information is surfaced. A page might rank #1 in traditional search but be ignored by AI if your llms.txt file is too restrictive. Conversely, a permissive llms.txt could lead to your content being used in ways you don't want. The balance is key. Considering tools to automate llms.txt generation can help maintain this balance as your site evolves.",
-      "Companies that integrate AI SEO strategies see powerful synergistic effects: better rankings in traditional search and more accurate, favorable representation in AI-powered discovery. It's no longer about optimizing for one or the other; it's about a unified strategy for the new age of information retrieval.",
-    ],
-    readTime: "14 min read",
-    tags: ["AI SEO", "Search Optimization", "Strategy", "2025", "SEO"],
-  },
-  {
-    id: "11",
-    slug: "llm-text-llmstxt-benefits-seo-strategy",
-    title:
-      "LLM Text and LLMs.txt Benefits for SEO Strategy",
-    excerpt:
-      "Discover the significant advantages of implementing LLMs.txt for AI SEO (GEO - Generative Engine Optimization) and how it positions your website for the future of AI-powered search.",
-    content: [
-      "Implementing LLMs.txt provides significant advantages for AI SEO (GEO - Generative Engine Optimization) and positions your website for the future of AI-powered search.",
-      "Key Benefits of LLMs.txt Implementation:",
-      [
-        "Improved AI Visibility: Your content becomes more discoverable and accurately represented in AI-generated responses, potentially increasing your visibility in the new era of AI search.",
-        "Brand Control: Guide how AI systems represent your brand and content, ensuring accuracy and consistency in AI-powered responses about your business.",
-        "Content Analysis & Optimization: Having a flattened version of your entire website enables comprehensive keyword analysis, entity research, and competitive analysis using AI tools.",
-        "Better AI Performance: Clean, structured content leads to more accurate AI responses when users ask questions related to your industry or services.",
-        "Competitive Advantage: Early adoption of LLMs.txt gives you a head start in AI optimization while most websites remain unoptimized for AI consumption.",
-        "Future-Proofing: As AI continues to reshape search and content discovery, having an LLMs.txt strategy positions you for emerging AI technologies.",
-      ],
-      "The Science Behind AI Optimization:",
-      [
-        "Unlike traditional SEO which operates largely on 'best practices,' LLMs.txt represents a more scientific approach to AI optimization:",
-        "Defined Standard: Clear protocol specification that provides a structured framework for AI content interaction.",
-        "AI Recognition: Verifiable AI system support from major platforms like ChatGPT, Claude, and Gemini.",
-        "Measurable Results: Trackable implementation benefits that can be monitored and optimized over time.",
-      ],
-      "This scientific approach to AI optimization through LLMs.txt represents a fundamental shift from traditional SEO practices. By providing clear, structured guidelines for AI systems, you're not just following best practices—you're implementing a verifiable, measurable system for AI content governance.",
-    ],
-    readTime: "10 min read",
-    tags: ["LLMs.txt", "AI SEO", "SEO Strategy", "GEO", "Technical"],
-  },
-  {
-    id: "12",
-    slug: "content-research-techniques-ai-era",
-    title:
-      "Content Research Techniques for the AI Era 2025: How to Create AI-Optimized, SEO-Driven Content",
-    excerpt:
-      "Master advanced 2025 content research techniques to create content optimized for both human readers and AI systems. Use AI tools, keyword research, and competitive analysis to boost your SEO and AI visibility.",
-    content: [
-      "Content research in 2025 has evolved. It's no longer enough to analyze search engine results pages. You must now investigate what AI chatbots are saying about your industry and how your competitors are influencing those conversations. This requires a new set of research techniques.",
-      "2025 Research Methods for AI and SEO:",
-      [
-        "Query AI Chatbots: Directly ask AI models like ChatGPT and Claude questions your customers would ask. Analyze the sources they cite and the gaps in their knowledge.",
-        "Competitive llms.txt Analysis: Examine your competitors' `llms.txt` files (e.g., `competitor.com/llms.txt`). What are they allowing or disallowing? This reveals their AI content strategy.",
-        "Use an llms.txt generator tool not just for creation, but for its potential analysis features. Some advanced tools can highlight what's different between your file and a competitor's.",
-        "Identify 'Answer Gaps': Find questions that AI struggles to answer well and create definitive content to fill that void.",
-        "Monitor AI-Sourced Questions: Use analytics to see what questions users are asking that lead them to your site from an AI.",
-      ],
-      "Your research should also inform your technical strategy. For example, if you find a competitor is using a specific WordPress plugin to manage their file, you can research the llms.txt tools vs plugin pros and cons for your own stack. You might also want to compare llms.txt tools to see which offers the best features for competitive intelligence.",
-      "In 2025, a comprehensive content strategy is built on a foundation of deep research into both human and machine information ecosystems. By understanding how AI discovers and processes content, you can create SEO-driven articles and landing pages that are perfectly positioned to become authoritative sources in the AI era.",
-    ],
-    readTime: "12 min read",
-    tags: [
-      "Content Research",
-      "AI Optimization",
-      "Research Techniques",
-      "2025",
-      "SEO",
-    ],
-  },
-  {
-    id: "15",
-    slug: "sitemap-to-llms-txt-converter-guide",
-    title: "Sitemap to llms.txt Converter: Complete Guide to AI-Optimized Content Curation",
-    excerpt: "Learn how to convert your sitemap.xml into a curated llms.txt file using our free sitemap-to-llms.txt generator. Discover the benefits of automated content filtering, intelligent grouping, and AI-friendly formatting for better visibility.",
-    content: [
-      "In 2025, the relationship between sitemap.xml and llms.txt is becoming increasingly important for AI SEO. While sitemap.xml provides a comprehensive list of all your website URLs, llms.txt offers a curated selection specifically designed for AI systems. Our sitemap-to-llms.txt converter bridges this gap, automatically transforming your complete sitemap into a focused, AI-optimized llms.txt file.",
-      "Why Convert Sitemap.xml to llms.txt?",
-      [
-        "Content Curation: Filter out low-value pages like login forms, admin areas, and duplicate content that don't benefit AI understanding.",
-        "Intelligent Grouping: Automatically organize URLs into logical sections (Primary, Docs, Blog, Help, Products) for better AI comprehension.",
-        "AI-Friendly Format: Present content in a structured format that AI systems can easily parse and understand.",
-        "Performance Optimization: Reduce AI crawler overhead by providing only the most relevant content.",
-        "SEO Enhancement: Improve your visibility in AI-powered search results and recommendations.",
-      ],
-      "How Our Sitemap-to-llms.txt Generator Works:",
-      [
-        "Upload your sitemap.xml URL or let our tool auto-detect it from your domain.",
-        "Our AI-powered system analyzes and filters URLs, removing noise like feeds, admin pages, and duplicate content.",
-        "Intelligent grouping algorithms organize remaining URLs into logical sections based on URL patterns and content type.",
-        "Optional enrichment fetches page titles and descriptions for better link text and context.",
-        "Generate a spec-compliant llms.txt file ready for immediate deployment.",
-      ],
-      "Advanced Features for 2025 AI SEO:",
-      [
-        "Smart Filtering: Automatically excludes login pages, cart/checkout flows, search results, and other low-value content.",
-        "Content Enrichment: Fetches page titles and meta descriptions to create meaningful link text.",
-        "Section Capping: Limits each section size to prevent overwhelming AI systems with too much information.",
-        "Optional Section: Moves overflow content to an 'Optional' section for comprehensive coverage.",
-        "Rate Limiting: Respects target site limitations while processing large sitemaps efficiently.",
-      ],
-      "The sitemap-to-llms.txt conversion process is essential for modern websites that want to maintain control over their AI presence. By curating your content specifically for AI consumption, you ensure that the most valuable aspects of your website are properly represented in AI-generated responses and recommendations.",
-      "As AI systems become more sophisticated, having a well-structured llms.txt file generated from your sitemap will be crucial for maintaining visibility and control in AI-driven search and discovery platforms.",
-    ],
-    readTime: "10 min read",
-    tags: ["Sitemap", "llms.txt", "AI SEO", "Content Curation", "2025", "Free Tool"],
-  },
-  {
-    id: "16",
-    slug: "ai-seo-strategy-2025-beyond-traditional-search",
-    title: "AI SEO Strategy 2025: Beyond Traditional Search to AI-Powered Discovery",
-    excerpt: "Develop a comprehensive 2025 AI SEO strategy that works with both traditional search engines and AI systems. Learn how to use semantic search, structured data, and llms.txt for maximum visibility in the AI era.",
-    content: [
-      "The landscape of digital discovery is rapidly evolving in 2025, with AI systems becoming as important as traditional search engines for content discovery. A successful AI SEO strategy now requires understanding both traditional SEO principles and the unique requirements of AI-powered platforms. This comprehensive guide will help you develop a strategy that excels in both worlds.",
-      "The Evolution of Search: From Keywords to AI Understanding",
-      [
-        "Traditional SEO focused on keyword optimization and backlink building for search engine rankings.",
-        "AI SEO emphasizes content structure, semantic understanding, and contextual relevance for AI systems.",
-        "Modern strategies must balance both approaches to achieve maximum visibility across all platforms.",
-        "llms.txt files provide the bridge between traditional crawling and AI-specific content access.",
-        "Semantic search capabilities require content that answers user intent, not just matches keywords.",
-      ],
-      "Key Components of 2025 AI SEO Strategy:",
-      [
-        "Content Structure: Use clear headings, logical flow, and comprehensive coverage of topics to help AI understand your content's value.",
-        "Semantic Markup: Implement structured data (Schema.org) to provide explicit context about your content's meaning and relationships.",
-        "llms.txt Implementation: Create and maintain a properly formatted llms.txt file to guide AI crawlers to your most valuable content.",
-        "User Intent Optimization: Focus on creating content that directly answers user questions and provides actionable solutions.",
-        "Cross-Platform Consistency: Ensure your brand message and key information are consistent across all platforms and formats.",
-      ],
-      "Technical Implementation for AI SEO:",
-      [
-        "Use our free llms.txt generator to create properly formatted files that AI systems can easily parse.",
-        "Implement semantic HTML structure with proper heading hierarchy and descriptive alt text.",
-        "Create comprehensive content clusters that cover topics thoroughly for better AI understanding.",
-        "Optimize for voice search by including conversational language and question-answer formats.",
-        "Monitor AI crawler activity through server logs to understand how your content is being accessed.",
-      ],
-      "Measuring AI SEO Success:",
-      [
-        "Track AI-sourced traffic from platforms like ChatGPT, Claude, and Google Gemini.",
-        "Monitor brand mention accuracy in AI-generated responses and recommendations.",
-        "Analyze content discovery speed - how quickly new content is picked up by AI systems.",
-        "Measure engagement rates from AI-recommended content to assess quality and relevance.",
-        "Use tools that track your presence in AI-powered search results and recommendations.",
-      ],
-      "The future of SEO is increasingly AI-driven, but traditional search optimization remains important. The key to success in 2025 is developing a holistic strategy that serves both human users and AI systems effectively. By implementing proper llms.txt files, creating semantically rich content, and maintaining technical excellence, you can achieve visibility across all discovery platforms.",
-      "Remember that AI SEO is not about gaming the system, but about creating genuinely valuable content that both humans and AI systems can understand and recommend. This approach ensures long-term success as AI technology continues to evolve.",
-    ],
-    readTime: "15 min read",
-    tags: ["AI SEO", "Search Strategy", "Semantic Search", "2025", "Technical SEO", "llms.txt"],
-  },
-  {
-    id: "17",
-    slug: "broken-link-detection-seo-tool",
-    title: "Broken Link Detection: The Ultimate SEO Tool for Website Health",
-    excerpt: "Discover how our advanced broken link detection tool helps you identify and fix broken links on your website. Improve SEO, user experience, and site performance with comprehensive link analysis.",
-    content: [
-      "Broken links are more than just a nuisance—they can significantly impact your website's SEO performance, user experience, and search engine rankings. Our comprehensive broken link detection tool helps you identify and fix these issues before they hurt your site's performance.",
-      "What Are Broken Links?",
-      [
-        "Broken links, also known as 'dead links' or 'orphaned links,' are hyperlinks that no longer lead to their intended destination.",
-        "These links typically result in 404 'Not Found' errors or other HTTP error codes.",
-        "They create a poor user experience and potentially harm your SEO efforts.",
-        "Both internal and external links can become broken over time.",
-      ],
-      "Types of Broken Links:",
-      [
-        "Internal Broken Links: Links within your website that point to non-existent pages, often caused by deleted content or moved pages.",
-        "External Broken Links: Links pointing to other websites that are no longer available, beyond your control but still impact user experience.",
-        "Temporary Broken Links: Links that are temporarily unavailable due to server issues or maintenance.",
-        "Permanent Broken Links: Links that will never work again due to deleted content or changed URLs.",
-      ],
-      "How Our Broken Link Detection Tool Works:",
-      [
-        "Intelligent Website Crawling: Our tool systematically crawls your website, following all internal and external links to build a comprehensive map of your site's link structure.",
-        "HTTP Status Code Analysis: Each link is tested with HTTP requests to determine its status, identifying 404 errors, server errors, and other problematic responses.",
-        "Detailed Reporting: Get comprehensive reports with status codes, response times, context information, and actionable insights for fixing broken links.",
-        "Smart Filtering: Automatically skips non-HTTP links (mailto, tel, javascript) and hash fragments to focus on actual web links.",
-        "Deduplication: Ensures each unique URL is only checked once, improving efficiency and accuracy.",
-      ],
-      "Key Features of Our Tool:",
-      [
-        "Comprehensive link analysis for both internal and external links",
-        "Context-aware link categorization with detailed error explanations",
-        "CSV export functionality for easy sharing and analysis",
-        "Authentication-based page limits (50 pages for free users, up to 1000 for authenticated users)",
-        "Scan history tracking to monitor your website's health over time",
-        "Smart filtering to skip irrelevant links like email addresses and phone numbers",
-      ],
-      "Why Use Our Broken Link Detection Tool?",
-      [
-        "SEO Benefits: Improves search engine rankings by ensuring all links work properly and prevents link equity loss.",
-        "User Experience: Enhances user experience by reducing bounce rates and frustration from broken links.",
-        "Brand Reputation: Maintains a professional appearance by fixing broken links before users encounter them.",
-        "Competitive Advantage: Stay ahead of competitors by maintaining a healthier website structure.",
-      ],
-      "Best Practices for Fixing Broken Links:",
-      [
-        "Set Up Proper Redirects: Use 301 redirects for permanently moved content to preserve SEO value.",
-        "Update Internal Links: Fix internal broken links by updating URLs to point to the correct pages.",
-        "Remove or Replace External Links: For broken external links, either remove them or find alternative sources.",
-        "Regular Monitoring: Implement regular broken link audits as part of your SEO strategy.",
-      ],
-      "Regular broken link audits should be part of your SEO strategy to ensure your website maintains its search engine rankings and provides the best possible experience for your visitors. Our advanced broken link detection tool provides everything you need to identify, analyze, and fix broken links on your website, helping you maintain a healthy site structure and improve user experience.",
-    ],
-    readTime: "8 min read",
-    tags: ["Broken Links", "SEO Tool", "Website Health", "Link Analysis", "SEO Audit"],
-  },
-];
-interface BlogPostPageProps {
-  params: Promise<{
-    slug: string;
-  }>;
-}
-
-const BlogPostPage = ({ params }: BlogPostPageProps) => {
-  const unwrappedParams = React.use(params) as { slug: string };
-  const post = blogPosts.find((p) => p.slug === unwrappedParams.slug);
+// Blog page component
+export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = getBlogPostBySlug(slug);
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">
-            Blog Post Not Found
-          </h1>
-          <p className="text-sm sm:text-base text-gray-600 mb-8">
-            The blog post you&apos;re looking for doesn&apos;t exist or may have been moved.
-          </p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Blog Post Not Found</h1>
+          <p className="text-gray-600 mb-8">The blog post you're looking for doesn't exist.</p>
           <Link
             href="/blogs"
-            className="inline-flex items-center space-x-2 bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg text-sm sm:text-base font-semibold hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back to Blogs</span>
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Blogs
           </Link>
         </div>
       </div>
     );
   }
 
+  // JSON-LD structured data for SEO
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    author: {
+      "@type": "Person",
+      name: post.author,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "TheLLMsTxt.com",
+      url: "https://thellmstxt.com",
+    },
+    datePublished: post.datePublished,
+    dateModified: post.dateModified,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://thellmstxt.com/blogs/${post.slug}`,
+    },
+    articleBody: post.excerpt,
+    keywords: post.tags.join(", "),
+    wordCount: post.content.join(" ").split(" ").length,
+  };
+
   return (
-    <main className="py-8 sm:py-12">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Back Button */}
-        <div className="mb-6 sm:mb-8">
+    <>
+      {/* JSON-LD structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      
+      <div className="min-h-screen bg-gray-50">
+        {/* Header */}
+        <div className="bg-white border-b border-gray-200">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="flex items-center justify-between mb-4">
           <Link
             href="/blogs"
-            className="inline-flex items-center space-x-2 text-blue-600 hover:text-blue-700 text-sm sm:text-base font-medium transition-colors"
+                className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
           >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back to Blogs</span>
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Blogs
           </Link>
-        </div>
-
-        {/* Blog Post */}
-        <article className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-8 shadow-lg border border-gray-100">
-          {/* Post Header */}
-          <header className="mb-6 sm:mb-8">
-            <div className="flex flex-wrap gap-2 sm:gap-4 mb-4">
-              {post.featured && (
-                <span className="bg-blue-100 text-blue-800 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
-                  Featured
-                </span>
-              )}
-              <div className="flex items-center space-x-2 text-gray-500 text-xs sm:text-sm">
-                <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span>{post.readTime}</span>
+              <div className="flex items-center text-gray-500 text-sm">
+                <Clock className="w-4 h-4 mr-1" />
+                {post.readTime}
               </div>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              {post.title}
-            </h1>
-
-            <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed">
-              {post.excerpt}
-            </p>
-          </header>
-
-          {/* Post Content */}
-          <div className="prose prose-sm sm:prose-base lg:prose-lg max-w-none">
-            {post.content.map((block, idx) =>
-              Array.isArray(block) ? (
-                <ul key={idx} className="list-disc pl-4 sm:pl-6 mb-4 text-gray-700">
-                  {block.map((item, i) => (
-                    <li key={i} className="text-sm sm:text-base">{item}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p key={idx} className="text-sm sm:text-base text-gray-700 leading-relaxed mb-4">
-                  {block}
-                </p>
-              )
-            )}
+            <div className="mb-6">
+              <h1 className="text-4xl font-bold text-gray-900 mb-4">{post.title}</h1>
+              <p className="text-xl text-gray-600 leading-relaxed">{post.excerpt}</p>
           </div>
 
-          {/* Tags */}
-          <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-100">
             <div className="flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
+              {post.tags.map((tag, index) => (
                 <span
-                  key={tag}
-                  className="bg-gray-100 text-gray-700 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm"
+                  key={index}
+                  className="px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full"
                 >
                   {tag}
                 </span>
               ))}
             </div>
           </div>
-        </article>
-      </div>
-    </main>
-  );
-};
+        </div>
 
-export default BlogPostPage;
+        {/* Content */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="prose prose-lg max-w-none">
+            {post.content.map((section, index) => (
+              <div key={index} className="mb-6">
+                {typeof section === "string" ? (
+                  <p className="text-gray-700 leading-relaxed mb-4">{section}</p>
+                ) : (
+                  <ul className="list-disc list-inside space-y-2 mb-4">
+                    {section.map((item, itemIndex) => (
+                      <li key={itemIndex} className="text-gray-700 leading-relaxed">
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
